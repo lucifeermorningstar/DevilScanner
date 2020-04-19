@@ -44,7 +44,7 @@ async def scan(event):
           executer = await event.get_sender()
           try:
              if re.match('.scan -f .*', event.text) and executer.id in SIBYL:
-                  if not trim: reason = event.text.split(" ", trim)[2]
+                  if not trim: reason = event.text.split(" ", 2)[2]
                   approve = True 
              else:
                   reason = event.text.split(" ", 1)[1]
