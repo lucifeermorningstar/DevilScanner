@@ -18,7 +18,7 @@ async def gban(enforcer, target, reason, msg_id, approved_by):
    return True
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.ERRORS)
+                    level=logging.ERROR)
 
 @System.on(events.NewMessage(pattern=r'[\.\?!/]scan'))
 async def scan(event):
