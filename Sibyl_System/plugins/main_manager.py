@@ -47,13 +47,15 @@ async def scan(event):
           executer = await event.get_sender()
           try:
              if re.match('.scan -f .*', event.text) and executer.id in SIBYL:
+                  print('OwO 2.5 Trim') 
                   if not trim: reason = event.text.split(" ", trim)[2]
                   print('OwO 3')
                   approve = True 
              else:
                   reason = event.text.split(" ", 1)[1]
                   approve = False
-          except:
+          except Exception as e:
+             print(e) 
              return
           if replied.video or replied.document or replied.contact or replied.gif or replied.sticker:
                await replied.forward_to(Sibyl_logs)
