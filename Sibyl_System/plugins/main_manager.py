@@ -40,6 +40,7 @@ async def scan(event):
           else: 
                  print('OwO 2')
                  if replied.sender.id in SIBYL or replied.sender.id in ENFORCERS:
+                          print('OwO return') 
                           return
                  sender = f"[{replied.sender.first_name}](tg://user?id={replied.sender.id})"
                  target = replied.sender.id
