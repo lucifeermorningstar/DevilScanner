@@ -1,14 +1,13 @@
 from Sibyl_System import SIBYL, ENFORCERS
-from Sibyl_System import System
+from Sibyl_System import System, system_cmd
 import asyncio
 from telethon import events
 import re 
 from telethon.utils import resolve_invite_link
 
 
-@System.on(events.NewMessage(pattern=r'[\.\?!/]addenf'))
+@System.on(system_cmd(pattern=r'addenf'))
 async def addenf(event):
-  if event.from_id in SIBYL:
      if event.reply:
         replied = await event.get_reply_message()
         id = replied.sender.id
@@ -20,9 +19,8 @@ async def addenf(event):
      ENFORCERS.append(id)
      await System.send_message(event.chat_id, f'Added [{id}](tg://user?id={id}) to Enforcers') 
 
-@System.on(events.NewMessage(pattern=r'[\.\?!/]rmenf'))
+@System.on(system_cmd(pattern=r'rmenf'))
 async def rmenf(event):
-  if event.from_id in SIBYL:
      if event.reply:
         replied = await event.get_reply_message()
         id = replied.sender.id
@@ -34,9 +32,8 @@ async def rmenf(event):
            return
      await System.send_message(event.chat_id, 'Is that person even a Enforcer?') 
 
-@System.on(events.NewMessage(pattern=r'[\.\?!/]listenf'))
+@System.on(system_cmd(pattern=r'listenf'))
 async def listuser(event):
-  if event.from_id in SIBYL:
       msg = "Enforcers:\n"
       for z in ENFORCERS:
          try:
@@ -50,9 +47,8 @@ from telethon.tl.functions.messages import ImportChatInviteRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.channels import LeaveChannelRequest
 
-@System.on(events.NewMessage(pattern=r'[\.\?!/]join'))
+@System.on(system_cmd(pattern=r'join'))
 async def join(event):
-   if event.from_id in SIBYL:
       try:
         link = event.text.split(" ", 1)[1]
       except:
@@ -66,14 +62,13 @@ async def join(event):
           await System.send_message(event.chat_id, "Joined chat!") 
 
 
-@System.on(events.NewMessage(pattern=r'[\.\?!/]resolve'))
-async def join(event):
-   if event.from_id in SIBYL:
+@System.on(system_cmd(pattern=r'resolve'))
+async def resolve(event):
       try:
         link = event.text.split(" ", 1)[1]
       except:
         return
-      match = re.match(r"(https?://)?(www\.)?t(elegram)?\.(dog|me|org|com)/joinchat/(.*)", link)
+      match = re.match(r"(https?://)?(www\.)?t(elegram)?\.(dog|me|org)/joinchat/(.*)", link)
       if match:
         try:
            data = resolve_invite_link(match.group(5))
@@ -83,9 +78,8 @@ async def join(event):
         await System.send_message(event.chat_id, f"Info from hash {match.group(5)}:\n**Link Creator**: {data[0]}\n**Chat ID**: {data[1]}")
 
 
-@System.on(events.NewMessage(pattern=r'[\.\?!/]leave'))
+@System.on(system_cmd(pattern=r'leave'))
 async def leave(event):
-   if event.from_id in SIBYL:
       try:
         link = event.text.split(" ", 1)[1]
       except:
