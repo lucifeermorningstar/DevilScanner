@@ -6,7 +6,7 @@ import re
 from Sibyl_System.plugins.Mongo_DB.message_blacklist import get_blacklist, update_blacklist
 from Sibyl_System.plugins.Mongo_DB.name_blacklist import get_wlc_bl, update_wlc_blacklist
 
-@System.on(system_cmd(pattern = r'addbl'))
+@System.on(system_cmd(pattern = r'addbl ', allow_slash=False))
 async def addbl(event):
      flag = re.match(".addbl -e (.*)", event.text, re.DOTALL)
      if flag:
@@ -51,7 +51,7 @@ async def rmwlcbl(event):
         await System.send_message(event.chat_id, f"{text} is not blacklisted") 
 
 
-@System.on(system_cmd(pattern=r'rmbl'))
+@System.on(system_cmd(pattern=r'rmbl ', allow_slash=False))
 async def rmbl(event):
      try:
        text = event.text.split(" ", 1)[1]
