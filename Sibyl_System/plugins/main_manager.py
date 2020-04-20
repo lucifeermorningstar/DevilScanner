@@ -129,16 +129,16 @@ Suspect is not a target for enforcement action. The trigger of Dominator will be
             
 @System.on(system_cmd(pattern=r'reject'))
 async def reject(event):
-  print('Triggered OwO') 
+  #print('Triggered OwO') 
   if event.reply:
-   print('Trying OmO') 
+   #print('Trying OmO') 
    replied = await event.get_reply_message()
    me = await System.get_me()
-   if replied.id == me.id:
-     print('Matching UwU') 
+   if replied.from_id == me.id:
+     #print('Matching UwU') 
      match = re.match('\$SCAN', replied.text) 
      if match:
-        print('Matched OmU') 
+        #print('Matched OmU') 
         id = replied.id
         await System.edit_message(Sibyl_logs, id, reject_string)
 
