@@ -1,6 +1,6 @@
 from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, Sibyl_approved_logs, GBAN_MSG_LOGS
 from Sibyl_System.strings import scan_request_string, scan_approved_string
-from Sibyl_System import System
+from Sibyl_System import System, system_cmd
 from telethon import events
 import re
 import asyncio
@@ -127,9 +127,9 @@ $REJECTED
 Suspect is not a target for enforcement action. The trigger of Dominator will be locked.
 """
             
-@System.on(events.NewMessage(pattern=r'[\.\?!/]reject'))
+@System.on(system_cmd(pattern=r'reject'))
 async def reject(event):
-  if event.from_id in SIBYL and event.reply:
+  if event.reply:
    replied = await event.get_reply_message()
    me = await System.get_me()
    if replied.id == me.id:
