@@ -12,6 +12,8 @@ if ENV:
    API_ID_KEY = int(os.environ.get('API_ID_KEY', None))
    API_HASH_KEY = os.environ.get('API_HASH_KEY', None)
    STRING_SESSION = os.environ.get('STRING_SESSION', None)
+   HEROKU_API_KEY = os.environ.get('HEROKU_API_KEY', None)
+   HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME', None)
    SIBYL = list(int(x) for x in os.environ.get("SIBYL", "").split())
    ENFORCERS = list(int(x) for x in os.environ.get("ENFORCERS", "").split())
    MONGO_DB_URL = os.environ.get('MONGO_DB_URL') 
