@@ -26,7 +26,7 @@ async def addenf(event):
            await System.send_message(event.chat_id, 'That person is already Enforcer!')
            return
      if HEROKU:
-        config['ENFORCERS'] = RAW_ENFORCERS + id
+        config['ENFORCERS'] = RAW_ENFORCERS + str(id) 
      else:
         ENFORCERS.append(id)
      await System.send_message(event.chat_id, f'Added [{id}](tg://user?id={id}) to Enforcers') 
