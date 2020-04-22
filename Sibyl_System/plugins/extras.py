@@ -1,10 +1,9 @@
-from Sibyl_System import SIBYL, ENFORCERS
+from Sibyl_System import SIBYL, ENFORCERS, session
 from Sibyl_System import System, system_cmd
 import asyncio
 from telethon import events
 import re 
 from telethon.utils import resolve_invite_link
-
 
 @System.on(system_cmd(pattern=r'addenf'))
 async def addenf(event):
@@ -91,6 +90,21 @@ async def leave(event):
       else:
          await System(LeaveChannelRequest(link))
          await System.send_message(event.chat_id, f"Successfully Left chat[{link}]")
+
+@System.on(system_cmd(pattern=r'get_redirect '))
+async def redirect(event):
+   try:
+     url = event.text.split(" ", 1)[1]
+   except:
+     return
+   if not url.startswith('https://') or not url.startswith('http://'):
+      url = 'https://' + url 
+   with session.get(url) as r:
+       url = r.url
+   await System.send_message(event.chat_id, url) 
+
+
+
 
 help_plus = """
 Help! 
