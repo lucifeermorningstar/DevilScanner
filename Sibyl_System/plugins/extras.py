@@ -99,7 +99,7 @@ async def redirect(event):
      return
    if not url.startswith('https://') or not url.startswith('http://'):
       url = 'https://' + url 
-   with session.get(url) as r:
+   async with session.get(url) as r:
        url = r.url
    await System.send_message(event.chat_id, url) 
 
