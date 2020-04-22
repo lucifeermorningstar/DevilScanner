@@ -1,9 +1,18 @@
 from Sibyl_System import SIBYL, ENFORCERS, session
 from Sibyl_System import System, system_cmd
 import asyncio
+import re
 from telethon import events
-import re 
 from telethon.utils import resolve_invite_link
+import heroku3
+
+try:
+  from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME
+  heroku_conn = heroku3.from_key(HEROKU_API_KEY)
+  app = heroku_conn.app(<HEROKU_APP_NAME)
+  config = app.config()
+except:
+  HEROKU = False
 
 @System.on(system_cmd(pattern=r'addenf'))
 async def addenf(event):
@@ -15,7 +24,10 @@ async def addenf(event):
      if id in ENFORCERS:
            await System.send_message(event.chat_id, 'That person is already Enforcer!')
            return
-     ENFORCERS.append(id)
+     if HEROKU:
+        config['ENFORCERS'] = ENFORCERS + id
+     else:
+        ENFORCERS.append(id)
      await System.send_message(event.chat_id, f'Added [{id}](tg://user?id={id}) to Enforcers') 
 
 @System.on(system_cmd(pattern=r'rmenf'))
