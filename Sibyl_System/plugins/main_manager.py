@@ -134,7 +134,7 @@ reject_string ="""
 $REJECTED
 **Crime Coefficient**: `Under 100`
 
-Suspect is not a target for enforcement action. The trigger of Dominator will be locked.
+Target is not a target for enforcement action. The trigger of Dominator will be locked.
 """
             
 @System.on(system_cmd(pattern=r'reject'))
@@ -160,8 +160,11 @@ Here is the help for **Main**:
 `proof` - **Get message from proof id which is at the end of gban msg **
 `reject` - **Reject a scan request** 
 
-**Note:** adding -f to a scan will force an approval.
-**Note 2:** adding -o will gban&fban the original sender , If using both approve and original sender flag the "-f" flag must come first!
+**Notes:**
+`/` `?` `.`are supported prefixes.
+**Example:** `/addenf` or `?addenf` or `.addenf`
+Adding `-f` to a scan will force an approval. (Sibyl Only)
+**Note 2:** adding `-o` will gban & fban the original sender, If using both approve and original sender flag the "-f" flag must come first!
 **Example:** `/scan -f bitcoin spammer`
 **Example 2:** `!scan -f -o owo` 
 Also see "?help extras" for extended functions.

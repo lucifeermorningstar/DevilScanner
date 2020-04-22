@@ -24,5 +24,8 @@ async def whois(event):
 
 help_plus =""" Here is Help for **Whois** - 
 `whois` - get data of the user
+**Notes:**
+`/` `?` `.`are supported prefixes.
+**Example:** `/addenf` or `?addenf` or `.addenf`
 """
 __plugin_name__ = "whois"

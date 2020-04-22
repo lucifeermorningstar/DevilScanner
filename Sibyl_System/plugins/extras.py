@@ -44,7 +44,7 @@ async def rmenf(event):
            return
      await System.send_message(event.chat_id, 'Is that person even a Enforcer?') 
 
-@System.on(system_cmd(pattern=r'listenf'))
+@System.on(system_cmd(pattern=r'enforcers'))
 async def listuser(event):
       msg = "Enforcers:\n"
       for z in ENFORCERS:
@@ -121,16 +121,19 @@ async def redirect(event):
 
 help_plus = """
 Help! 
-`addenf` - add a user to enforcers 
+`addenf` - Adds a user as an enforcer.
 Format : addenf <user id / as reply >
-`rmenf` - remove a user from enforcers 
+`rmenf` - Removes a user from enforcers. 
 Format : rmenf <user id/ as reply>
-`listenf` - List all enforcers
-`join` - join a chat 
-Format : join < chat username or invite link >
-`leave` - leave a chat 
-Format : leave < chat username or id >
+`enforcers` - Lists all enforcers.
+`join` - Joins a chat. 
+Format : Joins < chat username or invite link >
+`leave` - Leaves a chat. 
+Format : Leaves < chat username or id >
 `resolve` - owo
+**Notes:**
+`/` `?` `.`are supported prefixes.
+**Example:** `/addenf` or `?addenf` or `.addenf`
 """
 
 __plugin_name__ = "extras" 

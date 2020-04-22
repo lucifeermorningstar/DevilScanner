@@ -106,12 +106,16 @@ async def auto_wlc_gban(event):
 __plugin_name__ ="blacklist" 
 
 help_plus ="""
-Here is help for ** String Blacklist**
-`addbl` - **Add trigger to blacklist**  
-`rmbl` - **remove trigger from blacklist** 
-`listbl` - **list blacklisted words**
-Here is help for ** Welcome Name-String Blacklist**
-`addwlcbl` - **Add new blacklisted name-string**
-`rmwlcbl` - **Remove blacklisted welcome-name-string**
-Flags( -e // escape text ) For addbl & addwlcbl
+Here is help for **String Blacklist**
+`/addbl` - **Add trigger to blacklist**  
+`/rmbl` - **remove trigger from blacklist** 
+`/listbl` - **list blacklisted words**
+Here is help for **Welcome Name-String Blacklist**
+`/addwlcbl` - **Add new blacklisted name-string**
+`/rmwlcbl` - **Remove blacklisted welcome-name-string**
+Flags( -e // escape text ) to addbl & addwlcbl
+
+**Notes:**
+`/` `?` `.` are supported prefixes.
+**Example:** `/addbl` or `?addbl` or `.addbl`
 """
