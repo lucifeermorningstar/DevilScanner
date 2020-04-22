@@ -67,7 +67,7 @@ async def rmbl(event):
 
 @System.on(system_cmd(pattern=r'listbl'))
 async def listbl(event):
-      list = await get_blacklist()
+      list = await db.get_blacklist()
       msg = "Currently Blacklisted strings:\n"
       for x in list:
          msg += f"•{x}\n"
@@ -80,7 +80,7 @@ async def auto_gban_request(event):
     if event.from_id in ENFORCERS or event.from_id in SIBYL: return
     if event.chat_id == Sibyl_logs: return
     text = event.text
-    words = await get_blacklist()
+    words = await db.get_blacklist()
     sender = await event.get_sender() 
     if words:
       for word in words:
@@ -95,7 +95,7 @@ async def auto_wlc_gban(event):
     user = await event.get_user()
     if user.id in ENFORCERS or user.id in SIBYL: return
     if event.user_joined:
-      words = await get_wlc_bl()
+      words = await wlc_collection.get_wlc_bl()
       if words:
         text = user.first_name
         for word in words:
