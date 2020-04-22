@@ -7,7 +7,7 @@ import asyncio
 from Sibyl_System import session
 import logging 
 
-async def gban(enforcer=None, target, reason = None, msg_id, approved_by= None, auto=False):
+async def gban(enforcer=None, target=None, reason = None, msg_id=None, approved_by= None, auto=False):
    if GBAN_MSG_LOGS:
         logs = GBAN_MSG_LOGS
    else:
