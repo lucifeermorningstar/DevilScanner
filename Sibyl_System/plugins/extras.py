@@ -9,7 +9,7 @@ import heroku3
 try:
   from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME, RAW_ENFORCERS
   heroku_conn = heroku3.from_key(HEROKU_API_KEY)
-  app = heroku_conn.app(<HEROKU_APP_NAME)
+  app = heroku_conn.app(HEROKU_APP_NAME)
   config = app.config()
 except:
   HEROKU = False
