@@ -11,7 +11,7 @@ try:
   heroku_conn = heroku3.from_key(HEROKU_API_KEY)
   app = heroku_conn.app(HEROKU_APP_NAME)
   config = app.config()
-  HEROKU = TRUE
+  HEROKU = True
 except:
   HEROKU = False
 
