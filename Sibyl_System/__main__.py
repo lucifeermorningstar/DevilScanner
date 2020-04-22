@@ -1,5 +1,5 @@
 
-from Sibyl_System import SIBYL, Sibyl_logs, API_ID_KEY, API_HASH_KEY, STRING_SESSION, System
+from Sibyl_System import SIBYL, Sibyl_logs, API_ID_KEY, API_HASH_KEY, STRING_SESSION, System, system_cmd
 from Sibyl_System.strings import on_string
 from telethon import TelegramClient, events
 from telethon.sessions import StringSession
@@ -25,23 +25,24 @@ for load in to_load:
     if hasattr(imported, "help_plus") and imported.help_plus:
         HELP[imported.__plugin_name__.lower()] = imported 
 
-@System.on(events.NewMessage(pattern=r'[\.\?!]status'))
+@System.on(system_cmd(pattern=r'status'))
 async def status(event):
-    if event.from_id in SIBYL:
          await System.send_message(event.chat_id, on_string)
-    else:
-         return
 
-@System.on(events.NewMessage(pattern=r'[\.\?!]help'))
+@System.on(system_cmd(pattern=r'help', allow_slash=False))
 async def help(event):
-    if event.from_id in SIBYL:
-         help_for = event.text.split(" ", 1)[1].lower()
+         try:
+            help_for = event.text.split(" ", 1)[1].lower()
+         except:
+            msg = "Here is the list of plugins with Help text:\n" 
+            for x in a HELP.keys():
+                msg += f"`{x}`\n"
+            await System.send_message(event.chat_id, msg) 
+            return
          if help_for in HELP:
               await System.send_message(event.chat_id, HELP[help_for].help_plus)
          else:
               return 
-    else:
-         return
 
 
 
