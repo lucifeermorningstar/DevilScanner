@@ -7,14 +7,18 @@ import asyncio
 from Sibyl_System import session
 import logging 
 
-async def gban(enforcer, target, reason, msg_id, approved_by):
+async def gban(enforcer=None, target, reason = None, msg_id, approved_by= None, auto=False):
    if GBAN_MSG_LOGS:
         logs = GBAN_MSG_LOGS
    else:
         logs = Sibyl_logs
-   await System.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, approved_by= f"[{approved_by.first_name}](tg://user?id={approved_by.id})"))
-   await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
-   await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}") 
+   if not auto:
+      await System.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, approved_by= f"[{approved_by.first_name}](tg://user?id={approved_by.id})"))
+      await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
+      await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
+   else:
+      await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) AUTO GBAN | #{msg_id}")
+      await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) AUTO GBAN | #{msg_id}")
    return True
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -63,9 +67,15 @@ async def approve(event):
  if event.from_id in SIBYL and event.reply:
    replied = await event.get_reply_message()
    match = re.match('\$SCAN', replied.text)
+   auto_match = re.match('\$AUTO', replied.text)
+   me = await System.get_me()
+   if auto_match:
+      if replied.sender.id== me.id:
+         id = re.match("Triggered by: (\d+)", replied.text).group(1)        
+         await gban(enforcer=me.id, target=id,msg_id = replied.id)
+         return "OwO"
    if match:
      reply = replied.sender.id
-     me = await System.get_me()
      sender = await event.get_sender()
      #checks to not gban the Gbanner and find who is who
      if reply == me.id:
