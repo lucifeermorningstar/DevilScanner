@@ -35,7 +35,7 @@ async def help(event):
             help_for = event.text.split(" ", 1)[1].lower()
          except:
             msg = "Here is the list of plugins with Help text:\n" 
-            for x in a HELP.keys():
+            for x in HELP.keys():
                 msg += f"`{x}`\n"
             await System.send_message(event.chat_id, msg) 
             return
