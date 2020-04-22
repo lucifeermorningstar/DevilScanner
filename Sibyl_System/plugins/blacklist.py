@@ -3,8 +3,8 @@ from Sibyl_System import System, SIBYL, ENFORCERS, Sibyl_logs, system_cmd
 from telethon import events 
 import asyncio 
 import re 
-from Sibyl_System.plugins.Mongo_DB.message_blacklist import get_blacklist, update_blacklist
-from Sibyl_System.plugins.Mongo_DB.name_blacklist import get_wlc_bl, update_wlc_blacklist
+import Sibyl_System.plugins.Mongo_DB.message_blacklist as db
+import Sibyl_System.plugins.Mongo_DB.name_blacklist import wlc_collection
 
 @System.on(system_cmd(pattern = r'addbl ', allow_slash=False))
 async def addbl(event):
@@ -16,7 +16,7 @@ async def addbl(event):
          text = event.text.split(" ", 1)[1]
        except:
          return 
-     a = update_blacklist(text, add = True)
+     a = await db.update_blacklist(text, add = True)
      if a:
         await System.send_message(event.chat_id, f"Added {text} to blacklist") 
      else:
@@ -32,7 +32,7 @@ async def wlcbl(event):
           text = event.text.split(" ", 1)[1]
        except:
          return 
-     a = await update_wlc_blacklist(text, add = True)
+     a = await wlc_collection.update_wlc_blacklist(text, add = True)
      if a:
         await System.send_message(event.chat_id, f"Added {text} to blacklist") 
      else:
@@ -44,7 +44,7 @@ async def rmwlcbl(event):
        text = event.text.split(" ", 1)[1]
      except:
        return 
-     a = await update_wlc_blacklist(text, add = False)
+     a = await wlc_collection.update_wlc_blacklist(text, add = False)
      if a:
         await System.send_message(event.chat_id, f"Removed {text} from blacklist") 
      else:
@@ -57,7 +57,7 @@ async def rmbl(event):
        text = event.text.split(" ", 1)[1]
      except:
        return 
-     a = update_blacklist(text, add = False)
+     a = await db.update_blacklist(text, add = False)
      if a:
         await System.send_message(event.chat_id, f"Removed {text} from blacklist") 
      else:
@@ -78,10 +78,10 @@ async def listbl(event):
 @System.on(events.NewMessage(incoming=True))
 async def auto_gban_request(event):
     if event.from_id in ENFORCERS or event.from_id in SIBYL: return
+    if event.chat_id == Sibyl_logs: return
     text = event.text
     words = await get_blacklist()
-    sender = await event.get_sender()
-    if event.chat_id == Sibyl_logs: return 
+    sender = await event.get_sender() 
     if words:
       for word in words:
           pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
