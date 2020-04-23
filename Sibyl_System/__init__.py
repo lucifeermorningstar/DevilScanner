@@ -42,14 +42,14 @@ System = TelegramClient(
 MONGO_CLIENT = pymongo.MongoClient(MONGO_DB_URL)
 collection = MONGO_CLIENT['Sibyl']['Main']
 if collection.count_documents({'_id': 1}, limit=1) == 0:
-    dict = {"_id": 1}
-    dict["blacklisted"] = []
-    collection.insert_one(dict)
+    dictw = {"_id": 1}
+    dictw["blacklisted"] = []
+    collection.insert_one(dictw)
 
 if collection.count_documents({'_id': 2}, limit=1) == 0:
-    dict = {"_id": 2, "Type": "Wlc Blacklist"}
-    dict["blacklisted_wlc"] = []
-    collection.insert_one(dict)
+    dictw = {"_id": 2, "Type": "Wlc Blacklist"}
+    dictw["blacklisted_wlc"] = []
+    collection.insert_one(dictw)
 
 
 def system_cmd(pattern=None, allow_sibyl=True,
