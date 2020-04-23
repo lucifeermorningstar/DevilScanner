@@ -1,6 +1,5 @@
-import pymongo 
 from Sibyl_System import MONGO_CLIENT
-import asyncio 
+import asyncio
 import re 
 db = MONGO_CLIENT['Sibyl']['Main']
 #cant find better names
