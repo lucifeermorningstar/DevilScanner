@@ -1,5 +1,4 @@
-
-from Sibyl_System import Sibyl_logs, System, system_cmd
+from Sibyl_System import System, system_cmd
 from Sibyl_System.strings import on_string
 import logging
 import importlib
@@ -20,7 +19,7 @@ for load in to_load:
         IMPORTED[imported.__plugin_name__.lower()] = imported
 
     if hasattr(imported, "help_plus") and imported.help_plus:
-        HELP[imported.__plugin_name__.lower()] = imported 
+        HELP[imported.__plugin_name__.lower()] = imported
 
 @System.on(system_cmd(pattern=r'status'))
 async def status(event):
@@ -30,16 +29,16 @@ async def status(event):
 async def send_help(event):
          try:
             help_for = event.text.split(" ", 1)[1].lower()
-         except:
+         except IndexError:
             msg = "Here is the list of plugins with Help text:\n"
             for x in HELP.keys():
                 msg += f"`{x}`\n"
-            await System.send_message(event.chat_id, msg) 
+            await System.send_message(event.chat_id, msg)
             return
          if help_for in HELP:
               await System.send_message(event.chat_id, HELP[help_for].help_plus)
          else:
-              return 
+              return
 
 
 System.start()
