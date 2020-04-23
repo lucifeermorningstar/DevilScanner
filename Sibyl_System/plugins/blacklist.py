@@ -24,7 +24,7 @@ async def addbl(event):
 
 @System.on(system_cmd(pattern=r'addwlcbl'))
 async def wlcbl(event):
-    flag = re.match(".addbl -e (.*)", event.text, re.DOTALL)
+    flag = re.match(".addwlcbl -e (.*)", event.text, re.DOTALL)
     if flag:
         text = re.escape(flag.group(1))
     else:
