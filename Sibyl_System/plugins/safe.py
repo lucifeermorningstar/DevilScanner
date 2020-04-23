@@ -1,9 +1,6 @@
 from Sibyl_System import System, system_cmd
-from telethon import events
-import asyncio
 import os
 import sys
-import re
 
 @System.on(system_cmd(pattern = r"sibyl restart"))
 async def reboot(event):
