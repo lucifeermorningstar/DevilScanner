@@ -11,7 +11,7 @@ async def extract(flag, event):
     else:
         try:
             text = event.text.split(" ", 1)[1]
-            return Text
+            return text
         except BaseException:
             return False
 
