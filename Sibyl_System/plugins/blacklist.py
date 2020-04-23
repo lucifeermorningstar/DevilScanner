@@ -1,7 +1,5 @@
 import pymongo
 from Sibyl_System import System, SIBYL, ENFORCERS, Sibyl_logs, system_cmd
-from telethon import events
-import asyncio
 import re
 import Sibyl_System.plugins.Mongo_DB.message_blacklist as db
 import Sibyl_System.plugins.Mongo_DB.name_blacklist as wlc_collection
@@ -69,9 +67,9 @@ async def rmbl(event):
 
 @System.on(system_cmd(pattern=r'listbl'))
 async def listbl(event):
-    list = await db.get_blacklist()
+    bl_list = await db.get_blacklist()
     msg = "Currently Blacklisted strings:\n"
-    for x in list:
+    for x in bl_list:
         msg += f"•{x}\n"
     await System.send_message(event.chat_id, msg)
 
@@ -85,7 +83,6 @@ async def auto_gban_request(event):
         return
     text = event.text
     words = await db.get_blacklist()
-    sender = await event.get_sender()
     if words:
         for word in words:
             pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
