@@ -1,11 +1,9 @@
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
-from Sibyl_System import SIBYL, ENFORCERS, session
+from Sibyl_System import ENFORCERS, session
 from Sibyl_System import System, system_cmd
-import asyncio
 import re
-from telethon import events
 from telethon.utils import resolve_invite_link
 import heroku3
 
@@ -23,29 +21,29 @@ except BaseException:
 async def addenf(event):
     if event.reply:
         replied = await event.get_reply_message()
-        id = replied.sender.id
+        u_id = replied.sender.id
     else:
-        id = event.text.split(" ", 2)[1]
-    if id in ENFORCERS:
+        u_id = event.text.split(" ", 2)[1]
+    if u_id in ENFORCERS:
         await System.send_message(event.chat_id, 'That person is already Enforcer!')
         return
     if HEROKU:
-        config['ENFORCERS'] = RAW_ENFORCERS + str(id)
+        config['ENFORCERS'] = RAW_ENFORCERS + str(u_id)
     else:
-        ENFORCERS.append(id)
-    await System.send_message(event.chat_id, f'Added [{id}](tg://user?id={id}) to Enforcers')
+        ENFORCERS.append(u_id)
+    await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to Enforcers')
 
 
 @System.on(system_cmd(pattern=r'rmenf'))
 async def rmenf(event):
     if event.reply:
         replied = await event.get_reply_message()
-        id = replied.sender.id
+        u_id = replied.sender.id
     else:
-        id = event.text.split(" ", 2)[1]
-    if id in ENFORCERS:
-        ENFORCERS.remove(id)
-        await System.send_message(event.chat_id, f'Removed [{id}](tg://user?id={id}) from Enforcers')
+        u_id = event.text.split(" ", 2)[1]
+    if u_id in ENFORCERS:
+        ENFORCERS.remove(u_id)
+        await System.send_message(event.chat_id, f'Removed [{u_id}](tg://user?id={u_id}) from Enforcers')
         return
     await System.send_message(event.chat_id, 'Is that person even a Enforcer?')
 
