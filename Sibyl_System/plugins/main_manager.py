@@ -3,7 +3,6 @@ from Sibyl_System.strings import scan_request_string, scan_approved_string
 from Sibyl_System import System, system_cmd
 from telethon import events
 import re
-import asyncio
 from Sibyl_System import session
 import logging
 

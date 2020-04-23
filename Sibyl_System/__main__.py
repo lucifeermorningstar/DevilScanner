@@ -10,7 +10,7 @@ from Sibyl_System.plugins import to_load
 
 HELP = {}
 IMPORTED = {}
-for load in to_load: 
+for load in to_load:
     imported = importlib.import_module("Sibyl_System.plugins." + load)
     if not hasattr(imported, "__plugin_name__"):
         imported.__plugin_name__ = imported.__name__

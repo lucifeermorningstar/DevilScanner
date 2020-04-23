@@ -1,7 +1,7 @@
 from Sibyl_System import MONGO_CLIENT
 db = MONGO_CLIENT['Sibyl']['Main']
 #cant find better names
-upd = {} 
+upd = {}
 owo = {}
 
 async def update_wlc_blacklist(word, add = False):
@@ -9,7 +9,7 @@ async def update_wlc_blacklist(word, add = False):
      bl = db.find_one({'_id': 2})
      current = bl['blacklisted_wlc']
      if add:
-        if word in current: 
+        if word in current:
              return False
         current.append(word)
      else:

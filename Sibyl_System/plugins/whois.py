@@ -1,5 +1,4 @@
 from telethon.tl.functions.users import GetFullUserRequest
-from Sibyl_System import ENFORCERS, SIBYL
 from Sibyl_System import System, system_cmd
 
 

@@ -1,3 +1,4 @@
+"""Gets ENV vars or Config vars then makes Telethon client"""
 from telethon import TelegramClient, events
 import aiohttp
 from telethon.sessions import StringSession

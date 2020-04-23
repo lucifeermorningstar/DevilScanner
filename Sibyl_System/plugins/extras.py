@@ -101,10 +101,10 @@ async def leave(event):
         link = event.text.split(" ", 1)[1]
     except BaseException:
         return
-    id = re.match(r'(\d+)', link)
-    if id:
-        await System(LeaveChannelRequest(int(id.group(0))))
-        await System.send_message(event.chat_id, f"Successfully Left chat with id[{id}]")
+    c_id = re.match(r'-(\d+)', link)
+    if c_id:
+        await System(LeaveChannelRequest(int(c_id.group(0))))
+        await System.send_message(event.chat_id, f"Successfully Left chat with id[{c_id}]")
     else:
         await System(LeaveChannelRequest(link))
         await System.send_message(event.chat_id, f"Successfully Left chat[{link}]")
