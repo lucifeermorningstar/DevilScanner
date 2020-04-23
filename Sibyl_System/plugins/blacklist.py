@@ -5,16 +5,22 @@ import Sibyl_System.plugins.Mongo_DB.message_blacklist as db
 import Sibyl_System.plugins.Mongo_DB.name_blacklist as wlc_collection
 from telethon import events
 
-@System.on(system_cmd(pattern=r'addbl ', allow_slash=False))
-async def addbl(event):
-    flag = re.match(".addbl -e (.*)", event.text, re.DOTALL)
+async def extract(flag, event):
     if flag:
-        text = re.escape(flag.group(1))
+        return re.escape(flag.group(1))
     else:
         try:
             text = event.text.split(" ", 1)[1]
+            return Text
         except BaseException:
-            return
+            return False
+
+
+@System.on(system_cmd(pattern=r'addbl ', allow_slash=False))
+async def addbl(event) -> None:
+    flag = re.match(".addbl -e (.*)", event.text, re.DOTALL)
+    text = await extract(flag, event)
+    if not text: return
     a = await db.update_blacklist(text, add=True)
     if a:
         await System.send_message(event.chat_id, f"Added {text} to blacklist")
@@ -23,15 +29,10 @@ async def addbl(event):
 
 
 @System.on(system_cmd(pattern=r'addwlcbl'))
-async def wlcbl(event):
+async def wlcbl(event) -> None:
     flag = re.match(".addwlcbl -e (.*)", event.text, re.DOTALL)
-    if flag:
-        text = re.escape(flag.group(1))
-    else:
-        try:
-            text = event.text.split(" ", 1)[1]
-        except BaseException:
-            return
+    text = await extract(flag, event)
+    if not text: return
     a = await wlc_collection.update_wlc_blacklist(text, add=True)
     if a:
         await System.send_message(event.chat_id, f"Added {text} to blacklist")
