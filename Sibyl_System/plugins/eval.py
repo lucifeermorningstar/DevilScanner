@@ -1,7 +1,4 @@
-from telethon import events
-import asyncio
 import sys
-import re
 from Sibyl_System import system_cmd, System
 from io import StringIO
 import traceback
