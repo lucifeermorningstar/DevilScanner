@@ -1,7 +1,7 @@
 
 from Sibyl_System import SIBYL, Sibyl_logs, API_ID_KEY, API_HASH_KEY, STRING_SESSION, System, system_cmd
 from Sibyl_System.strings import on_string
-from telethon import TelegramClient, events
+from telethon import TelegramClient
 from telethon.sessions import StringSession
 import logging
 import asyncio
@@ -30,11 +30,11 @@ async def status(event):
          await System.send_message(event.chat_id, on_string)
 
 @System.on(system_cmd(pattern=r'help', allow_slash=False))
-async def help(event):
+async def send_help(event):
          try:
             help_for = event.text.split(" ", 1)[1].lower()
          except:
-            msg = "Here is the list of plugins with Help text:\n" 
+            msg = "Here is the list of plugins with Help text:\n"
             for x in HELP.keys():
                 msg += f"`{x}`\n"
             await System.send_message(event.chat_id, msg) 
