@@ -1,7 +1,4 @@
-import pymongo
 from Sibyl_System import MONGO_CLIENT
-import asyncio
-
 
 async def get_blacklist():
     db = MONGO_CLIENT['Sibyl']['Main']
