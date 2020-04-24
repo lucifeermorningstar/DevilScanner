@@ -14,7 +14,7 @@ async def gban(enforcer=None, target=None, reason=None, msg_id=None, approved_by
     else:
         logs = Sibyl_logs
     if not auto:
-        await System.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, approved_by=f"[{approved_by.first_name}](tg://user?id={approved_by.id})"))
+        await System.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, reason = reason, approved_by=f"[{approved_by.first_name}](tg://user?id={approved_by.id})"))
         await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
         await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
     else:
