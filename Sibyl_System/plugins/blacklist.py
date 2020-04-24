@@ -120,7 +120,7 @@ async def rmbl(event):
          words = await wlc_collection.get_wlc_bl()
     else:
          return
-    which = re.match('.get (\d)x(\d+)')
+    which = re.match('.get (\d)x(\d+)', event.text)
     if which:
        try:
           await event.reply(f"Info from type {which.group(1)}\nPostion: {which.group(2)}\nMatches:{words[which.group(2)]}")
