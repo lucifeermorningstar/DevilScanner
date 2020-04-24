@@ -79,8 +79,8 @@ async def approve(event):
         if auto_match:
             if replied.sender.id == me.id:
                 id = re.search(
-                    r"Triggered by: \[\w+\]\(tg://user\?id=(\d+)\)",
-                    replied.text).group(1)
+                    r"Triggered by: (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
+                    replied.text).group(2)
                 await gban(enforcer=me.id, target=id, msg_id=replied.id, auto=True)
                 return "OwO"
         if match:
