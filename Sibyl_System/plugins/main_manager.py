@@ -33,7 +33,7 @@ async def scan(event):
         if re.match('.scan -f -o .*',
                     event.text) or re.match(".scan -o .*", event.text):
             if replied.fwd_from:
-                if not re.match('.scan -o .*', event.text): trim = 2
+                if re.match('.scan -o .*', event.text): trim = 2
                 else: trim = 3
                 reply = replied.fwd_from
                 target = reply.from_id
