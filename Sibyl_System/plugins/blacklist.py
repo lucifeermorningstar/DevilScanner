@@ -100,7 +100,8 @@ async def auto_wlc_gban(event):
     if event.user_joined:
         words = await wlc_collection.get_wlc_bl()
         if words:
-            text = user.first_name + ' ' + user.last_name
+            text = user.first_name
+            if user.last_name: text = text + " " + user.last_name
             for word in words:
                 pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
                 if re.search(pattern, text, flags=re.IGNORECASE):
