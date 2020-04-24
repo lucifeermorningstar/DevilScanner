@@ -14,6 +14,7 @@ scan_approved_string = """
 #LethalEliminator
 **Enforcer** = {enforcer}
 **Target User** = {scam}
+**Reason**: = {reason} 
 **Approved By** = {approved_by}
 **Crime Coefficient** = Over 300
 """
