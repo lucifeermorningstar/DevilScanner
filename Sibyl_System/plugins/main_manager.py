@@ -141,7 +141,11 @@ async def proof(event):
                     return
         async with session.post('https://nekobin.com/api/documents', json={'content': message}) as r:
             paste = f"https://nekobin.com/{(await r.json())['result']['key']}"
-        await msg.edit(f"**Proof from ID** - {proof_id} :\n**Reason**: {reason}\n**Message**: [Nekobin]({paste})")
+        url = "https://del.dog/documents"
+        async with session.post(url, data=message.encode("UTF-8")) as f:
+             r = f.json()
+             url = f"https://del.dog/{r['key']}"
+        await msg.edit(f"**Proof from ID** - {proof_id} :\n**Reason**: {reason}\n**Message**: [Nekobin]({paste})\n[DelDog]({url})")
 
 reject_string = """
 $REJECTED
