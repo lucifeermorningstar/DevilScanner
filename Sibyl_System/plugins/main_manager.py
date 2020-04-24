@@ -8,6 +8,7 @@ import logging
 
 
 async def gban(enforcer=None, target=None, reason=None, msg_id=None, approved_by=None, auto=False):
+    """Gban users, example - await gban(enforcer = 1, target= 2, reason=3, msg_id= 4, approved_by= 5, auto=False)"""
     if GBAN_MSG_LOGS:
         logs = GBAN_MSG_LOGS
     else:
