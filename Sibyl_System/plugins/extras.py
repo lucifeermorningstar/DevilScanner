@@ -118,7 +118,8 @@ async def redirect(event):
         return
     if not url.startswith('https://') or not url.startswith('http://'):
         url = 'https://' + url
-    async with session.get(url) as r:
+    #why f string? Cuz I don't want to change var name
+    async with session.get(f"{url}") as r:
         url = r.url
     await System.send_message(event.chat_id, url)
 
