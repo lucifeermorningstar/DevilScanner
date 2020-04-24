@@ -64,7 +64,7 @@ async def scan(event):
             await replied.forward_to(Sibyl_logs)
         if trim:
             reason = event.text.split(" ", trim)[trim]
-        msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=f"[{executer.first_name}](tg://user?id={executer.id})", spammer=sender, message=replied.text, reason=reason))
+        msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=f"[{executer.first_name}](tg://user?id={executer.id})", spammer=sender, chat = event.chat.title, message=replied.text, reason=reason))
         if approve:
             await gban(executer.id, target, reason, msg.id, executer)
 

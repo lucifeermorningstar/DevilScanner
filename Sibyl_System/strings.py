@@ -6,6 +6,7 @@ scan_request_string = """
 $SCAN
 {enforcer} is requesting a Cymatic Scan for {spammer}
 Scan Reason: {reason}
+Chat = {chat}
 Target Message: {message}
 """
 
