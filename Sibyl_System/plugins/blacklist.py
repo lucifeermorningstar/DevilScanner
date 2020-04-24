@@ -1,4 +1,3 @@
-
 from Sibyl_System import System, SIBYL, ENFORCERS, Sibyl_logs, system_cmd
 import re
 import Sibyl_System.plugins.Mongo_DB.message_blacklist as db
@@ -88,7 +87,8 @@ async def auto_gban_request(event):
         for word in words:
             pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
             if re.search(pattern, text, flags=re.IGNORECASE):
-                await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nMessage: {event.text}")
+                c = words.index(word)
+                await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nReason: 0x{c}\nMessage: {event.text}")
                 return
 
 
@@ -105,7 +105,28 @@ async def auto_wlc_gban(event):
             for word in words:
                 pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
                 if re.search(pattern, text, flags=re.IGNORECASE):
-                    await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nUser joined and blacklisted string in name\nMatched String = {word}")
+                    c = words.index(word)
+                    await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nReason: 1x{c}\nUser joined and blacklisted string in name\nMatched String = {word}")
+
+@System.on(system_cmd(pattern=r'get ', allow_slash=False))
+async def rmbl(event):
+    try:
+        text = event.text.split(" ", 1)[1]
+    except BaseException:
+        return
+    if text.startswith('0'):
+         words = await db.get_blacklist()
+    elif text.startswith('1'):
+         words = await wlc_collection.get_wlc_bl()
+    else:
+         return
+    which = re.match('.get (\d)x(\d+)')
+    if which:
+       try:
+          await event.reply(f"Info from type {which.group(1)}\nPostion: {which.group(2)}\nMatches:{words[which.group(2)]}")
+       except:
+          return
+
 
 __plugin_name__ = "blacklist"
 
