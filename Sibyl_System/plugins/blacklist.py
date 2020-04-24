@@ -123,7 +123,7 @@ async def rmbl(event):
     which = re.match('.get (\d)x(\d+)', event.text)
     if which:
        try:
-          await event.reply(f"Info from type {which.group(1)}\nPostion: {which.group(2)}\nMatches:{words[which.group(2)]}")
+          await event.reply(f"Info from type {which.group(1)}\nPostion: {which.group(2)}\nMatches:{words[int(which.group(2))]}")
        except:
           return
 
