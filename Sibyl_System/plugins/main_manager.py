@@ -143,7 +143,7 @@ async def proof(event):
             paste = f"https://nekobin.com/{(await r.json())['result']['key']}"
         url = "https://del.dog/documents"
         async with session.post(url, data=message.encode("UTF-8")) as f:
-             r = f.json()
+             r = await f.json()
              url = f"https://del.dog/{r['key']}"
         await msg.edit(f"**Proof from ID** - {proof_id} :\n**Reason**: {reason}\n**Message**: [Nekobin]({paste})\n[DelDog]({url})")
 
