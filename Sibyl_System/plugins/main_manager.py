@@ -151,7 +151,7 @@ async def proof(event):
         async with session.post(url, data=message.encode("UTF-8")) as f:
              r = await f.json()
              url = f"https://del.dog/{r['key']}"
-        await msg.edit(proof.format(proof_id = proof_id, reason=reason, paste=paste, url=url)
+        await msg.edit(proof.format(proof_id = proof_id, reason=reason, paste=paste, url=url))
 
 reject_string = """
 $REJECTED
