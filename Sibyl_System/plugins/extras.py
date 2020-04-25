@@ -6,6 +6,7 @@ from Sibyl_System import System, system_cmd
 import re
 from telethon.utils import resolve_invite_link
 import heroku3
+import os 
 
 try:
     from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME
