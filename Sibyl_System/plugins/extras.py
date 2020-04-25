@@ -126,7 +126,7 @@ async def redirect(event) -> None:
         of = 'https://' + of
     async with session.get(of) as r:
         url = r.url
-    await System.send_message(event.chat_id, url)
+    await System.send_message(event.chat_id, f'URL: {url}')
 
 
 help_plus = """
