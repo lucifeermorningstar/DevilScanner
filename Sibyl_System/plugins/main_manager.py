@@ -106,10 +106,10 @@ async def approve(event):
 
 proof_string = """
 **Proof from ID** - {proof_id} :
-  ┣━**Reason**: {reason}
-  ┗━**Message**
-             ┣━[Nekobin]({paste})
-             ┗━[DelDog]({url})"""
+┣━**Reason**: {reason}
+┗━**Message**
+         ┣━[Nekobin]({paste})
+         ┗━[DelDog]({url})"""
 
 @System.on(events.NewMessage(pattern=r'[\.\?!/]proof'))
 async def proof(event):
