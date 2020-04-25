@@ -122,7 +122,7 @@ async def redirect(event) -> None:
         of = event.text.split(" ", 1)[1]
     except BaseException:
         return
-    if not of.startswith('https://') or not of.startswith('http://'):
+    if not of.startswith('https://'):
         of = 'https://' + of
     async with session.get(of) as r:
         url = r.url
