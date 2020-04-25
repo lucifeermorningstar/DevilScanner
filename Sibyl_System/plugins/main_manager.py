@@ -145,6 +145,11 @@ async def proof(event):
         async with session.post(url, data=message.encode("UTF-8")) as f:
              r = await f.json()
              url = f"https://del.dog/{r['key']}"
+        proof ="""**Proof from ID** - {proof_id} :
+                            ┗**Reason**: {reason}
+                            ┗**Message**: 
+                                   ┗[Nekobin]({paste})
+                                   ┗[DelDog]({url})"""
         await msg.edit(f"**Proof from ID** - {proof_id} :\n**Reason**: {reason}\n**Message**: [Nekobin]({paste})\n[DelDog]({url})")
 
 reject_string = """
