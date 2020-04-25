@@ -104,6 +104,12 @@ async def approve(event):
                     scam = id1
                 await gban(enforcer, scam, reason, replied.id, sender)
 
+proof = """
+**Proof from ID** - {proof_id} :
+  ┣━**Reason**: {reason}
+  ┗━**Message**
+             ┣━[Nekobin]({paste})
+             ┗━[DelDog]({url})"""
 
 @System.on(events.NewMessage(pattern=r'[\.\?!/]proof'))
 async def proof(event):
@@ -145,12 +151,8 @@ async def proof(event):
         async with session.post(url, data=message.encode("UTF-8")) as f:
              r = await f.json()
              url = f"https://del.dog/{r['key']}"
-        proof = f"""**Proof from ID** - {proof_id} :
-                            ┗**Reason**: {reason}
-                            ┗**Message**: 
-                                   ┗[Nekobin]({paste})
-                                   ┗[DelDog]({url})"""
-        await msg.edit(proof)
+        await msg.edit(proof.format(proof_id = proof_id, reason=reason, paste=paste, url=url)
+
 reject_string = """
 $REJECTED
 **Crime Coefficient**: `Under 100`
