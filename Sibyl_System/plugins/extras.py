@@ -8,7 +8,7 @@ from telethon.utils import resolve_invite_link
 import heroku3
 
 try:
-    from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME, RAW_ENFORCERS
+    from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME
     heroku_conn = heroku3.from_key(HEROKU_API_KEY)
     app = heroku_conn.app(HEROKU_APP_NAME)
     config = app.config()
@@ -28,7 +28,7 @@ async def addenf(event):
         await System.send_message(event.chat_id, 'That person is already Enforcer!')
         return
     if HEROKU:
-        config['ENFORCERS'] = RAW_ENFORCERS + str(u_id)
+        config['ENFORCERS'] = os.environ.get('ENFORCERS') + ' ' + str(u_id)
     else:
         ENFORCERS.append(u_id)
     await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to Enforcers')
