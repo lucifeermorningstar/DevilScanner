@@ -19,7 +19,7 @@ except BaseException:
 
 
 @System.on(system_cmd(pattern=r'addenf'))
-async def addenf(event):
+async def addenf(event) -> None:
     if event.reply:
         replied = await event.get_reply_message()
         u_id = replied.sender.id
@@ -36,21 +36,26 @@ async def addenf(event):
 
 
 @System.on(system_cmd(pattern=r'rmenf'))
-async def rmenf(event):
+async def rmenf(event) -> None:
     if event.reply:
         replied = await event.get_reply_message()
         u_id = replied.sender.id
     else:
         u_id = event.text.split(" ", 2)[1]
-    if u_id in ENFORCERS:
-        ENFORCERS.remove(u_id)
-        await System.send_message(event.chat_id, f'Removed [{u_id}](tg://user?id={u_id}) from Enforcers')
+    if u_id not in ENFORCERS:
+        await System.send_message(event.chat_id, 'Is that person even a Enforcer?')
         return
-    await System.send_message(event.chat_id, 'Is that person even a Enforcer?')
+    if HEROKU:
+        config['ENFORCERS'] = os.environ.get('ENFORCERS').strip(u_id)
+    else:
+        ENFORCERS.remove(u_id)
+    await System.send_message(event.chat_id, f'Removed [{u_id}](tg://user?id={u_id}) from Enforcers')
+
+
 
 
 @System.on(system_cmd(pattern=r'enforcers'))
-async def listuser(event):
+async def listuser(event) -> None:
     msg = "Enforcers:\n"
     for z in ENFORCERS:
         try:
@@ -62,13 +67,13 @@ async def listuser(event):
 
 
 @System.on(system_cmd(pattern=r'join'))
-async def join(event):
+async def join(event) -> None:
     try:
         link = event.text.split(" ", 1)[1]
     except BaseException:
         return
     private = re.match(
-        r"(https?://)?(www\.)?t(elegram)?\.(dog|me|org|com)/joinchat/(.*)",
+        r"(https?://)?(www\.)?t(elegram)?\.(dog|me|org)/joinchat/(.*)",
         link)
     if private:
         await System(ImportChatInviteRequest(private.group(5)))
@@ -79,7 +84,7 @@ async def join(event):
 
 
 @System.on(system_cmd(pattern=r'resolve'))
-async def resolve(event):
+async def resolve(event) -> None:
     try:
         link = event.text.split(" ", 1)[1]
     except BaseException:
@@ -97,7 +102,7 @@ async def resolve(event):
 
 
 @System.on(system_cmd(pattern=r'leave'))
-async def leave(event):
+async def leave(event) -> None:
     try:
         link = event.text.split(" ", 1)[1]
     except BaseException:
@@ -112,15 +117,14 @@ async def leave(event):
 
 
 @System.on(system_cmd(pattern=r'get_redirect '))
-async def redirect(event):
+async def redirect(event) -> None:
     try:
-        url = event.text.split(" ", 1)[1]
+        of = event.text.split(" ", 1)[1]
     except BaseException:
         return
     if not url.startswith('https://') or not url.startswith('http://'):
-        url = 'https://' + url
-    #why f string? Cuz I don't want to change var name
-    async with session.get(f"{url}") as r:
+        of = 'https://' + of
+    async with session.get(of) as r:
         url = r.url
     await System.send_message(event.chat_id, url)
 
@@ -137,6 +141,7 @@ Format : Joins < chat username or invite link >
 `leave` - Leaves a chat.
 Format : Leaves < chat username or id >
 `resolve` - owo
+`get_redirect` - get redirect of a link
 **Notes:**
 `/` `?` `.` `!` are supported prefixes.
 **Example:** `/addenf` or `?addenf` or `.addenf`
