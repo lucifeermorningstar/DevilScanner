@@ -134,7 +134,6 @@ async def proof(event):
                 re.DOTALL)
             if message: message = message.group(1)
         except BaseException:
-            if not message:
                 proof_id -= 1
                 proof = await System.get_messages(Sibyl_logs, ids=proof_id)
                 if proof:
