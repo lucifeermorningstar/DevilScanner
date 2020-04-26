@@ -131,9 +131,10 @@ async def proof(event):
             message = re.search(
                 'Target Message: (.*)',
                 proof.message,
-                re.DOTALL).group(1)
+                re.DOTALL)
+            if message: message = message.group(1)
         except BaseException:
-            if message == None:
+            if not message:
                 proof_id -= 1
                 proof = await System.get_messages(Sibyl_logs, ids=proof_id)
                 if proof:
