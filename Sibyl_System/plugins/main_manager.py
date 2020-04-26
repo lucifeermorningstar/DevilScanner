@@ -139,7 +139,9 @@ async def proof(event):
                 proof = await System.get_messages(Sibyl_logs, ids=proof_id)
                 if proof:
                     if proof.media:
-                        proof.forward_to(event.chat_id)
+                        await msg.edit('Proof is media -> Forwarding message') 
+                        await proof.forward_to(event.chat_id)
+                        return
                     else:
                         await msg.edit(f"Error getting proof from id {proof_id}")
                         return
