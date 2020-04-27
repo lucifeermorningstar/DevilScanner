@@ -1,12 +1,13 @@
-# Sibyl System
-> A proactive judgement system for group chats.
-
-[![Sibyl System](https://i.imgur.com/elrXfOE.jpg "Sibyl System")](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/441b48966e9f4b58a643d7c4cee8ba66)](https://app.codacy.com/gh/AnimeKaizoku/SibylSystem?utm_source=github.com&utm_medium=referral&utm_content=AnimeKaizoku/SibylSystem&utm_campaign=Badge_Grade_Dashboard)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Repo Size](https://img.shields.io/github/repo-size/AnimeKaizoku/SibylSystem)](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 [![Stars](https://img.shields.io/github/stars/AnimeKaizoku/SibylSystem?style=social)](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
-[![Maintained]https://img.shields.io/badge/Maintained-Yes-brightgreen)](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
+[![Maintained](https://img.shields.io/badge/Maintained-Yes-brightgreen)](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
+
+# Sibyl System
+> A proactive judgement system for group chats.
+
+[![Sibyl System](https://i.imgur.com/elrXfOE.jpg "Sibyl System")](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
 ## A Telethon UserBot to make gbanning easy 
