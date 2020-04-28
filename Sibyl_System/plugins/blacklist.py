@@ -27,7 +27,7 @@ async def addbl(event) -> None:
         await System.send_message(event.chat_id, f" {text} is already blacklisted")
 
 
-@System.on(system_cmd(pattern=r'addwlcbl'))
+@System.on(system_cmd(pattern=r'addwlcbl '))
 async def wlcbl(event) -> None:
     flag = re.match(".addwlcbl -e (.*)", event.text, re.DOTALL)
     text = await extract(flag, event)
@@ -39,7 +39,7 @@ async def wlcbl(event) -> None:
         await System.send_message(event.chat_id, f" {text} is already blacklisted")
 
 
-@System.on(system_cmd(pattern=r'rmwlcbl'))
+@System.on(system_cmd(pattern=r'rmwlcbl '))
 async def rmwlcbl(event):
     try:
         text = event.text.split(" ", 1)[1]
@@ -94,6 +94,7 @@ async def auto_gban_request(event):
 
 @System.on(events.ChatAction())  # pylint:disable=E0602
 async def auto_wlc_gban(event):
+    if not event.user_joined: return
     user = await event.get_user()
     if user.id in ENFORCERS or user.id in SIBYL:
         return
@@ -139,7 +140,7 @@ Here is help for **Welcome Name-String Blacklist**
 `/addwlcbl` - **Add new blacklisted name-string**
 `/rmwlcbl` - **Remove blacklisted welcome-name-string**
 Flags( -e // escape text ) to addbl & addwlcbl
-
+`/get` - **Get Match from yxy **
 **Notes:**
 `/` `?` `.` `!` are supported prefixes.
 **Example:** `/addbl` or `?addbl` or `.addbl`
