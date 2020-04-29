@@ -28,7 +28,20 @@ async def run(event):
   elif output: final = "**Output**:\n`" + output
   elif stderr: final = "**Output**:\n`" + stderr
   else: final = "`OwO no output"
-  await System.send_message(event.chat_id, final + '`' )
+  await event.reply(final + '`' )
+
+@System.on(system_cmd(pattern = r"sibyl (ev|eva|eval|py)"))
+async def run_eval(event):
+  cmd = event.text.split(' ' , 1)
+  cmd = cmd[1] if len(cmd) > 1 else ""
+  try:
+     evaluation = eval(cmd)
+     if inspect.isawaitable(evaluation):
+       evaluation = await evaluation
+  except (Exception) as e: 
+       evaluation = str(e)
+  await event.reply(evaluation)
+  
 
 
 async def async_exec(code, event):
@@ -39,10 +52,10 @@ async def async_exec(code, event):
     return await locals()['__async_exec'](event)
 
 
-__plugin_name__ = "exec"
+__plugin_name__ = "py"
 
 help_plus = """
 Run code using **exec** 
 CMD - <x or ex or exec or execute> your code here
-EXAMPLE - `!x print("OWO")`
+EXAMPLE - `!sibyl x print("OWO")`
 """
