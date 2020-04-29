@@ -32,8 +32,8 @@ async def run(event):
 
 @System.on(system_cmd(pattern = r"sibyl (ev|eva|eval|py)"))
 async def run_eval(event):
-  cmd = event.text.split(' ' , 1)
-  cmd = cmd[1] if len(cmd) > 1 else ""
+  cmd = event.text.split(' ' , 2)
+  cmd = cmd[2] if len(cmd) > 2 else ""
   try:
      evaluation = eval(cmd)
      if inspect.isawaitable(evaluation):
@@ -58,4 +58,7 @@ help_plus = """
 Run code using **exec** 
 CMD - <x or ex or exec or execute> your code here
 EXAMPLE - `!sibyl x print("OWO")`
+Run code using **eval**
+CMD - <ev or eva or eval or py> your code
+EXAMPLE - `!sibyl eval 1 + 1`
 """
