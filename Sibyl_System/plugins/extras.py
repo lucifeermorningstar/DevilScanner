@@ -25,6 +25,10 @@ async def addenf(event) -> None:
         u_id = replied.sender.id
     else:
         u_id = event.text.split(" ", 2)[1]
+    try:
+      u_id = (await System.get_entity(u_id)).id
+    except BaseException:
+        await event.reply('Ivalid ID/Username!')
     if u_id in ENFORCERS:
         await System.send_message(event.chat_id, 'That person is already Enforcer!')
         return
@@ -42,6 +46,10 @@ async def rmenf(event) -> None:
         u_id = replied.sender.id
     else:
         u_id = event.text.split(" ", 2)[1]
+    try:
+      u_id = (await System.get_entity(u_id)).id
+    except BaseException:
+        await event.reply('Ivalid ID/Username!')
     if u_id not in ENFORCERS:
         await System.send_message(event.chat_id, 'Is that person even a Enforcer?')
         return
