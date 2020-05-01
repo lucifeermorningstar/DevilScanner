@@ -22,7 +22,8 @@ except BaseException:
 async def addenf(event) -> None:
     if event.reply:
         replied = await event.get_reply_message()
-        u_id = replied.sender.id
+        if replied: u_id = replied.sender.id
+        else: return
     else:
         u_id = event.text.split(" ", 2)[1]
     try:
