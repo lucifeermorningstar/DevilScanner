@@ -88,7 +88,8 @@ async def auto_gban_request(event):
             pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
             if re.search(pattern, text, flags=re.IGNORECASE):
                 c = words.index(word)
-                await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nReason: 0x{c}\nMessage: {event.text}")
+                link = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else "Occurred in Private Chat - {event.chat.title}"
+                await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nReason: 0x{c}\nChat: {link}\nMessage: {event.text}")
                 return
 
 
@@ -110,7 +111,7 @@ async def auto_wlc_gban(event):
                     await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nReason: 1x{c}\nUser joined and blacklisted string in name\nMatched String = {word}")
 
 @System.on(system_cmd(pattern=r'get ', allow_slash=False))
-async def rmbl(event):
+async def get(event):
     try:
         text = event.text.split(" ", 1)[1]
     except BaseException:
