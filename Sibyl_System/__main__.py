@@ -10,6 +10,7 @@ from Sibyl_System.plugins import to_load
 
 HELP = {}
 IMPORTED = {}
+
 for load in to_load:
     imported = importlib.import_module("Sibyl_System.plugins." + load)
     if not hasattr(imported, "__plugin_name__"):
@@ -23,7 +24,7 @@ for load in to_load:
 
 @System.on(system_cmd(pattern=r'status'))
 async def status(event):
-         await System.send_message(event.chat_id, on_string)
+         await event.reply(on_string)
 
 @System.on(system_cmd(pattern=r'help', allow_slash=False))
 async def send_help(event):
@@ -36,7 +37,7 @@ async def send_help(event):
             await System.send_message(event.chat_id, msg)
             return
          if help_for in HELP:
-              await System.send_message(event.chat_id, HELP[help_for].help_plus)
+              await event.reply(HELP[help_for].help_plus)
          else:
               return
 
