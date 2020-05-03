@@ -33,7 +33,7 @@ async def send_help(event):
          except IndexError:
             msg = "Here is the list of plugins with Help text:\n"
             for x in HELP.keys():
-                msg += f"`{x}`\n"
+                msg += f"`{x.capitalize()}`\n"
             await System.send_message(event.chat_id, msg)
             return
          if help_for in HELP:
