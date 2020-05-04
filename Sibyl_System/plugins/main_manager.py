@@ -83,7 +83,7 @@ async def scan(event):
    await a.edit("OwO, It worked") 
 
 
-@System.on(system_cmd(pattern=r'approve', allow_inspector=True))
+@System.on(system_cmd(pattern=r'approve', allow_inspectors=True))
 async def approve(event):
     if event.from_id in SIBYL and event.reply:
         replied = await event.get_reply_message()
