@@ -17,6 +17,7 @@ if ENV:
     RAW_SIBYL = os.environ.get("SIBYL", "")
     RAW_ENFORCERS = os.environ.get("ENFORCERS", "")
     SIBYL = list(int(x) for x in os.environ.get("SIBYL", "").split())
+    INSPECTORS = list(int(x) for x in os.environ.get("INSPECTORS", "").split())
     ENFORCERS = list(int(x) for x in os.environ.get("ENFORCERS", "").split())
     MONGO_DB_URL = os.environ.get('MONGO_DB_URL')
     Sibyl_logs = int(os.environ.get('Sibyl_logs', None))
@@ -30,6 +31,7 @@ else:
     MONGO_DB_URL = Config.MONGO_DB_URL
     SIBYL = Config.SIBYL
     ENFORCERS = Config.ENFORCERS
+    INSPECTORS = Config.INSPECTORS
     Sibyl_logs = Config.Sibyl_logs
     Sibyl_approved_logs = Config.Sibyl_approved_logs
     GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
@@ -54,13 +56,15 @@ if collection.count_documents({'_id': 2}, limit=1) == 0:
 
 
 def system_cmd(pattern=None, allow_sibyl=True,
-               allow_enforcer=False, allow_slash=True, **args):
+               allow_enforcer=False, allow_inspectors = True, allow_slash=True, **args):
     if pattern and allow_slash:
         args["pattern"] = re.compile(r"[\?\.!/]" + pattern)
     else:
         args["pattern"] = re.compile(r"[\?\.!]" + pattern)
     if allow_sibyl and allow_enforcer:
         args["from_users"] = ENFORCERS
+    elif allow_inspectors and allow_sibyl:
+        args["from_users"] = INSPECTORS
     else:
         args["from_users"] = SIBYL
     return events.NewMessage(**args)
