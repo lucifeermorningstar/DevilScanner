@@ -68,8 +68,22 @@ async def scan(event):
         if approve:
             await gban(executer.id, target, reason, msg.id, executer)
 
+@System.on(system_cmd(pattern=r're(vive|vert|store) '))
+async def scan(event):
+   try:
+     user_id = event.text.split(" ", 1)[1]
+   except IndexError: return
+   a = await event.reply("Casting magic spells to revive the dead person")
+   if GBAN_MSG_LOGS:
+        logs = GBAN_MSG_LOGS
+   else:
+        logs = Sibyl_logs
+   await System.send_message(logs, f'/ungban {user_id}')
+   await System.send_message(logs, f'/unfban {user_id}')
+   await a.edit("OwO, It worked") 
 
-@System.on(events.NewMessage(pattern=r'[\.\?!/]approve'))
+
+@System.on(system_cmd(pattern=r'approve', allow_inspector=True))
 async def approve(event):
     if event.from_id in SIBYL and event.reply:
         replied = await event.get_reply_message()
@@ -182,6 +196,7 @@ Here is the help for **Main**:
 
 `scan` - **Reply to a message WITH reason to send a request to Sibyl for judgement**
 `approve` - **Approve a scan request (Only works in Public Safety Bureau)**
+`revert or revive or restore` - **Ungban ID**
 `proof` - **Get message from proof id which is at the end of gban msg **
 `reject` - **Reject a scan request**
 
