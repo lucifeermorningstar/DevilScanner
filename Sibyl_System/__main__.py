@@ -34,7 +34,7 @@ async def send_help(event):
             msg = "Here is the list of plugins with Help text:\n"
             for x in HELP.keys():
                 msg += f"`{x.capitalize()}`\n"
-            await System.send_message(event.chat_id, msg)
+            await event.reply(msg)
             return
          if help_for in HELP:
               await event.reply(HELP[help_for].help_plus)
