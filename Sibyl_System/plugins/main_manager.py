@@ -26,7 +26,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
                     level=logging.ERROR)
 
 
-@System.on(system_cmd(pattern=r'scan ', allow_enforcers = True))
+@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True))
 async def scan(event):
     if event.reply:
         trim = None
