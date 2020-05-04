@@ -18,7 +18,7 @@ except BaseException:
     HEROKU = False
 
 
-@System.on(system_cmd(pattern=r'addenf'))
+@System.on(system_cmd(pattern=r'addenf', allow_inspectors = True))
 async def addenf(event) -> None:
     if event.reply:
         replied = await event.get_reply_message()
@@ -40,7 +40,7 @@ async def addenf(event) -> None:
     await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to Enforcers')
 
 
-@System.on(system_cmd(pattern=r'rmenf'))
+@System.on(system_cmd(pattern=r'rmenf', allow_inspectors = True))
 async def rmenf(event) -> None:
     if event.reply:
         replied = await event.get_reply_message()
@@ -67,7 +67,7 @@ async def rmenf(event) -> None:
 
 
 
-@System.on(system_cmd(pattern=r'enforcers'))
+@System.on(system_cmd(pattern=r'enforcers', allow_inspectors = True))
 async def listuser(event) -> None:
     msg = "Enforcers:\n"
     for z in ENFORCERS:
@@ -96,7 +96,7 @@ async def join(event) -> None:
         await System.send_message(event.chat_id, "Joined chat!")
 
 
-@System.on(system_cmd(pattern=r'resolve'))
+@System.on(system_cmd(pattern=r'resolve', allow_inspectors = True))
 async def resolve(event) -> None:
     try:
         link = event.text.split(" ", 1)[1]
@@ -129,7 +129,7 @@ async def leave(event) -> None:
         await System.send_message(event.chat_id, f"Successfully Left chat[{link}]")
 
 
-@System.on(system_cmd(pattern=r'get_redirect '))
+@System.on(system_cmd(pattern=r'get_redirect ', allow_inspectors = True))
 async def redirect(event) -> None:
     try:
         of = event.text.split(" ", 1)[1]
