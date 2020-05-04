@@ -36,8 +36,11 @@ else:
     Sibyl_approved_logs = Config.Sibyl_approved_logs
     GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
 
-ENFORCERS.extend(SIBYL)
+INSPECTORS.extend(SIBYL)
+ENFORCERS.extend(INSPECTORS)
+
 session = aiohttp.ClientSession()
+
 System = TelegramClient(
     StringSession(STRING_SESSION),
     API_ID_KEY,
@@ -56,7 +59,7 @@ if collection.count_documents({'_id': 2}, limit=1) == 0:
 
 
 def system_cmd(pattern=None, allow_sibyl=True,
-               allow_enforcer=False, allow_inspectors = True, allow_slash=True, **args):
+               allow_enforcer=False, allow_inspectors = False, allow_slash=True, **args):
     if pattern and allow_slash:
         args["pattern"] = re.compile(r"[\?\.!/]" + pattern)
     else:
