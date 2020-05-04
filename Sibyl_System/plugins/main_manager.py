@@ -85,7 +85,7 @@ async def scan(event):
 
 @System.on(system_cmd(pattern=r'approve', allow_inspectors=True))
 async def approve(event):
-    if event.from_id in SIBYL and event.reply:
+    if event.reply:
         replied = await event.get_reply_message()
         match = re.match(r'\$SCAN', replied.text)
         auto_match = re.match(r'\$AUTO', replied.text)
@@ -176,7 +176,7 @@ Target is not a target for enforcement action. The trigger of Dominator will be 
 """
 
 
-@System.on(system_cmd(pattern=r'reject'))
+@System.on(system_cmd(pattern=r'reject', allow_inspectors = True))
 async def reject(event):
     #print('Triggered OwO')
     if event.reply:
