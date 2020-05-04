@@ -26,9 +26,9 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
                     level=logging.ERROR)
 
 
-@System.on(events.NewMessage(pattern=r'[\.\?!/]scan'))
+@System.on(system_cmd(pattern=r'scan ', allow_enforcers = True))
 async def scan(event):
-    if event.from_id in ENFORCERS and event.reply:
+    if event.reply:
         trim = None
         replied = await event.get_reply_message()
         if re.match('.scan -f -o .*',
