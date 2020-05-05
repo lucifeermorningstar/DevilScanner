@@ -1,4 +1,4 @@
-from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, Sibyl_approved_logs, GBAN_MSG_LOGS
+from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS, Sibyl_approved_logs, GBAN_MSG_LOGS
 from Sibyl_System.strings import scan_request_string, scan_approved_string
 from Sibyl_System import System, system_cmd
 from telethon import events
@@ -45,13 +45,13 @@ async def scan(event):
                 else:
                     sender = f"[{reply.from_id}](tg://user?id={reply.from_id})"
         else:
-            if replied.sender.id in SIBYL or replied.sender.id in ENFORCERS:
+            if replied.sender.id in ENFORCERS:
                 return
             sender = f"[{replied.sender.first_name}](tg://user?id={replied.sender.id})"
             target = replied.sender.id
         executer = await event.get_sender()
         try:
-            if re.match('.scan -f .*', event.text) and executer.id in SIBYL:
+            if re.match('.scan -f .*', event.text) and executer.id in INSPECTORS:
                 if not trim:
                     reason = event.text.split(" ", 2)[2]
                 approve = True
