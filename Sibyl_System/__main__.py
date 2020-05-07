@@ -44,8 +44,8 @@ async def send_help(event):
 
 
 async def main():
-  System.start()
-  System.run_until_disconnected()
+  await System.start()
+  await System.run_until_disconnected()
   await System.catch_up()
 
 if __name__ == '__main__':
