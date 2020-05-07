@@ -1,7 +1,7 @@
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
-from Sibyl_System import ENFORCERS, session
+from Sibyl_System import ENFORCERS, INSPECTORS,  session
 from Sibyl_System import System, system_cmd
 import re
 from telethon.utils import resolve_invite_link
@@ -95,6 +95,66 @@ async def join(event) -> None:
         await System(JoinChannelRequest(link))
         await System.send_message(event.chat_id, "Joined chat!")
 
+@System.on(system_cmd(pattern=r'addins'))
+async def addins(event) -> None:
+    if event.reply:
+        replied = await event.get_reply_message()
+        if replied: u_id = replied.sender.id
+        else: return
+    else:
+        u_id = event.text.split(" ", 2)[1]
+    try:
+      u_id = (await System.get_entity(u_id)).id
+    except BaseException:
+        await event.reply('Ivalid ID/Username!')
+        return
+    if u_id in INSPECTORS:
+        await System.send_message(event.chat_id, 'That person is already INSPECTORS!')
+        return
+    if HEROKU:
+        config['INSPECTORS'] = os.environ.get('INSPECTORS') + ' ' + str(u_id)
+    else:
+        INSPECTORS.append(u_id)
+    await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to INSPECTORS')
+
+
+@System.on(system_cmd(pattern=r'rmins'))
+async def rmins(event) -> None:
+    if event.reply:
+        replied = await event.get_reply_message()
+        u_id = replied.sender.id
+    else:
+        u_id = event.text.split(" ", 2)[1]
+    try:
+      u_id = (await System.get_entity(u_id)).id
+    except BaseException:
+        await event.reply('Ivalid ID/Username!')
+    if u_id not in INSPECTORS:
+        await System.send_message(event.chat_id, 'Is that person even a INSPECTORS?')
+        return
+    if HEROKU:
+        ENF = os.environ.get('INSPECTORS')
+        if ENF.endswith(u_id):
+            config['INSPECTORS'] = ENF.strip(' ' + u_id)
+        else:
+            config['INSPECTORS'] = ENF.strip(' ' + u_id + ' ')
+    else:
+        INSPECTORS.remove(u_id)
+    await System.send_message(event.chat_id, f'Removed [{u_id}](tg://user?id={u_id}) from INSPECTORS')
+
+
+
+
+@System.on(system_cmd(pattern=r'inspectors', allow_inspectors = True))
+async def listuserI(event) -> None:
+    msg = "Inspectors:\n"
+    for z in INSPECTORS:
+        try:
+            user = await System.get_entity(z)
+            msg += f"•[{user.first_name}](tg://user?id={user.id}) | {z}\n"
+        except BaseException:
+            msg += f"•{z}\n"
+    await System.send_message(event.chat_id, msg)
 
 @System.on(system_cmd(pattern=r'resolve', allow_inspectors = True))
 async def resolve(event) -> None:

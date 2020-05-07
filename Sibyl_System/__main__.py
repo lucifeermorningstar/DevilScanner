@@ -22,11 +22,11 @@ for load in to_load:
     if hasattr(imported, "help_plus") and imported.help_plus:
         HELP[imported.__plugin_name__.lower()] = imported
 
-@System.on(system_cmd(pattern=r'status'))
+@System.on(system_cmd(pattern=r'status', allow_inspectors = True))
 async def status(event):
          await event.reply(on_string)
 
-@System.on(system_cmd(pattern=r'help', allow_slash=False))
+@System.on(system_cmd(pattern=r'help', allow_slash=False, allow_inspectors = True))
 async def send_help(event):
          try:
             help_for = event.text.split(" ", 1)[1].lower()
@@ -42,5 +42,10 @@ async def send_help(event):
               return
 
 
-System.start()
-System.run_until_disconnected()
+async def main():
+  System.start()
+  System.run_until_disconnected()
+  await System.catch_up()
+
+if __name__ == '__main__':
+  asyncio.get_event_loop().run_until_complete(main())
