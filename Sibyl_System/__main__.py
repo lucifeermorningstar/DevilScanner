@@ -2,6 +2,7 @@ from Sibyl_System import System, system_cmd
 from Sibyl_System.strings import on_string
 import logging
 import importlib
+import asyncio
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
