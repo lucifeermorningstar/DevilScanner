@@ -26,9 +26,8 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
                     level=logging.ERROR)
 
 
-@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True))
+@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True, force_reply = True))
 async def scan(event):
-    if event.reply:
         trim = None
         replied = await event.get_reply_message()
         if re.match('.scan -f -o .*',
@@ -83,9 +82,8 @@ async def scan(event):
    await a.edit("OwO, It worked") 
 
 
-@System.on(system_cmd(pattern=r'approve', allow_inspectors=True))
+@System.on(system_cmd(pattern=r'approve', allow_inspectors=True, force_reply = True))
 async def approve(event):
-    if event.reply:
         replied = await event.get_reply_message()
         match = re.match(r'\$SCAN', replied.text)
         auto_match = re.match(r'\$AUTO', replied.text)
@@ -176,10 +174,8 @@ Target is not a target for enforcement action. The trigger of Dominator will be 
 """
 
 
-@System.on(system_cmd(pattern=r'reject', allow_inspectors = True))
+@System.on(system_cmd(pattern=r'reject', allow_inspectors = True, force_reply = True))
 async def reject(event):
-    #print('Triggered OwO')
-    if event.reply:
         #print('Trying OmO')
         replied = await event.get_reply_message()
         me = await System.get_me()
