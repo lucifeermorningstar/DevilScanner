@@ -47,6 +47,7 @@ System = TelegramClient(
     API_HASH_KEY)
 MONGO_CLIENT = pymongo.MongoClient(MONGO_DB_URL)
 collection = MONGO_CLIENT['Sibyl']['Main']
+
 if collection.count_documents({'_id': 1}, limit=1) == 0:
     dictw = {"_id": 1}
     dictw["blacklisted"] = []
@@ -59,7 +60,7 @@ if collection.count_documents({'_id': 2}, limit=1) == 0:
 
 
 def system_cmd(pattern=None, allow_sibyl=True,
-               allow_enforcer=False, allow_inspectors = False, allow_slash=True, **args):
+               allow_enforcer=False, allow_inspectors = False, allow_slash=True, force_reply = False, **args):
     if pattern and allow_slash:
         args["pattern"] = re.compile(r"[\?\.!/]" + pattern)
     else:
@@ -70,4 +71,6 @@ def system_cmd(pattern=None, allow_sibyl=True,
         args["from_users"] = INSPECTORS
     else:
         args["from_users"] = SIBYL
+    if force_reply:
+        args["func"] = lambda e: True if event.message.reply_to_msg_id else False
     return events.NewMessage(**args)
