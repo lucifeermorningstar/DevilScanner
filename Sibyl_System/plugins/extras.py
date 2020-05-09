@@ -29,7 +29,7 @@ async def addenf(event) -> None:
         try:
            u_id = (await System.get_entity(u_id)).id
         except BaseException:
-           await event.reply('I haven't interacted with that user! Meh, Will add them anyway')
+           await event.reply("I haven't interacted with that user! Meh, Will add them anyway")
     if u_id in ENFORCERS:
         await System.send_message(event.chat_id, 'That person is already Enforcer!')
         return
