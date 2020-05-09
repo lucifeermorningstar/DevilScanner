@@ -20,7 +20,7 @@ except BaseException:
 
 @System.on(system_cmd(pattern=r'addenf', allow_inspectors = True))
 async def addenf(event) -> None:
-    if event.reply:
+    if event.message.reply_to_msg_id:
         replied = await event.get_reply_message()
         if replied: u_id = replied.sender.id
         else: return
@@ -42,7 +42,7 @@ async def addenf(event) -> None:
 
 @System.on(system_cmd(pattern=r'rmenf', allow_inspectors = True))
 async def rmenf(event) -> None:
-    if event.reply:
+    if event.message.reply_to_msg_id:
         replied = await event.get_reply_message()
         u_id = replied.sender.id
     else:
@@ -120,7 +120,7 @@ async def addins(event) -> None:
 
 @System.on(system_cmd(pattern=r'rmins'))
 async def rmins(event) -> None:
-    if event.reply:
+    if event.message.reply_to_msg_id:
         replied = await event.get_reply_message()
         u_id = replied.sender.id
     else:
