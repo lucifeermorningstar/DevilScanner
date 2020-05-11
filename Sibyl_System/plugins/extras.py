@@ -56,8 +56,7 @@ async def rmenf(event) -> None:
         return
     if HEROKU:
         ENF = os.environ.get('ENFORCERS')
-        if ENF.endswith(u_id) :
-            config['ENFORCERS'] = ENF.strip(u_id)
+        config['ENFORCERS'] = ENF.strip(u_id)
     else:
         ENFORCERS.remove(u_id)
     await System.send_message(event.chat_id, f'Removed [{u_id}](tg://user?id={u_id}) from Enforcers')
