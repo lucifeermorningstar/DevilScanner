@@ -85,6 +85,6 @@ Sibyl is under active development and some future plans include
 #### Contributors
 
 | <a href="https://github.com/DragSama" target="_blank">**DragSama**</a> | <a href="https://github.com/TsunayoshiSawada" target="_blank">**Sawada**</a> | 
-| :---: |:---:| :---:|
+| :---: |:---:|
 | [![DragSama](https://avatars1.githubusercontent.com/u/49992845?s=100&v=4)](https://github.com/DragSama)    | [![Sawada](https://avatars0.githubusercontent.com/u/34431649?s=100&v=4)](https://github.com/TsunayoshiSawada) |
 | <a href="https://github.com/AnimeKaizoku/SibylSystem/commits?author=DragSama" target="_blank">`All code is written by me :D`</a> | <a href="https://github.com/AnimeKaizoku/SibylSystem/commits?author=TsunayoshiSawada" target="_blank">`Base Idea of making userbot, All the weeb stuff`</a> |
