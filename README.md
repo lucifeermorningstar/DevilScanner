@@ -71,6 +71,10 @@ Sibyl is under active development and some future plans include
 
 - In case of emergency and/or if the System thinks that it is in danger, it can falsify the judgement of the Dominator, in order to suppress the threat.
 
+#### Warning
+> Since Warning Always come after the spell
+- Using this userbot can get your account floodwaited as it checks for each message, each edited, each join for blacklisted strings, If you don't want auto gbans simply delete blacklist.py and remove it from to_load in `__init_.py`
+
 ##### Why that? 
 
 >Why use regex for so proof and approve? 
