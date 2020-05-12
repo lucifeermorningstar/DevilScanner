@@ -24,6 +24,7 @@ You can get both of these from my.telegram.org
 - ` Sibyl_logs `: In this group all scan request come
 - ` Sibyl_approved_logs `: When approved it sends a message there
 - ` GBAN_MSG_LOGS `:Where to gban user, Set to None and it will send /gban in Sibyl_logs
+- Start bot using `python3 -m Sibyl_System`
 ------------
 
 ## Purpose and schematics
@@ -42,11 +43,9 @@ The base of operations of Sibyl are Beneath the NONA Tower and are only accessib
 ------------
 
 ### Commands list
-Users can access the following commands, usage is limited based on enforcer privileges.
+You can check help using - 
 
-    *scan *- Reply to a message with reason to send a request for gbans
-    *approve* - Approve a scan request
-    *proof* - Get message from proof id which is at the end of gban msg
+    *help <plugin_name> *- Get help about plugin, Send it without plugin name to get list of all plugins.
 
 ------------
 
@@ -80,8 +79,12 @@ Sibyl is under active development and some future plans include
 >Why such noob code?
 - Cuz I'm a noob?
 
->Why not classes for config?
-- Because I don't want it to be hard for newbies (to python (or those who don't know it)) to setup the bot
-
 >Why not getting list of all module instead of manually putting module in to_load?
 - I don't want people from uniborg or ftg or other userbots to put there plugins (those weird animation ones or useless ones) in Sibyl System 
+
+#### Contributors
+
+| <a href="https://github.com/DragSama" target="_blank">**DragSama**</a> | <a href="https://github.com/TsunayoshiSawada" target="_blank">**Sawada**</a> | 
+| :---: |:---:| :---:|
+| [![DragSama](https://avatars1.githubusercontent.com/u/49992845?s=100&v=4)](https://github.com/DragSama)    | [![Sawada](https://avatars0.githubusercontent.com/u/34431649?s=100&v=4)](https://github.com/TsunayoshiSawada) |
+| <a href="https://github.com/AnimeKaizoku/SibylSystem/commits?author=DragSama" target="_blank">`All code is written by me :D`</a> | <a href="https://github.com/AnimeKaizoku/SibylSystem/commits?author=TsunayoshiSawada" target="_blank">`Base Idea of making userbot, All the weeb stuff`</a> |
