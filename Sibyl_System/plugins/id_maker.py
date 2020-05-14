@@ -13,7 +13,7 @@ async def image_maker(event) -> None:
  id_template.save('user_id.png')
  await System.send_message(
         event.chat_id,
-        "Generated User Profile Photo",
+        "Generated User ID",
         reply_to=event.message.id,
         file='user_id.png',
         force_document=False,
