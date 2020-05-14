@@ -11,6 +11,9 @@ async def image_maker(event) -> None:
  user_photo = user_photo.resize((123, 134))
  id_template.paste(user_photo, (146, 66))
  id_template.save('user_id.png')
+ position = (300, 56)
+ color = 'rgb(23, 43, 226)' #blue color
+ draw.text(position, replied_user.first_name, fill=color)
  await System.send_message(
         event.chat_id,
         "Generated User ID",
