@@ -5,7 +5,7 @@ import os
 @System.on(system_cmd(pattern = r'get_id'))
 async def image_maker(event) -> None:
  replied_user = await event.get_reply_message()
- await System.download_profile_photo(replied_user.from_id, path= 'user.png', download_big = True)
+ await System.download_profile_photo(replied_user.from_id, file= 'user.png', download_big = True)
  user_photo = Image.open('user.png')
  id_template = Image.open('ID.png')
  user_photo = user_photo.resize((123, 134))
