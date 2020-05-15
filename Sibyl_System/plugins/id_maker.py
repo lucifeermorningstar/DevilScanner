@@ -1,5 +1,5 @@
 from Sibyl_System import system_cmd, System
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import os
 
 @System.on(system_cmd(pattern = r'get_id'))
@@ -10,10 +10,12 @@ async def image_maker(event) -> None:
  id_template = Image.open('ID.png')
  user_photo = user_photo.resize((123, 134))
  id_template.paste(user_photo, (146, 66))
- id_template.save('user_id.png')
  position = (300, 56)
+ draw = ImageDraw.Draw(id_template)
  color = 'rgb(23, 43, 226)' #blue color
- draw.text(position, replied_user.first_name, fill=color)
+ font = ImageFont.truetype('arial-unicode-ms.ttf', size=30)
+ draw.text(position, replied_user.first_name, fill=color, font=font)
+ id_template.save('user_id.png')
  await System.send_message(
         event.chat_id,
         "Generated User ID",
