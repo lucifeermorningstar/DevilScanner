@@ -1,5 +1,5 @@
 from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS, Sibyl_approved_logs, GBAN_MSG_LOGS
-from Sibyl_System.strings import scan_request_string, scan_approved_string
+from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string
 from Sibyl_System import System, system_cmd
 from telethon import events
 import re
@@ -7,19 +7,22 @@ from Sibyl_System import session
 import logging
 
 
-async def gban(enforcer=None, target=None, reason=None, msg_id=None, approved_by=None, auto=False):
+async def gban(enforcer=None, target=None, reason=None, msg_id=None, approved_by=None, auto=False, bot=False):
     """Gbans & Fbans user."""
     if GBAN_MSG_LOGS:
         logs = GBAN_MSG_LOGS
     else:
         logs = Sibyl_logs
     if not auto:
-        await System.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, reason = reason, proof_id = msg_id))
         await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
         await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
     else:
         await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) AUTO GBAN | #{msg_id}")
         await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) AUTO GBAN | #{msg_id}")
+    if bot:
+        await System.send_message(Sibyl_approved_logs, bot_gban_string.format(enforcer=enforcer, scam=target, reason = reason))
+    else:
+        await System.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, reason = reason, proof_id = msg_id))
     return True
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
@@ -68,7 +71,7 @@ async def scan(event):
             await gban(executer.id, target, reason, msg.id, executer)
 
 @System.on(system_cmd(pattern=r're(vive|vert|store) '))
-async def scan(event):
+async def revive(event):
    try:
      user_id = event.text.split(" ", 1)[1]
    except IndexError: return
@@ -93,7 +96,11 @@ async def approve(event):
                 id = re.search(
                     r"Triggered by: (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
                     replied.text).group(2)
-                await gban(enforcer=me.id, target=id, msg_id=replied.id, auto=True)
+                try:
+                     bot = (await System.get_entity(id)).bot
+                except:
+                     bot = False
+                await gban(enforcer=me.id, target=id, msg_id=replied.id, auto=True, bot=bot)
                 return "OwO"
         if match:
             reply = replied.sender.id
@@ -114,7 +121,11 @@ async def approve(event):
                 else:
                     enforcer = id2
                     scam = id1
-                await gban(enforcer, scam, reason, replied.id, sender)
+                try:
+                   bot = (await System.get_entity(scam)).bot
+                except:
+                   bot = False 
+                await gban(enforcer, scam, reason, replied.id, sender, bot=bot)
 
 proof_string = """
 **Proof from ID** - {proof_id} :
