@@ -18,5 +18,13 @@ scan_approved_string = """
 **Crime Coefficient** = Over 300
 **Case Number** = {proof_id}
 """
+
+bot_gban_string = """
+#DESTROY_DECOMPOSER
+**Enforcer** = {enforcer}
+**Target User** = {scam}
+**Reason** = {reason} 
+"""
+
 # https://psychopass.fandom.com/wiki/Crime_Coefficient_(Index)
 # https://psychopass.fandom.com/wiki/The_Dominator
