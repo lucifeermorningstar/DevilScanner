@@ -93,22 +93,20 @@ async def auto_gban_request(event):
                 return
 
 
-@System.on(events.ChatAction())  # pylint:disable=E0602
+@System.on(events.ChatAction(func= lambda e: e.user_joined))  # pylint:disable=E0602
 async def auto_wlc_gban(event):
-    if not event.user_joined: return
     user = await event.get_user()
     if user.id in ENFORCERS or user.id in SIBYL:
         return
-    if event.user_joined:
-        words = await wlc_collection.get_wlc_bl()
-        if words:
-            text = user.first_name
-            if user.last_name: text = text + " " + user.last_name
-            for word in words:
-                pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
-                if re.search(pattern, text, flags=re.IGNORECASE):
-                    c = words.index(word)
-                    await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nReason: 1x{c}\nUser joined and blacklisted string in name\nMatched String = {word}")
+    words = await wlc_collection.get_wlc_bl()
+    if words:
+       text = user.first_name
+       if user.last_name: text = text + " " + user.last_name
+       for word in words:
+          pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
+          if re.search(pattern, text, flags=re.IGNORECASE):
+             c = words.index(word)
+             await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nReason: 1x{c}\nUser joined and blacklisted string in name\nMatched String = {word}")
 
 @System.on(system_cmd(pattern=r'get ', allow_slash=False))
 async def get(event):
