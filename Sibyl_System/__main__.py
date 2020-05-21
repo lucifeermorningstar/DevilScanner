@@ -32,7 +32,7 @@ async def send_help(event):
          try:
             help_for = event.text.split(" ", 1)[1].lower()
          except IndexError:
-            msg = "Here is the list of plugins with Help text:\n"
+            msg = "List of plugins with help text:\n"
             for x in HELP.keys():
                 msg += f"`{x.capitalize()}`\n"
             await event.reply(msg)
@@ -45,8 +45,8 @@ async def send_help(event):
 
 async def main():
   await System.start()
-  await System.run_until_disconnected()
   await System.catch_up()
+  await System.run_until_disconnected()
 
 if __name__ == '__main__':
   asyncio.get_event_loop().run_until_complete(main())
