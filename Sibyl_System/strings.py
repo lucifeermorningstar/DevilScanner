@@ -1,7 +1,7 @@
 on_string = """
-**Portable Psychological Diagnosis and Supression System has been activated.**
-This chat is connected to Sibyl System.
-Cymatic scans are now possible!
+**Portable Psychological Diagnosis and Supression System**
+Connection to Sibyl System was successful.
+`Dominator` is now active. Cymatic scans are now possible!
 """
 
 # Make sure not to change this too much
