@@ -70,7 +70,7 @@ async def listbl(event):
     bl_list = await db.get_blacklist()
     msg = "Currently Blacklisted strings:\n"
     for x in bl_list:
-        msg += f"•{x}\n"
+        msg += f"•`{x}`\n"
     await System.send_message(event.chat_id, msg)
 
 
