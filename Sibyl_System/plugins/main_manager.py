@@ -128,7 +128,7 @@ async def approve(event):
                 await gban(enforcer, scam, reason, replied.id, sender, bot=bot)
 
 proof_string = """
-**Proof from ID** - {proof_id} :
+**Case file for** - {proof_id} :
 ┣━**Reason**: {reason}
 ┗━**Message**
          ┣━[Nekobin]({paste})
@@ -137,18 +137,18 @@ proof_string = """
 @System.on(events.NewMessage(pattern=r'[\.\?!/]proof'))
 async def proof(event):
     if event.from_id in SIBYL:
-        msg = await System.send_message(event.chat_id, 'Trying to get Proof owo >>>>>')
+        msg = await System.send_message(event.chat_id, 'Connecting to archive for case file >>>>>')
         try:
             proof_id = int(event.text.split(' ', 1)[1])
         except BaseException:
-            await msg.edit('>>>>> Proof id is not valid')
+            await msg.edit('>>>>>The case file ID is invalid')
             return
-        await msg.edit('Fetching msg details from proof id <<<<<<<')
+        await msg.edit('Fetching msg details from case file ID <<<<<<<')
         proof = await System.get_messages(Sibyl_logs, ids=proof_id)
         try:
             reason = re.search(r"Scan Reason: (.*)", proof.message).group(1)
         except BaseException:
-            await msg.edit('>>>>It looks like I cannot see the msg or the proof id is not valid')
+            await msg.edit('>>>>Unable to see the msg or the case file ID is not valid')
             return
         try:
             message = re.search(
@@ -160,14 +160,14 @@ async def proof(event):
                 proof = await System.get_messages(Sibyl_logs, ids=proof_id)
                 if proof:
                     if proof.media:
-                        await msg.edit('Proof is media -> Forwarding message') 
+                        await msg.edit('Case file includes media -> Forwarding message') 
                         await proof.forward_to(event.chat_id)
                         return
                     else:
-                        await msg.edit(f"Error getting proof from id {proof_id}")
+                        await msg.edit(f"Error getting case file from ID {proof_id}")
                         return
                 else:
-                    await msg.edit(f" Failed to get proof, Is the proof id valid?")
+                    await msg.edit(f" Failed to pull case file, Is the ID valid?")
                     return
         async with session.post('https://nekobin.com/api/documents', json={'content': message}) as r:
             paste = f"https://nekobin.com/{(await r.json())['result']['key']}"
@@ -179,9 +179,10 @@ async def proof(event):
 
 reject_string = """
 $REJECTED
-**Crime Coefficient**: `Under 100`
+**Crime Coefficient:** `Under 100`
 
-Target is not a target for enforcement action. The trigger of Dominator will be locked.
+Not a target for enforcement action. 
+The trigger will be locked.
 """
 
 

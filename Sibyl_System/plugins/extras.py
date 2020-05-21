@@ -106,7 +106,7 @@ async def addins(event) -> None:
         await event.reply('Ivalid ID/Username!')
         return
     if u_id in INSPECTORS:
-        await System.send_message(event.chat_id, 'That person is already INSPECTORS!')
+        await System.send_message(event.chat_id, 'That person is already an Inspector!')
         return
     if HEROKU:
         config['INSPECTORS'] = os.environ.get('INSPECTORS') + ' ' + str(u_id)
@@ -127,7 +127,7 @@ async def rmins(event) -> None:
     except BaseException:
         await event.reply('Ivalid ID/Username!')
     if u_id not in INSPECTORS:
-        await System.send_message(event.chat_id, 'Is that person even a INSPECTORS?')
+        await System.send_message(event.chat_id, 'Is that person even an Inspector?')
         return
     if HEROKU:
         ENF = os.environ.get('INSPECTORS')
@@ -137,7 +137,7 @@ async def rmins(event) -> None:
             config['INSPECTORS'] = ENF.strip(' ' + u_id + ' ')
     else:
         INSPECTORS.remove(u_id)
-    await System.send_message(event.chat_id, f'Removed [{u_id}](tg://user?id={u_id}) from INSPECTORS')
+    await System.send_message(event.chat_id, f'Removed Inspector status of [{u_id}](tg://user?id={u_id})')
 
 
 
@@ -180,10 +180,10 @@ async def leave(event) -> None:
     c_id = re.match(r'-(\d+)', link)
     if c_id:
         await System(LeaveChannelRequest(int(c_id.group(0))))
-        await System.send_message(event.chat_id, f"Successfully Left chat with id[-{c_id.group(1)}]")
+        await System.send_message(event.chat_id, f"Sibyl has left chat with id[-{c_id.group(1)}]")
     else:
         await System(LeaveChannelRequest(link))
-        await System.send_message(event.chat_id, f"Successfully Left chat[{link}]")
+        await System.send_message(event.chat_id, f"Sibyl has left chat[{link}]")
 
 
 @System.on(system_cmd(pattern=r'get_redirect ', allow_inspectors = True))
