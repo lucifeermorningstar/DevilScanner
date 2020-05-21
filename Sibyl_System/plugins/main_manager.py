@@ -192,7 +192,7 @@ async def reject(event):
         me = await System.get_me()
         if replied.from_id == me.id:
             #print('Matching UwU')
-            match = re.match(r'\$SCAN', replied.text)
+            match = re.match(r'\$(SCAN|AUTO)', replied.text)
             if match:
                 #print('Matched OmU')
                 id = replied.id
