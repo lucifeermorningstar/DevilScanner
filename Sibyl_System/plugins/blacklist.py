@@ -106,7 +106,7 @@ async def auto_wlc_gban(event):
           pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
           if re.search(pattern, text, flags=re.IGNORECASE):
              c = words.index(word)
-             await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{event.from_id}](tg://user?id={event.from_id})\nReason: 1x{c}\nUser joined and blacklisted string in name\nMatched String = {word}")
+             await System.send_message(Sibyl_logs, f"$AUTO\nTriggered by: [{user.id}](tg://user?id={user.id})\nReason: 1x{c}\nUser joined and blacklisted string in name\nMatched String = {word}")
 
 @System.on(system_cmd(pattern=r'get ', allow_slash=False))
 async def get(event):
