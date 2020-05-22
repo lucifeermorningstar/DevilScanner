@@ -94,7 +94,7 @@ async def approve(event):
         if auto_match:
             if replied.sender.id == me.id:
                 id = re.search(
-                    r"Triggered by: (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
+                    r"Scanned by: (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
                     replied.text).group(2)
                 try:
                      bot = (await System.get_entity(id)).bot
