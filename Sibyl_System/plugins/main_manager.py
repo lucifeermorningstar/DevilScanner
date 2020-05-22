@@ -17,8 +17,8 @@ async def gban(enforcer=None, target=None, reason=None, msg_id=None, approved_by
         await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
         await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
     else:
-        await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) AUTO GBAN | #{msg_id}")
-        await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) AUTO GBAN | #{msg_id}")
+        await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) Auto Gban[${msg_id}]")
+        await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) Auto Gban[${msg_id}]")
     if bot:
         await System.send_message(Sibyl_approved_logs, bot_gban_string.format(enforcer=enforcer, scam=target, reason = reason))
     else:
@@ -89,7 +89,7 @@ async def revive(event):
 async def approve(event):
         replied = await event.get_reply_message()
         match = re.match(r'\$SCAN', replied.text)
-        auto_match = re.match(r'\$AUTO', replied.text)
+        auto_match = re.match(r'\$AUTO(SCAN)?', replied.text)
         me = await System.get_me()
         if auto_match:
             if replied.sender.id == me.id:
