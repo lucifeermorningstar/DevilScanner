@@ -10,8 +10,8 @@ scan_request_string = """
 $SCAN
 {enforcer} is requesting a Cymatic Scan for {spammer}
 **Scan Reason:** `{reason}`
-**Target Message:** `{message}`
 **Chat Originated from:** {chat}
+**Target Message:** `{message}`
 """
 
 scan_approved_string = """
