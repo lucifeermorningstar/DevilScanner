@@ -27,6 +27,6 @@ async def image_maker(event) -> None:
         "Generated User ID",
         reply_to=event.message.id,
         file='user_id.png',
-        force_document=False,
+        force_document=True,
         silent=True
     )
