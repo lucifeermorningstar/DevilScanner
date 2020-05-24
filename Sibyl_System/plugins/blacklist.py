@@ -88,8 +88,13 @@ async def auto_gban_request(event):
             pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
             if re.search(pattern, text, flags=re.IGNORECASE):
                 c = words.index(word)
-                link = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else "Occurred in Private Chat - {event.chat.title}"
-                await System.send_message(Sibyl_logs, f"$AUTOSCAN\nScanned user: [{event.from_id}](tg://user?id={event.from_id})\nReason: 0x{c}\nChat: {link}\nMessage: {event.text}\nHue Color: Yellow-green")
+                link = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
+                logmsg = f"$AUTOSCAN\n**Scanned user:** [{event.from_id}](tg://user?id={event.from_id})\
+                     **Reason:** 0x{c}\n\
+                     **Chat:** {link}\n\
+                     **Hue Color:** Yellow-green\n\
+                     **Message:** {event.text}"
+                await System.send_message(Sibyl_logs, logmsg)
                 return
 
 
@@ -106,7 +111,11 @@ async def auto_wlc_gban(event):
           pattern = r"( |^|[^\w])" + word + r"( |$|[^\w])"
           if re.search(pattern, text, flags=re.IGNORECASE):
              c = words.index(word)
-             await System.send_message(Sibyl_logs, f"$AUTOSCAN\nScanned user: [{user.id}](tg://user?id={user.id})\nReason: 1x{c}\nUser joined and blacklisted string in name\nMatched String = {word}")
+             logmsg = f"$AUTOSCAN\n**Scanned user:** [{user.id}](tg://user?id={user.id})\n\
+                **Reason:** 1x{c}\n\
+                **User joined and blacklisted string in name**\n\
+                **Matched String:** {word}"
+             await System.send_message(Sibyl_logs, logmsg)
 
 @System.on(system_cmd(pattern=r'get ', allow_slash=False))
 async def get(event):

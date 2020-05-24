@@ -108,7 +108,7 @@ async def approve(event):
             # checks to not gban the Gbanner and find who is who
             if reply == me.id:
                 list = re.findall(r'tg://user\?id=(\d+)', replied.text)
-                reason = re.search(r"**Scan Reason:** (.*)", replied.text).group(1)
+                reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (.*)", replied.text).group(1)
                 if len(list) > 1:
                     id1 = list[0]
                     id2 = list[1]
@@ -146,7 +146,7 @@ async def proof(event):
         await msg.edit('Fetching msg details from case file ID <<<<<<<')
         proof = await System.get_messages(Sibyl_logs, ids=proof_id)
         try:
-            reason = re.search(r"**Scan Reason:** (.*)", proof.message).group(1)
+            reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (.*)", proof.message).group(1)
         except BaseException:
             await msg.edit('>>>>Unable to see the msg or the case file ID is not valid')
             return

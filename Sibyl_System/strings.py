@@ -8,7 +8,9 @@ Connection to Sibyl System was successful.
 # If you still wanna change it change the regex too
 scan_request_string = """
 $SCAN
-{enforcer} is requesting a Cymatic Scan for {spammer}
+Cymatic Scan request
+**Enforcer:** {enforcer} 
+**User scanned:** {spammer}
 **Scan Reason:** `{reason}`
 **Chat Originated from:** {chat}
 **Target Message:** `{message}`
