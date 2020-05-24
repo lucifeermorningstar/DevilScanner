@@ -14,7 +14,7 @@ async def shell(event):
   stdout, stderr = await async_process.communicate()
   msg = ""
   if stderr.decode(): msg += f"**stderr:**\n`{stderr.decode()}`"
-  if stdout.deocde(): msg += f"**stdout:**\n`{stdout.decode()}`"
+  if stdout.decode(): msg += f"**stdout:**\n`{stdout.decode()}`"
   await event.reply(msg)
 
 __plugin_name__ = "shell"
