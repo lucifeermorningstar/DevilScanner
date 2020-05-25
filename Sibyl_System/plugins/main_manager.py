@@ -152,7 +152,7 @@ async def proof(event):
             return
         try:
             message = re.search(
-                '**Target Message:** (.*)',
+                '(**)?Target Message:(**)? (.*)',
                 proof.message,
                 re.DOTALL).group(1)
         except BaseException:
@@ -193,7 +193,7 @@ async def reject(event):
         me = await System.get_me()
         if replied.from_id == me.id:
             #print('Matching UwU')
-            match = re.match(r'\$(SCAN|AUTO)', replied.text)
+            match = re.match(r'\$(SCAN|AUTO(SCAN)?)', replied.text)
             if match:
                 #print('Matched OmU')
                 id = replied.id
