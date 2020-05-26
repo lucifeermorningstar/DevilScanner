@@ -108,7 +108,7 @@ async def approve(event):
             # checks to not gban the Gbanner and find who is who
             if reply == me.id:
                 list = re.findall(r'tg://user\?id=(\d+)', replied.text)
-                reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (.*)", replied.text).group(3)
+                reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? `?(.*)`?", replied.text).group(3)
                 if len(list) > 1:
                     id1 = list[0]
                     id2 = list[1]
