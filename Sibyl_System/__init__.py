@@ -63,7 +63,7 @@ async def make_collections() -> str:
     return ""
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(do_update())
+loop.run_until_complete(make_collections())
 
 def system_cmd(pattern=None, allow_sibyl=True,
                allow_enforcer=False, allow_inspectors = False, allow_slash=True, force_reply = False, **args):
