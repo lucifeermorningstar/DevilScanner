@@ -3,7 +3,7 @@ from telethon import TelegramClient, events
 import aiohttp
 from telethon.sessions import StringSession
 import os
-import pymongo
+from motor import motor_asyncio
 import re
 
 
@@ -45,18 +45,20 @@ System = TelegramClient(
     StringSession(STRING_SESSION),
     API_ID_KEY,
     API_HASH_KEY)
-MONGO_CLIENT = pymongo.MongoClient(MONGO_DB_URL)
+
+MONGO_CLIENT = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
+
 collection = MONGO_CLIENT['Sibyl']['Main']
 
-if collection.count_documents({'_id': 1}, limit=1) == 0:
+if await collection.count_documents({'_id': 1}, limit=1) == 0:
     dictw = {"_id": 1}
     dictw["blacklisted"] = []
-    collection.insert_one(dictw)
+    await collection.insert_one(dictw)
 
-if collection.count_documents({'_id': 2}, limit=1) == 0:
+if await collection.count_documents({'_id': 2}, limit=1) == 0:
     dictw = {"_id": 2, "Type": "Wlc Blacklist"}
     dictw["blacklisted_wlc"] = []
-    collection.insert_one(dictw)
+    await collection.insert_one(dictw)
 
 
 def system_cmd(pattern=None, allow_sibyl=True,
