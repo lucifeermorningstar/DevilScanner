@@ -2,7 +2,7 @@ from Sibyl_System import MONGO_CLIENT
 
 async def get_blacklist():
     db = MONGO_CLIENT['Sibyl']['Main']
-    json = db.find_one({'_id': 1})
+    json = await db.find_one({'_id': 1})
     return json.get('blacklisted', [])
 
 
@@ -11,7 +11,7 @@ async def update_blacklist(word, add=False):
     # cant find better names
     upd = {}
     owo = {}
-    bl = db.find_one({'_id': 1})
+    bl = await db.find_one({'_id': 1})
     current = bl['blacklisted']
     if add:
         if word in current:
@@ -24,5 +24,5 @@ async def update_blacklist(word, add=False):
             return False
     upd['blacklisted'] = current
     owo['$set'] = upd
-    db.update_one(db.find_one({'_id': 1}), owo)
+    await db.update_one(await db.find_one({'_id': 1}), owo)
     return True
