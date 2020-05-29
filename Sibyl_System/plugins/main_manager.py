@@ -148,7 +148,7 @@ async def proof(event):
         proof = await System.get_messages(Sibyl_logs, ids=proof_id)
         try:
             reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)", proof.message)
-            reason = reason.group(4) if reason.group(4) else regex.group(3)
+            reason = reason.group(4) if reason.group(4) else reason.group(3)
         except BaseException:
             await msg.edit('>>>>Unable to see the msg or the case file ID is not valid')
             return
