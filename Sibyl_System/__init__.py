@@ -3,9 +3,9 @@ from telethon import TelegramClient, events
 import aiohttp
 from telethon.sessions import StringSession
 import os
-import pymongo
+from motor import motor_asyncio
 import re
-
+import asyncio
 
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
@@ -45,19 +45,25 @@ System = TelegramClient(
     StringSession(STRING_SESSION),
     API_ID_KEY,
     API_HASH_KEY)
-MONGO_CLIENT = pymongo.MongoClient(MONGO_DB_URL)
+
+MONGO_CLIENT = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
+
 collection = MONGO_CLIENT['Sibyl']['Main']
 
-if collection.count_documents({'_id': 1}, limit=1) == 0:
-    dictw = {"_id": 1}
-    dictw["blacklisted"] = []
-    collection.insert_one(dictw)
+async def make_collections() -> str:
+    if await collection.count_documents({'_id': 1}, limit=1) == 0:
+        dictw = {"_id": 1}
+        dictw["blacklisted"] = []
+        await collection.insert_one(dictw)
 
-if collection.count_documents({'_id': 2}, limit=1) == 0:
-    dictw = {"_id": 2, "Type": "Wlc Blacklist"}
-    dictw["blacklisted_wlc"] = []
-    collection.insert_one(dictw)
+    if await collection.count_documents({'_id': 2}, limit=1) == 0:
+        dictw = {"_id": 2, "Type": "Wlc Blacklist"}
+        dictw["blacklisted_wlc"] = []
+        await collection.insert_one(dictw)
+    return ""
 
+loop = asyncio.get_event_loop()
+loop.run_until_complete(make_collections())
 
 def system_cmd(pattern=None, allow_sibyl=True,
                allow_enforcer=False, allow_inspectors = False, allow_slash=True, force_reply = False, **args):

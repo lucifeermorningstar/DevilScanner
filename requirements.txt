@@ -1,5 +1,5 @@
 telethon
 aiohttp
-pymongo 
+motor 
 heroku3
 pillow
