@@ -1,6 +1,6 @@
 on_string = """
 **Portable Psychological Diagnosis and Supression System**
-Connection to Sibyl System was successful.
+Connection successful.
 `Dominator` is now active. Cymatic scans are now possible!
 """
 
@@ -17,7 +17,7 @@ Cymatic Scan request
 """
 
 scan_approved_string = """
-#LETHAL_ELIMINATOR
+#LethalEliminator
 **Target User:** `{scam}`
 **Crime Coefficient:** `Over 300`
 **Reason:** `{reason}`
@@ -26,7 +26,7 @@ scan_approved_string = """
 """
 
 bot_gban_string = """
-#DESTROY_DECOMPOSER
+#DestroyDecomposer
 **Enforcer:** `{enforcer}`
 **Target User:** `{scam}`
 **Reason:** `{reason}`
