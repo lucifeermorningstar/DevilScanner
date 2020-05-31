@@ -6,6 +6,7 @@ import sys
 async def reboot(event):
     if event.fwd_from:
         return
+    await event.reply('Restarting.....')
     await System.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
     quit()
@@ -15,5 +16,5 @@ async def reboot(event):
 async def shutdown(event):
     if event.fwd_from:
         return
-    await System.send_message(event.chat_id, "Shutting Down... ")
+    await event.reply("Shutting Down... ")
     await System.disconnect()
