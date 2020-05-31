@@ -16,6 +16,21 @@ Cymatic Scan request
 **Target Message:** `{message}`
 """
 
+reject_string = """
+$REJECTED
+**Crime Coefficient:** `Under 100`
+
+Not a target for enforcement action. 
+The trigger will be locked.
+"""
+
+proof_string = """
+**Case file for** - {proof_id} :
+┣━**Reason**: {reason}
+┗━**Message**
+         ┣━[Nekobin]({paste})
+         ┗━[DelDog]({url})"""
+
 scan_approved_string = """
 #LethalEliminator
 **Target User:** `{scam}`
