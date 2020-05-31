@@ -33,7 +33,7 @@ proof_string = """
 
 scan_approved_string = """
 #LethalEliminator
-**Target User:** `{scam}`
+**Target User:** {scam}
 **Crime Coefficient:** `Over 300`
 **Reason:** `{reason}`
 **Enforcer:** `{enforcer}`
@@ -43,7 +43,7 @@ scan_approved_string = """
 bot_gban_string = """
 #DestroyDecomposer
 **Enforcer:** `{enforcer}`
-**Target User:** `{scam}`
+**Target User:** {scam}
 **Reason:** `{reason}`
 """
 
