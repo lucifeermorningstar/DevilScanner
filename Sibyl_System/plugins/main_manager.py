@@ -1,5 +1,5 @@
 from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS, Sibyl_approved_logs, GBAN_MSG_LOGS
-from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string
+from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string
 from Sibyl_System import System, system_cmd
 from telethon import events
 import re
@@ -128,13 +128,6 @@ async def approve(event):
                    bot = False 
                 await gban(enforcer, scam, reason, replied.id, sender, bot=bot)
 
-proof_string = """
-**Case file for** - {proof_id} :
-┣━**Reason**: {reason}
-┗━**Message**
-         ┣━[Nekobin]({paste})
-         ┗━[DelDog]({url})"""
-
 @System.on(events.NewMessage(pattern=r'[\.\?!/]proof'))
 async def proof(event):
     if event.from_id in SIBYL:
@@ -178,14 +171,6 @@ async def proof(event):
              r = await f.json()
              url = f"https://del.dog/{r['key']}"
         await msg.edit(proof_string.format(proof_id = proof_id, reason=reason, paste=paste, url=url))
-
-reject_string = """
-$REJECTED
-**Crime Coefficient:** `Under 100`
-
-Not a target for enforcement action. 
-The trigger will be locked.
-"""
 
 
 @System.on(system_cmd(pattern=r'reject', allow_inspectors = True, force_reply = True))
