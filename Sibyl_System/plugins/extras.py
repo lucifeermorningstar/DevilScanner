@@ -56,7 +56,12 @@ async def rmenf(event) -> None:
         return
     if HEROKU:
         ENF = os.environ.get('ENFORCERS')
-        config['ENFORCERS'] = ENF.strip(str(u_id))
+        if ENF.endswith(u_id):
+         config['ENFORCERS'] = ENF.strip(' ' + str(u_id))
+        elif ENF.starswith(u_id):
+         config['ENFORCERS'] = ENF.strip(str(u_id) + ' ')
+        else:
+         config['ENFORCERS'] = ENF.strip(' ' + str(u_id) + ' ')   
     else:
         ENFORCERS.remove(u_id)
     await System.send_message(event.chat_id, f'Removed [{u_id}](tg://user?id={u_id}) from Enforcers')
@@ -132,12 +137,14 @@ async def rmins(event) -> None:
     if HEROKU:
         ENF = os.environ.get('INSPECTORS')
         if ENF.endswith(u_id):
-            config['INSPECTORS'] = ENF.strip(' ' + u_id)
+         config['INSPECTORS'] = ENF.strip(' ' + str(u_id))
+        elif ENF.starswith(u_id):
+         config['INSPECTORS'] = ENF.strip(str(u_id) + ' ')
         else:
-            config['INSPECTORS'] = ENF.strip(' ' + u_id + ' ')
+         config['INSPECTORS'] = ENF.strip(' ' + str(u_id) + ' ')
     else:
         INSPECTORS.remove(u_id)
-    await System.send_message(event.chat_id, f'Removed Inspector status of [{u_id}](tg://user?id={u_id})')
+    await System.send_message(event.chat_id, f'Removed Inspector status of [{u_id}](tg://user?id={u_id}), Now that user is a mere enforcers.')
 
 
 
