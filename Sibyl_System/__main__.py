@@ -23,7 +23,7 @@ for load in to_load:
     if hasattr(imported, "help_plus") and imported.help_plus:
         HELP[imported.__plugin_name__.lower()] = imported
 
-@System.on(system_cmd(pattern=r'status', allow_inspectors = True))
+@System.on(system_cmd(pattern=r'status', allow_enforcer = True))
 async def status(event):
          await event.reply(on_string)
 
