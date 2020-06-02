@@ -4,15 +4,14 @@ from Sibyl_System import Sibyl_logs, Sibyl_approved_logs, GBAN_MSG_LOGS
 
 class SibylClient(TelegramClient):
     """Custom Telethon client class."""
-
-    self.gban_logs = GBAN_MSG_LOGS
-    self.approved_logs = Sibyl_approved_logs
-    self.log = Sibyl_logs
     
     def __init__(self, *args, **kwargs):
+        self.gban_logs = GBAN_MSG_LOGS
+        self.approved_logs = Sibyl_approved_logs
+        self.log = Sibyl_logs
         super().__init__(*args, **kwargs)
     
-    async def gban(enforcer = None, target=None, reason=None, msg_id=None, approved_by=None, auto=False, bot=False) -> bool:
+    async def gban(self, enforcer = None, target=None, reason=None, msg_id=None, approved_by=None, auto=False, bot=False) -> bool:
         """Gbans & Fbans user."""
         if self.gban_logs:
             logs = self.gban_logs
