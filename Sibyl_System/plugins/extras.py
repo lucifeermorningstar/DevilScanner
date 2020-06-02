@@ -213,6 +213,11 @@ Format : addenf <user id / as reply >
 `rmenf` - Removes a user from enforcers.
 Format : rmenf <user id/ as reply>
 `enforcers` - Lists all enforcers.
+`addins` - Adds a user as an Inspector.
+Format : addins <user id / as reply >
+`rmins` - Removes a user from Inspector.
+Format : rmins <user id/ as reply>
+`inspector` - Lists all Inspector.
 `join` - Joins a chat.
 Format : Joins < chat username or invite link >
 `leave` - Leaves a chat.
