@@ -28,6 +28,14 @@ class SibylClient(TelegramClient):
         else:
             await self.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, reason = reason, proof_id = msg_id))
         return True
+    
+    async def ungban(self, target=None, reason=None) -> bool:
+        if self.gban_logs:
+            logs = self.gban_logs
+        else:
+            logs = self.log
+        await self.send_message(logs, f'/ungban [{target}](tg://ueser?id={target}) {reason}')
+        return True
         
   
   
