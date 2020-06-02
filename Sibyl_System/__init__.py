@@ -1,4 +1,4 @@
-"""Gets ENV vars or Config vars then makes Telethon client."""
+"""Gets ENV vars or Config vars then calls class."""
 from telethon import TelegramClient, events
 import aiohttp
 from telethon.sessions import StringSession
@@ -6,6 +6,7 @@ import os
 from motor import motor_asyncio
 import re
 import asyncio
+
 
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
@@ -41,10 +42,12 @@ ENFORCERS.extend(INSPECTORS)
 
 session = aiohttp.ClientSession()
 
-System = TelegramClient(
+from .client_class import SibylClient
+System = SibylClient(
     StringSession(STRING_SESSION),
     API_ID_KEY,
     API_HASH_KEY)
+
 
 MONGO_CLIENT = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
 

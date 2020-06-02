@@ -7,24 +7,6 @@ from Sibyl_System import session
 import logging
 
 
-async def gban(enforcer=None, target=None, reason=None, msg_id=None, approved_by=None, auto=False, bot=False):
-    """Gbans & Fbans user."""
-    if GBAN_MSG_LOGS:
-        logs = GBAN_MSG_LOGS
-    else:
-        logs = Sibyl_logs
-    if not auto:
-        await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
-        await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}")
-    else:
-        await System.send_message(logs, f"/gban [{target}](tg://user?id={target}) Auto Gban[${msg_id}]")
-        await System.send_message(logs, f"/fban [{target}](tg://user?id={target}) Auto Gban[${msg_id}]")
-    if bot:
-        await System.send_message(Sibyl_approved_logs, bot_gban_string.format(enforcer=enforcer, scam=target, reason = reason))
-    else:
-        await System.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, reason = reason, proof_id = msg_id))
-    return True
-
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.ERROR)
 
@@ -72,7 +54,7 @@ async def scan(event):
            msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=sender, chat=chat , message=replied.text, reason=reason))
         if approve:
            msg = await System.send_message(Sibyl_logs, forced_scan_string.format(ins = executor, spammer=sender, chat=chat,message=replied.text, reason=reason))
-           await gban(executer.id, target, reason, msg.id, executer)
+           await System.gban(executer.id, target, reason, msg.id, executer)
 
 @System.on(system_cmd(pattern=r're(vive|vert|store) '))
 async def revive(event):
@@ -104,7 +86,7 @@ async def approve(event):
                      bot = (await System.get_entity(id)).bot
                 except:
                      bot = False
-                await gban(enforcer=me.id, target=id, msg_id=replied.id, auto=True, bot=bot)
+                await System.gban(enforcer=me.id, target=id, msg_id=replied.id, auto=True, bot=bot)
                 return "OwO"
         if match:
             reply = replied.sender.id
@@ -130,7 +112,7 @@ async def approve(event):
                    bot = (await System.get_entity(scam)).bot
                 except:
                    bot = False 
-                await gban(enforcer, scam, reason, replied.id, sender, bot=bot)
+                await System.gban(enforcer, scam, reason, replied.id, sender, bot=bot)
 
 @System.on(system_cmd(pattern=r'proof ', allow_inspectors=True, force_reply = True))
 async def proof(event):
