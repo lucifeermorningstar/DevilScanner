@@ -1,5 +1,5 @@
 from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS, Sibyl_approved_logs, GBAN_MSG_LOGS
-from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string
+from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
 from Sibyl_System import System, system_cmd
 from telethon import events
 import re
@@ -66,9 +66,13 @@ async def scan(event):
             await replied.forward_to(Sibyl_logs)
         if trim:
             reason = event.text.split(" ", trim)[trim]
-        msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=f"[{executer.first_name}](tg://user?id={executer.id})", spammer=sender, chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}", message=replied.text, reason=reason))
+        executor = [{executer.first_name}](tg://user?id={executer.id})
+        chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
+        if not approve:
+           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=sender, chat=chat , message=replied.text, reason=reason))
         if approve:
-            await gban(executer.id, target, reason, msg.id, executer)
+           msg = await System.send_message(Sibyl_logs, forced_scan_string.format(ins = executor, spammer=sender, chat=chat,message=replied.text, reason=reason))
+           await gban(executer.id, target, reason, msg.id, executer)
 
 @System.on(system_cmd(pattern=r're(vive|vert|store) '))
 async def revive(event):
