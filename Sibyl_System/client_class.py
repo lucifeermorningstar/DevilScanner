@@ -1,5 +1,5 @@
 from telethon import TelegramClient
-from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
+from .strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
 from Sibyl_System import Sibyl_logs, Sibyl_approved_logs, GBAN_MSG_LOGS
 
 class SibylClient(TelegramClient):
