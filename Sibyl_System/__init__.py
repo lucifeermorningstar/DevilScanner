@@ -6,7 +6,7 @@ import os
 from motor import motor_asyncio
 import re
 import asyncio
-from client_class import SibylClient
+from .client_class import SibylClient
 
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
