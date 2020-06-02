@@ -132,9 +132,8 @@ async def approve(event):
                    bot = False 
                 await gban(enforcer, scam, reason, replied.id, sender, bot=bot)
 
-@System.on(events.NewMessage(pattern=r'[\.\?!/]proof'))
+@System.on(system_cmd(pattern=r'proof ', allow_inspectors=True, force_reply = True))
 async def proof(event):
-    if event.from_id in SIBYL:
         msg = await System.send_message(event.chat_id, 'Connecting to archive for case file >>>>>')
         try:
             proof_id = int(event.text.split(' ', 1)[1])
