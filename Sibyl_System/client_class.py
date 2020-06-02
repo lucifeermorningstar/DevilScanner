@@ -35,6 +35,7 @@ class SibylClient(TelegramClient):
         else:
             logs = self.log
         await self.send_message(logs, f'/ungban [{target}](tg://ueser?id={target}) {reason}')
+        await self.send_message(logs, f'/unfban [{target}](tg://ueser?id={target}) {reason}')
         return True
         
   
