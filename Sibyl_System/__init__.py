@@ -6,7 +6,7 @@ import os
 from motor import motor_asyncio
 import re
 import asyncio
-from .client_class import SibylClient
+
 
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
@@ -42,6 +42,7 @@ ENFORCERS.extend(INSPECTORS)
 
 session = aiohttp.ClientSession()
 
+from .client_class import SibylClient
 System = SibylClient(
     StringSession(STRING_SESSION),
     API_ID_KEY,
