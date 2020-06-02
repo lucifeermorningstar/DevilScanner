@@ -66,8 +66,7 @@ async def revive(event):
         logs = GBAN_MSG_LOGS
    else:
         logs = Sibyl_logs
-   await System.send_message(logs, f'/ungban {user_id}')
-   await System.send_message(logs, f'/unfban {user_id}')
+   await System.ungban(user_id, f" By //{(await event.get_sender()).id}")
    await a.edit("OwO, It worked") 
 
 
