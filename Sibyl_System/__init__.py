@@ -25,7 +25,7 @@ if ENV:
     Sibyl_approved_logs = int(os.environ.get('Sibyl_Approved_Logs', None))
     GBAN_MSG_LOGS = int(os.environ.get('GBAN_MSG_LOGS', None))
 else:
-    import .config as Config
+    import config as Config
     API_ID_KEY = Config.API_ID
     API_HASH_KEY = Config.API_HASH
     STRING_SESSION = Config.STRING_SESSION
