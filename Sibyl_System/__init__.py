@@ -65,7 +65,7 @@ async def make_collections() -> str:
         await collection.insert_one(dictw)
     if await collection.count_documents({'_id': 3}, limit=1) == 0:
         dictw = {"_id": 3, "Type": "Gban:List"}
-        dictw["gbans"] = []
+        dictw["victim"] = []
         dictw["gbanners"] = []
         dictw["reason"] = []
         dictw["proof_id"] = []
