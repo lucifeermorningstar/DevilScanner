@@ -1,7 +1,6 @@
-from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS, Sibyl_approved_logs, GBAN_MSG_LOGS
+from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS, GBAN_MSG_LOGS
 from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
 from Sibyl_System import System, system_cmd
-from telethon import events
 import re
 from Sibyl_System import session
 import logging
@@ -62,10 +61,6 @@ async def revive(event):
      user_id = event.text.split(" ", 1)[1]
    except IndexError: return
    a = await event.reply("Casting magic spells to revive the dead person")
-   if GBAN_MSG_LOGS:
-        logs = GBAN_MSG_LOGS
-   else:
-        logs = Sibyl_logs
    await System.ungban(user_id, f" By //{(await event.get_sender()).id}")
    await a.edit("OwO, It worked") 
 
@@ -94,7 +89,7 @@ async def approve(event):
             if reply == me.id:
                 list = re.findall(r'tg://user\?id=(\d+)', replied.text)
                 reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)", replied.text)
-                reason = reason.group(4) if reason.group(4) else regex.group(3)
+                reason = reason.group(4) if reason.group(4) else reason.group(3)
                 if len(list) > 1:
                     id1 = list[0]
                     id2 = list[1]
