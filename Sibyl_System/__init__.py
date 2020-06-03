@@ -1,5 +1,5 @@
 """Gets ENV vars or Config vars then calls class."""
-from telethon import TelegramClient, events
+from telethon import events
 import aiohttp
 from telethon.sessions import StringSession
 import os
