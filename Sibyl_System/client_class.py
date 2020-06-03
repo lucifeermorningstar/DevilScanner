@@ -1,11 +1,12 @@
 from telethon import TelegramClient
-from .strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
+from .strings import scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
 from Sibyl_System import Sibyl_logs, Sibyl_approved_logs, GBAN_MSG_LOGS
 
-class SibylClient(TelegramClient):
-    """Custom Telethon client class."""
+class SibylClient(TelegramClient):  
     
+    """Custom Telethon client class."""
     def __init__(self, *args, **kwargs):
+        """Declare stuff."""
         self.gban_logs = GBAN_MSG_LOGS
         self.approved_logs = Sibyl_approved_logs
         self.log = Sibyl_logs
