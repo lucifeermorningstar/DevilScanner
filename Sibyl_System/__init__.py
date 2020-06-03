@@ -64,7 +64,7 @@ async def make_collections() -> str:
         dictw["blacklisted_wlc"] = []
         await collection.insert_one(dictw)
     if await collection.count_documents({'_id': 3}, limit=1) == 0:
-        dictw = {"_id": 2, "Type": "Gban:List"}
+        dictw = {"_id": 3, "Type": "Gban:List"}
         dictw["gbans"] = []
         dictw["gbanners"] = []
         dictw["reason"] = []
