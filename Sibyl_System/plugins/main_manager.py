@@ -80,7 +80,8 @@ async def approve(event):
                      bot = (await System.get_entity(id)).bot
                 except:
                      bot = False
-                await System.gban(enforcer=me.id, target=id, msg_id=replied.id, auto=True, bot=bot)
+                reason = re.search('\*\*Reason:\*\* (.*)', replied.text).group(1)
+                await System.gban(enforcer=me.id, target=id, reason = reason, msg_id=replied.id, auto=True, bot=bot)
                 return "OwO"
         if match:
             reply = replied.sender.id
