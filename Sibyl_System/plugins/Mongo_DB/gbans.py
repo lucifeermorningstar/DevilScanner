@@ -1,7 +1,8 @@
 from Sibyl_System import MONGO_CLIENT
 
+db = MONGO_CLIENT['Sibyl']['Main']
+
 async def get_gbans() -> dict:
-    db = MONGO_CLIENT['Sibyl']['Main']
     json = await db.find_one({'_id': 3})
     return json
 
