@@ -22,5 +22,5 @@ async def update_gban(victim:int, reason:str=None, proof_id:int=None, enforcer:i
         gbans_dict['reason'].remove(reason)
         gbans_dict['proof_id'].remove(proof_id)
         gbans_dict['gbanners'].remove(enforcer)
-     await db.update(await get_gbans(), gbans_dict)
-     return True
+    await db.update(await get_gbans(), gbans_dict)
+    return True
