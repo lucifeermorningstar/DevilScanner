@@ -1,6 +1,7 @@
 from telethon import TelegramClient
 from .strings import scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
 from Sibyl_System import Sibyl_logs, Sibyl_approved_logs, GBAN_MSG_LOGS
+from Sibyl_System.plugins.Mongo_DB.gbans import update_gban
 
 class SibylClient(TelegramClient):  
     
@@ -28,7 +29,10 @@ class SibylClient(TelegramClient):
             await self.send_message(Sibyl_approved_logs, bot_gban_string.format(enforcer=enforcer, scam=target, reason = reason))
         else:
             await self.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, reason = reason, proof_id = msg_id))
-        return True
+        if await update_gban(victim = target, reason=reason, proof_id=msg_id, enforcer=enforcer): 
+            return True
+        else:
+            return False
     
     async def ungban(self, target=None, reason=None) -> bool:
         if self.gban_logs:
@@ -37,7 +41,10 @@ class SibylClient(TelegramClient):
             logs = self.log
         await self.send_message(logs, f'/ungban [{target}](tg://ueser?id={target}) {reason}')
         await self.send_message(logs, f'/unfban [{target}](tg://ueser?id={target}) {reason}')
-        return True
+        if await update_gban(victim = target, reason=reason, proof_id=msg_id, enforcer=enforcer, add=False): 
+            return True
+        else:
+            return False
         
   
   
