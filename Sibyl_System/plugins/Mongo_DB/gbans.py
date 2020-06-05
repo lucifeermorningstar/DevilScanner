@@ -11,7 +11,7 @@ async def get_gban(user:int) :
     if user not in gbans['victim']:
         return False
     else:
-        place = user.index(gbans['victim'])
+        place = gbans['victim'].index(user)
         user_data = {}
         user_data['user'] = gbans['victim'][place]
         user_data['reason'] = gbans['reason'][place]
