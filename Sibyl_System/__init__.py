@@ -42,14 +42,13 @@ ENFORCERS.extend(INSPECTORS)
 
 session = aiohttp.ClientSession()
 
+MONGO_CLIENT = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
+
 from .client_class import SibylClient
 System = SibylClient(
     StringSession(STRING_SESSION),
     API_ID_KEY,
     API_HASH_KEY)
-
-
-MONGO_CLIENT = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
 
 collection = MONGO_CLIENT['Sibyl']['Main']
 
