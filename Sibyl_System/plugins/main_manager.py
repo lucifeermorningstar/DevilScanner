@@ -3,6 +3,7 @@ from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_
 from Sibyl_System import System, system_cmd
 import re
 from Sibyl_System import session
+import Sibyl_System.plugins.Mongo_DB.gbans as db
 import logging
 
 
@@ -109,7 +110,7 @@ async def approve(event):
                    bot = False 
                 await System.gban(enforcer, scam, reason, replied.id, sender, bot=bot)
 
-@System.on(system_cmd(pattern=r'proof ', allow_inspectors=True, force_reply = True))
+@System.on(system_cmd(pattern=r'proof ', allow_inspectors=True))
 async def proof(event):
         msg = await System.send_message(event.chat_id, 'Connecting to archive for case file >>>>>')
         try:
@@ -152,6 +153,23 @@ async def proof(event):
              url = f"https://del.dog/{r['key']}"
         await msg.edit(proof_string.format(proof_id = proof_id, reason=reason, paste=paste, url=url))
 
+@System.on(system_cmd(pattern=r'qproof ', allow_inspectors=True))
+async def qproof(event):
+   user = event.text.split(' ', 1)
+   if len(user) == 1: return
+   user_data = await db.get_gban(int(user[1]))
+   if not user_data:
+        await event.reply('User is not gbanned')
+        return
+   message = f"User: {user_data['user']}\n"\
+                       f"Enforcer: {user_data['enforcer']}\n"\
+                       f"Reason: {user_data['reason']}\n"\
+                       f"Extended Proof: {user_data['proof_id']}"
+   await event.reply(message)
+      
+
+
+
 
 @System.on(system_cmd(pattern=r'reject', allow_inspectors = True, force_reply = True))
 async def reject(event):
@@ -169,11 +187,12 @@ async def reject(event):
 help_plus = """
 Here is the help for **Main**:
 
-`scan` - **Reply to a message WITH reason to send a request to Sibyl for judgement**
-`approve` - **Approve a scan request (Only works in Public Safety Bureau)**
-`revert or revive or restore` - **Ungban ID**
-`proof` - **Get message from proof id which is at the end of gban msg **
-`reject` - **Reject a scan request**
+`scan` - Reply to a message WITH reason to send a request to Sibyl for judgement
+`approve` - Approve a scan request (Only works in Public Safety Bureau)
+`revert or revive or restore` - Ungban ID
+`qproof` - Get quick proof from database for given user id
+`proof` - Get message from proof id which is at the end of gban msg
+`reject` - Reject a scan request
 
 **Notes:**
 `/` `?` `.`are supported prefixes.
