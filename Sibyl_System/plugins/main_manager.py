@@ -50,6 +50,7 @@ async def scan(event):
             reason = event.text.split(" ", trim)[trim]
         executor = f'[{executer.first_name}](tg://user?id={executer.id})'
         chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
+        await event.reply("Scanning...")
         if not approve:
            msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=sender, chat=chat , message=replied.text, reason=reason))
         if approve:
@@ -63,7 +64,7 @@ async def revive(event):
    except IndexError: return
    a = await event.reply("Casting magic spells to revive the dead person")
    await System.ungban(user_id, f" By //{(await event.get_sender()).id}")
-   await a.edit("OwO, It worked") 
+   await a.edit("OwO, It worked")
 
 
 @System.on(system_cmd(pattern=r'approve', allow_inspectors=True, force_reply = True))
@@ -107,8 +108,10 @@ async def approve(event):
                 try:
                    bot = (await System.get_entity(scam)).bot
                 except:
-                   bot = False 
+                   bot = False
                 await System.gban(enforcer, scam, reason, replied.id, sender, bot=bot)
+                orig = re.search(r"t.me\/(\w+)\/(\d+)", replied.text).group(1)
+                await System.send_message(orig, 'Scan approved, Taking action...')
 
 @System.on(system_cmd(pattern=r'proof ', allow_inspectors=True))
 async def proof(event):
@@ -183,6 +186,8 @@ async def reject(event):
                 #print('Matched OmU')
                 id = replied.id
                 await System.edit_message(Sibyl_logs, id, reject_string)
+        orig = re.search(r"t.me\/(\w+)\/(\d+)", replied.text).group(1)
+        await System.send_message(orig, 'Scan rejected.')
 
 help_plus = """
 Here is the help for **Main**:
