@@ -110,8 +110,9 @@ async def approve(event):
                 except:
                    bot = False
                 await System.gban(enforcer, scam, reason, replied.id, sender, bot=bot)
-                orig = re.search(r"t.me\/(\w+)\/(\d+)", replied.text).group(1)
-                await System.send_message(orig, 'Scan approved, Taking action...')
+                orig = re.search(r"t.me\/(\w+)\/(\d+)", replied.text)
+                if orig:
+                  await System.send_message(orig.group(1), 'Scan approved, Taking action...', reply_to = int(orig.group(2)))
 
 @System.on(system_cmd(pattern=r'proof ', allow_inspectors=True))
 async def proof(event):
