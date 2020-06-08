@@ -189,7 +189,7 @@ async def reject(event):
                 await System.edit_message(Sibyl_logs, id, reject_string)
         orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
         if orig:
-          await System.send_message(orig.group(1),'Scan rejected.', reply_to=orig.group(2))
+          await System.send_message(orig.group(1),'Scan rejected.', reply_to=int(orig.group(2)))
 
 help_plus = """
 Here is the help for **Main**:
