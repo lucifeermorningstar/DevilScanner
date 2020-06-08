@@ -110,7 +110,7 @@ async def approve(event):
                 except:
                    bot = False
                 await System.gban(enforcer, scam, reason, replied.id, sender, bot=bot)
-                orig = re.search(r"t.me\/(\w+)\/(\d+)", replied.text)
+                orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
                 if orig:
                   await System.send_message(orig.group(1), 'Scan approved, Taking action...', reply_to = int(orig.group(2)))
 
@@ -187,8 +187,9 @@ async def reject(event):
                 #print('Matched OmU')
                 id = replied.id
                 await System.edit_message(Sibyl_logs, id, reject_string)
-        orig = re.search(r"t.me\/(\w+)\/(\d+)", replied.text).group(1)
-        await System.send_message(orig, 'Scan rejected.')
+        orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
+        if orig:
+          await System.send_message(orig.group(1),'Scan rejected.', reply_to=orig.group(2))
 
 help_plus = """
 Here is the help for **Main**:
