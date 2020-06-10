@@ -17,8 +17,10 @@ async def scan(event):
         replied = await event.get_reply_message()
         if re.match('.scan (-f )?-o .*', event.text) or re.match(".scan -o .*", event.text) or re.match(".scan (-f )?-p", event.text):
             if replied.fwd_from:
-                if re.match('.scan -o .*', event.text): trim = 2
-                elif: trim = 3
+                if re.match('.scan -o .*', event.text): 
+                  trim = 2
+                else: 
+                  trim = 3
                 reply = replied.fwd_from
                 target = reply.from_id
                 if reply.from_id in ENFORCERS or reply.from_id in SIBYL:
