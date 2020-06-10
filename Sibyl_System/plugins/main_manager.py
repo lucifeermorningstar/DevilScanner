@@ -15,11 +15,12 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 async def scan(event):
         trim = None
         replied = await event.get_reply_message()
-        if re.match('.scan -f -o .*',
-                    event.text) or re.match(".scan -o .*", event.text):
+        if re.match('.scan (-f )?-o .*', event.text) 
+        or re.match(".scan -o .*", event.text) 
+        or re.match(".scan (-f )?-p", event.text):
             if replied.fwd_from:
                 if re.match('.scan -o .*', event.text): trim = 2
-                else: trim = 3
+                elif: trim = 3
                 reply = replied.fwd_from
                 target = reply.from_id
                 if reply.from_id in ENFORCERS or reply.from_id in SIBYL:
@@ -34,6 +35,7 @@ async def scan(event):
             sender = f"[{replied.sender.first_name}](tg://user?id={replied.sender.id})"
             target = replied.sender.id
         executer = await event.get_sender()
+        req_proof = req_user = False
         try:
             if re.match('.scan -f .*', event.text) and executer.id in INSPECTORS:
                 if not trim:
@@ -42,6 +44,10 @@ async def scan(event):
             else:
                 reason = event.text.split(" ", 1)[1]
                 approve = False
+            match = re.match('.scan -f -p (\d+) .*', event.text)
+            if  match and executer.id in INSPECTORS:
+                rep_proof = True
+                req_user = match.group(1)
         except BaseException:
             return
         if replied.video or replied.document or replied.contact or replied.gif or replied.sticker:
@@ -50,7 +56,10 @@ async def scan(event):
             reason = event.text.split(" ", trim)[trim]
         executor = f'[{executer.first_name}](tg://user?id={executer.id})'
         chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
-        await event.reply("Scanning...")
+        await event.reply("Scanning.")
+        if req_proof and req_user:
+          await replied.forward_to(Sibyl_logs)
+          await System.gban(executer.id, req_user, reason, msg.id, executer)
         if not approve:
            msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=sender, chat=chat , message=replied.text, reason=reason))
         if approve:
