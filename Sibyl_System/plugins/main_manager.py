@@ -15,9 +15,7 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 async def scan(event):
         trim = None
         replied = await event.get_reply_message()
-        if re.match('.scan (-f )?-o .*', event.text) 
-        or re.match(".scan -o .*", event.text) 
-        or re.match(".scan (-f )?-p", event.text):
+        if re.match('.scan (-f )?-o .*', event.text) or re.match(".scan -o .*", event.text) or re.match(".scan (-f )?-p", event.text):
             if replied.fwd_from:
                 if re.match('.scan -o .*', event.text): trim = 2
                 elif: trim = 3
