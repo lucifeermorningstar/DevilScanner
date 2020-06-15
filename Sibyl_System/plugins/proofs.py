@@ -46,7 +46,7 @@ async def proof(event):
              url = f"https://del.dog/{r['key']}"
         await msg.edit(proof_string.format(proof_id = proof_id, reason=reason, paste=paste, url=url))
 
-@System.Bot.on(events.InlineQuery)  # pylint:disable=E0602
+@System.bot.on(events.InlineQuery)  # pylint:disable=E0602
 async def inline_handler(event):
   builder = event.builder
   query = event.text
