@@ -1,6 +1,6 @@
 from telethon import TelegramClient
 from .strings import scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
-from Sibyl_System import Sibyl_logs, Sibyl_approved_logs, GBAN_MSG_LOGS
+from Sibyl_System import Sibyl_logs, Sibyl_approved_logs, GBAN_MSG_LOGS, BOT_TOKEN, API_ID, API_HASH, STRING_SESSION
 from Sibyl_System.plugins.Mongo_DB.gbans import update_gban
 
 class SibylClient(TelegramClient):  
@@ -11,6 +11,13 @@ class SibylClient(TelegramClient):
         self.gban_logs = GBAN_MSG_LOGS
         self.approved_logs = Sibyl_approved_logs
         self.log = Sibyl_logs
+        self.bot = None
+        if BOT_TOKEN:
+            self.bot = TelegramClient(
+                "SibylSystem",
+                api_id=API_ID,
+                api_hash=API_HASH
+            ).start(bot_token=BOT_TOKEN)
         super().__init__(*args, **kwargs)
     
     async def gban(self, enforcer = None, target=None, reason=None, msg_id=None, approved_by=None, auto=False, bot=False) -> bool:
