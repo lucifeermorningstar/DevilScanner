@@ -68,7 +68,7 @@ async def inline_handler(event):
                    f"Reason: {user_data['reason']}\n"\
                    f"Extended Proof: {user_data['proof_id']}"
          result = builder.article(result)
-    await event.answer(result)
+    await event.answer('Sibyl System DB', text = result)
      
 @System.on(system_cmd(pattern=r'qproof ', allow_inspectors=True))
 async def qproof(event):
