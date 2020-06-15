@@ -4,7 +4,7 @@ from Sibyl_System import INSPECTORS, Sibyl_logs
 import Sibyl_System.plugins.Mongo_DB.gbans as db
 import asyncio
 
-async def make_proof(event):
+async def make_proof(event, proof_id):
         System = event.client
         proof = await System.get_messages(Sibyl_logs, ids=proof_id)
         try:
@@ -62,7 +62,7 @@ async def inline_handler(event):
       if len(split) == 1:
          result = builder.article("Type Case-ID", text="No Case-ID was provided")
       else:
-         proof = await make_proof(event)
+         proof = await make_proof(event, split[1])
          if proof == "Invalid":
             result = builder.article("Invalid  Case-ID", text="Case-ID is Invalid")
          elif proof == "Media":
