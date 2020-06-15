@@ -15,8 +15,8 @@ class SibylClient(TelegramClient):
         if BOT_TOKEN:
             self.bot = TelegramClient(
                 "SibylSystem",
-                api_id=API_ID,
-                api_hash=API_HASH
+                api_id=API_ID_KEY,
+                api_hash=API_HASH_KEY
             ).start(bot_token=BOT_TOKEN)
         super().__init__(*args, **kwargs)
     
