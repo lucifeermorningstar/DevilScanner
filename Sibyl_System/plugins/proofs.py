@@ -62,7 +62,7 @@ async def inline_handler(event):
       if len(split) == 1:
          result = builder.article("Type Case-ID", text="No Case-ID was provided")
       else:
-         proof = await make_proof(event, split[1])
+         proof = await make_proof(event, int(split[1]))
          if proof == "Invalid":
             result = builder.article("Invalid  Case-ID", text="Case-ID is Invalid")
          elif proof == "Media":
