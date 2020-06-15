@@ -1,4 +1,7 @@
 from Sibyl_System import System, system_cmd
+from telethon import events
+from Sibyl_System import INSPECTORS
+import Sibyl_System.plugins.Mongo_DB.gbans as db
 
 @System.on(system_cmd(pattern=r'proof ', allow_inspectors=True))
 async def proof(event):
@@ -43,6 +46,30 @@ async def proof(event):
              url = f"https://del.dog/{r['key']}"
         await msg.edit(proof_string.format(proof_id = proof_id, reason=reason, paste=paste, url=url))
 
+@System.Bot.on(events.InlineQuery)  # pylint:disable=E0602
+async def inline_handler(event):
+  builder = event.builder
+  query = event.text
+  split = query.text.split(' ', 1)
+  if query.user_id not in INSPECTORS:
+    result = builder.article("You don't have access to this cmd.")
+    await event.answer(result)
+    return
+  if query.startswith("qproof"):
+    if len(split) == 1:
+      result = builder.article("Type User id")
+    else:
+      user_data = await db.get_gban(int(split[1]))
+      if not user_data:
+         result = builder.article('User is not gbanned')
+      else:
+         result =  f"User: {user_data['user']}\n"\
+                   f"Enforcer: {user_data['enforcer']}\n"\
+                   f"Reason: {user_data['reason']}\n"\
+                   f"Extended Proof: {user_data['proof_id']}"
+         result = builder.article(result)
+    await event.answer(result)
+     
 @System.on(system_cmd(pattern=r'qproof ', allow_inspectors=True))
 async def qproof(event):
    user = event.text.split(' ', 1)
