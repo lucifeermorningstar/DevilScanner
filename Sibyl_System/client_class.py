@@ -1,6 +1,6 @@
 from telethon import TelegramClient
 from .strings import scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
-from Sibyl_System import Sibyl_logs, Sibyl_approved_logs, GBAN_MSG_LOGS, BOT_TOKEN, API_ID, API_HASH, STRING_SESSION
+from Sibyl_System import Sibyl_logs, Sibyl_approved_logs, GBAN_MSG_LOGS, BOT_TOKEN, API_ID_KEY, API_HASH_KEY
 from Sibyl_System.plugins.Mongo_DB.gbans import update_gban
 
 class SibylClient(TelegramClient):  
