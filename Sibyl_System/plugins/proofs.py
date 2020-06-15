@@ -2,6 +2,7 @@ from Sibyl_System import System, system_cmd
 from telethon import events
 from Sibyl_System import INSPECTORS
 import Sibyl_System.plugins.Mongo_DB.gbans as db
+import asyncio
 
 async def make_proof(event):
         System = event.client
@@ -43,6 +44,7 @@ async def inline_handler(event):
     result = builder.article("Sibyl System", text = "You don't have access to this cmd.")
     await event.answer([result])
     return
+  await asyncio.sleep(2)
   if query.startswith("qproof"):
     if len(split) == 1:
       result = builder.article("Type User id", text="No Id was proved")
@@ -60,7 +62,7 @@ async def inline_handler(event):
       if len(split) == 1:
          result = builder.article("Type Case-ID", text="No Case-ID was provided")
       else:
-         proof = make_proof(event)
+         proof = await make_proof(event)
          if proof == "Invalid":
             result = builder.article("Invalid  Case-ID", text="Case-ID is Invalid")
          elif proof == "Media":
