@@ -53,7 +53,7 @@ async def inline_handler(event):
   split = query.split(' ', 1)
   if event.query.user_id not in INSPECTORS:
     result = builder.article("Sibyl System", text = "You don't have access to this cmd.")
-    await event.answer(result)
+    await event.answer([result])
     return
   if query.startswith("qproof"):
     if len(split) == 1:
@@ -68,4 +68,4 @@ async def inline_handler(event):
                    f"Reason: {user_data['reason']}\n"\
                    f"Extended Proof: {user_data['proof_id']}"
          result = builder.article(result)
-    await event.answer(result)
+    await event.answer([result])
