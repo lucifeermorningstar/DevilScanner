@@ -67,5 +67,5 @@ async def inline_handler(event):
                    f"Enforcer: {user_data['enforcer']}\n"\
                    f"Reason: {user_data['reason']}\n"\
                    f"Extended Proof: {user_data['proof_id']}"
-         result = builder.article(result)
+         result = builder.article('Sibyl System', text = result)
     await event.answer([result])
