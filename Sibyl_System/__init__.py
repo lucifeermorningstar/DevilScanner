@@ -24,6 +24,7 @@ if ENV:
     Sibyl_logs = int(os.environ.get('Sibyl_logs', None))
     Sibyl_approved_logs = int(os.environ.get('Sibyl_Approved_Logs', None))
     GBAN_MSG_LOGS = int(os.environ.get('GBAN_MSG_LOGS', None))
+    BOT_TOKEN = os.environ.get('BOT_TOKEN')
 else:
     import config as Config
     API_ID_KEY = Config.API_ID
@@ -36,6 +37,7 @@ else:
     Sibyl_logs = Config.Sibyl_logs
     Sibyl_approved_logs = Config.Sibyl_approved_logs
     GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
+    BOT_TOKEN = Config.BOT_TOKEN
 
 INSPECTORS.extend(SIBYL)
 ENFORCERS.extend(INSPECTORS)
