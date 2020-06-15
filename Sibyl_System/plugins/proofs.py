@@ -50,7 +50,7 @@ async def proof(event):
 async def inline_handler(event):
   builder = event.builder
   query = event.text
-  split = query.text.split(' ', 1)
+  split = query.split(' ', 1)
   if query.user_id not in INSPECTORS:
     result = builder.article("You don't have access to this cmd.")
     await event.answer(result)
@@ -69,17 +69,3 @@ async def inline_handler(event):
                    f"Extended Proof: {user_data['proof_id']}"
          result = builder.article(result)
     await event.answer('Sibyl System DB', text = result)
-     
-@System.on(system_cmd(pattern=r'qproof ', allow_inspectors=True))
-async def qproof(event):
-   user = event.text.split(' ', 1)
-   if len(user) == 1: return
-   user_data = await db.get_gban(int(user[1]))
-   if not user_data:
-        await event.reply('User is not gbanned')
-        return
-   message = f"User: {user_data['user']}\n"\
-                       f"Enforcer: {user_data['enforcer']}\n"\
-                       f"Reason: {user_data['reason']}\n"\
-                       f"Extended Proof: {user_data['proof_id']}"
-   await event.reply(message)
