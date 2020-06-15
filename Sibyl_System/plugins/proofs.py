@@ -1,6 +1,6 @@
 from Sibyl_System import System, system_cmd
 from telethon import events
-from Sibyl_System import INSPECTORS
+from Sibyl_System import INSPECTORS, Sibyl_logs
 import Sibyl_System.plugins.Mongo_DB.gbans as db
 import asyncio
 
