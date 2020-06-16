@@ -1,7 +1,8 @@
 on_string = """
 **Portable Psychological Diagnosis and Supression System**
 Connection successful.
-`Dominator` is now active. Cymatic scans are now possible!
+`Dominator` is now active. 
+Cymatic scans are now possible!
 """
 
 # Make sure not to change these too much

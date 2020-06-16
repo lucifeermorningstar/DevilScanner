@@ -71,9 +71,9 @@ async def revive(event):
    try:
      user_id = event.text.split(" ", 1)[1]
    except IndexError: return
-   a = await event.reply("Casting magic spells to revive the dead person")
+   a = await event.reply("Reverting bans..")
    await System.ungban(user_id, f" By //{(await event.get_sender()).id}")
-   await a.edit("OwO, It worked")
+   await a.edit("Revert request sent to sibyl. This might take 10minutes or so.")
 
 
 @System.on(system_cmd(pattern=r'approve', allow_inspectors=True, force_reply = True))
