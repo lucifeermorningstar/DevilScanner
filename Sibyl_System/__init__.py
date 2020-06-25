@@ -73,10 +73,11 @@ async def make_collections() -> str:
         await collection.insert_one(dictw)
     return ""
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(make_collections())
-globals()['Processing'] = 0
-globals()['processed'] = 0
+if __name__ == '__main__':
+   loop = asyncio.get_event_loop()
+   loop.run_until_complete(make_collections())
+   System.processing = 0
+   System.processed = 0
 
 def system_cmd(pattern=None, allow_sibyl=True,
                allow_enforcer=False, allow_inspectors = False, allow_slash=True, force_reply = False, **args):
