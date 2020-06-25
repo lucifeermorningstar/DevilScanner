@@ -77,6 +77,7 @@ async def listbl(event):
 @System.on(events.MessageEdited(incoming=True))
 @System.on(events.NewMessage(incoming=True))
 async def auto_gban_request(event):
+    globals()['Processing'] += 1
     if event.from_id in ENFORCERS or event.from_id in SIBYL:
         return
     if event.chat_id == Sibyl_logs:
@@ -91,11 +92,14 @@ async def auto_gban_request(event):
                 link = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
                 logmsg = f"""$AUTOSCAN\n**Scanned user:** [{event.from_id}](tg://user?id={event.from_id})\n**Reason:** 0x{c}\n**Chat:** {link}\n**Hue Color:** Yellow-green\n**Message:** {event.text}"""                     
                 await System.send_message(Sibyl_logs, logmsg)
+                globals()['processed'] += 1
+                globals()['Processing'] -= 1
                 return
 
 
 @System.on(events.ChatAction(func= lambda e: e.user_joined))  # pylint:disable=E0602
 async def auto_wlc_gban(event):
+    globals()['Processing'] += 1
     user = await event.get_user()
     if user.id in ENFORCERS or user.id in SIBYL:
         return
@@ -109,6 +113,8 @@ async def auto_wlc_gban(event):
              c = words.index(word)
              logmsg = f"""$AUTOSCAN\n**Scanned user:** [{user.id}](tg://user?id={user.id})\n**Reason:** 1x{c}\n**User joined and blacklisted string in name**\n**Matched String:** {word}\n"""
              await System.send_message(Sibyl_logs, logmsg)
+             globals()['processed'] += 1
+             globals()['Processing'] -= 1
 
 @System.on(system_cmd(pattern=r'get ', allow_slash=False))
 async def get(event):
