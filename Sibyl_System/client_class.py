@@ -12,6 +12,8 @@ class SibylClient(TelegramClient):
         self.approved_logs = Sibyl_approved_logs
         self.log = Sibyl_logs
         self.bot = None
+        self.processing = 0
+        self.processed = 0
         if BOT_TOKEN:
             self.bot = TelegramClient(
                 "SibylSystem",
