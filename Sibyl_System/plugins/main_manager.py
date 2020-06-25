@@ -56,7 +56,7 @@ async def scan(event):
             reason = event.text.split(" ", trim)[trim]
         executor = f'[{executer.first_name}](tg://user?id={executer.id})'
         chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
-        await event.reply("Scanning.")
+        await event.reply("Connecting to Sibyl for a cymatic scan.")
         if req_proof and req_user:
           await replied.forward_to(Sibyl_logs)
           await System.gban(executer.id, req_user, reason, msg.id, executer)
@@ -121,7 +121,7 @@ async def approve(event):
                 await System.gban(enforcer, scam, reason, replied.id, sender, bot=bot)
                 orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
                 if orig:
-                  await System.send_message(orig.group(1), 'Scan approved, Taking action...', reply_to = int(orig.group(2)))
+                  await System.send_message(orig.group(1), 'User is a target for enforcement action.\nEnforcement Mode: Lethal Eliminator', reply_to = int(orig.group(2)))
 
 @System.on(system_cmd(pattern=r'reject', allow_inspectors = True, force_reply = True))
 async def reject(event):
