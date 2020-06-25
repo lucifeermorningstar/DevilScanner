@@ -27,6 +27,12 @@ for load in to_load:
 async def status(event):
          await event.reply(on_string)
 
+@System.on(system_cmd(pattern='sibyl stats'))
+async def stats(event):
+         msg = f"Currently Processing {globals()['Processing']} messages."
+         msg += f"\nProcessed {globals()['processed']} messages."
+         await event.reply(msg)
+
 @System.on(system_cmd(pattern=r'help', allow_slash=False, allow_inspectors = True))
 async def send_help(event):
          try:
