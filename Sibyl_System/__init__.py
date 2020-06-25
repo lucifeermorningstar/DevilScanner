@@ -75,7 +75,7 @@ async def make_collections() -> str:
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(make_collections())
-globals()['processing'] = 0
+globals()['Processing'] = 0
 globlas()['processed'] = 0
 def system_cmd(pattern=None, allow_sibyl=True,
                allow_enforcer=False, allow_inspectors = False, allow_slash=True, force_reply = False, **args):
