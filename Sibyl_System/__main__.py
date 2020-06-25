@@ -29,8 +29,8 @@ async def status(event):
 
 @System.on(system_cmd(pattern='sibyl stats'))
 async def stats(event):
-         msg = f"Currently Processing {globals()['Processing']} messages."
-         msg += f"\nProcessed {globals()['processed']} messages."
+         msg = f"Currently Processing {System.processing} messages."
+         msg += f"\nProcessed {System.processed} messages."
          await event.reply(msg)
 
 @System.on(system_cmd(pattern=r'help', allow_slash=False, allow_inspectors = True))
