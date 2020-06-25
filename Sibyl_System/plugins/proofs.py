@@ -5,7 +5,6 @@ import Sibyl_System.plugins.Mongo_DB.gbans as db
 import asyncio
 
 async def make_proof(event, proof_id):
-        System = event.client
         proof = await System.get_messages(Sibyl_logs, ids=proof_id)
         try:
             reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)", proof.message)
