@@ -95,11 +95,13 @@ async def auto_gban_request(event):
                 System.processed += 1
                 System.processing -= 1
                 return
+    System.processed += 1
+    System.processing -= 1
 
 
 @System.on(events.ChatAction(func= lambda e: e.user_joined))  # pylint:disable=E0602
 async def auto_wlc_gban(event):
-    globals()['Processing'] += 1
+    System.processing += 1
     user = await event.get_user()
     if user.id in ENFORCERS or user.id in SIBYL:
         return
@@ -115,6 +117,9 @@ async def auto_wlc_gban(event):
              await System.send_message(Sibyl_logs, logmsg)
              System.processed += 1
              System.processing -= 1
+             return
+       System.processed += 1
+       System.processing -= 1
 
 @System.on(system_cmd(pattern=r'get ', allow_slash=False))
 async def get(event):
