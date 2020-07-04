@@ -1,27 +1,10 @@
 from Sibyl_System import System, system_cmd
 from Sibyl_System.strings import on_string
 import logging
-import importlib
 import asyncio
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
-
-from Sibyl_System.plugins import to_load
-
-HELP = {}
-IMPORTED = {}
-
-for load in to_load:
-    imported = importlib.import_module("Sibyl_System.plugins." + load)
-    if not hasattr(imported, "__plugin_name__"):
-        imported.__plugin_name__ = imported.__name__
-
-    if not imported.__plugin_name__.lower() in IMPORTED:
-        IMPORTED[imported.__plugin_name__.lower()] = imported
-
-    if hasattr(imported, "help_plus") and imported.help_plus:
-        HELP[imported.__plugin_name__.lower()] = imported
 
 @System.on(system_cmd(pattern=r'status', allow_enforcer = True))
 async def status(event):
