@@ -51,6 +51,7 @@ async def rmenf(event) -> None:
       u_id = (await System.get_entity(u_id)).id
     except BaseException:
         await event.reply('Invalid ID/Username!')
+    u_id = str(u_id)
     if u_id not in ENFORCERS:
         await System.send_message(event.chat_id, 'Is that person even a Enforcer?')
         return
@@ -63,7 +64,7 @@ async def rmenf(event) -> None:
         else:
          config['ENFORCERS'] = ENF.strip(' ' + str(u_id) + ' ')   
     else:
-        ENFORCERS.remove(u_id)
+        ENFORCERS.remove(int(u_id))
     await System.send_message(event.chat_id, f'Removed [{u_id}](tg://user?id={u_id}) from Enforcers')
 
 
@@ -134,6 +135,7 @@ async def rmins(event) -> None:
     if u_id not in INSPECTORS:
         await System.send_message(event.chat_id, 'Is that person even an Inspector?')
         return
+    u_id = str(u_id)
     if HEROKU:
         ENF = os.environ.get('INSPECTORS')
         if ENF.endswith(u_id):
@@ -143,7 +145,7 @@ async def rmins(event) -> None:
         else:
          config['INSPECTORS'] = ENF.strip(' ' + str(u_id) + ' ')
     else:
-        INSPECTORS.remove(u_id)
+        INSPECTORS.remove(int(u_id))
     await System.send_message(event.chat_id, f'Removed Inspector status of [{u_id}](tg://user?id={u_id}), Now that user is a mere enforcers.')
 
 
