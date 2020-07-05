@@ -1,5 +1,6 @@
 from Sibyl_System import System, system_cmd
 from Sibyl_System.strings import on_string
+from Sibyl_System.plugins.Mongo_DB.gbans import get_gbans 
 import logging
 import importlib
 import asyncio
@@ -25,13 +26,13 @@ for load in to_load:
 
 @System.on(system_cmd(pattern=r'status', allow_enforcer = True))
 async def status(event):
-         await event.reply(on_string)
+  await event.reply(on_string)
 
 @System.on(system_cmd(pattern='sibyl stats'))
 async def stats(event):
-         msg = f"Currently Processing {System.processing} messages."
-         msg += f"\nProcessed {System.processed} messages."
-         await event.reply(msg)
+  msg = f"Processed {System.processed} messages since last restart."
+  msg += f"\n{len(get_gbans()['victim'])} users are gbanned."
+  await event.reply(msg)
 
 @System.on(system_cmd(pattern=r'help', allow_slash=False, allow_inspectors = True))
 async def send_help(event):
