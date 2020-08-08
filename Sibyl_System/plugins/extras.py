@@ -59,7 +59,7 @@ async def rmenf(event) -> None:
         ENF = os.environ.get('ENFORCERS')
         if ENF.endswith(u_id):
          config['ENFORCERS'] = ENF.strip(' ' + str(u_id))
-        elif ENF.starswith(u_id):
+        elif ENF.startswith(u_id):
          config['ENFORCERS'] = ENF.strip(str(u_id) + ' ')
         else:
          config['ENFORCERS'] = ENF.strip(' ' + str(u_id) + ' ')   
@@ -140,7 +140,7 @@ async def rmins(event) -> None:
         ENF = os.environ.get('INSPECTORS')
         if ENF.endswith(u_id):
          config['INSPECTORS'] = ENF.strip(' ' + str(u_id))
-        elif ENF.starswith(u_id):
+        elif ENF.startswith(u_id):
          config['INSPECTORS'] = ENF.strip(str(u_id) + ' ')
         else:
          config['INSPECTORS'] = ENF.strip(' ' + str(u_id) + ' ')
