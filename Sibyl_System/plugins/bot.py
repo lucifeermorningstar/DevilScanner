@@ -36,9 +36,19 @@ async def make_proof(event, proof_id):
              url = f"https://del.dog/{r['key']}"
         return proof_string.format(proof_id = proof_id, reason=reason, paste=paste, url=url)
 
-@System.bot.on(events.NewMessages(pattern = "[/?]start"))
+@System.bot.on(events.NewMessage(pattern = "[/?]start"))
 async def sup(event):
     await event.reply('sup?')
+
+@System.bot.on(events.NewMessage(pattern = "[/?]help"))
+async def sup(event):
+    await event.reply("""
+    This bot is a inline bot, You can use it by typing @SibylSystemRobot
+    If a user is gbanned - 
+       Getting user details using db - @SibylSystemRobot info <user_id>
+       Getting reason for gban, message the user was gbanned for - @SibylSystemRobot proof <user_id>
+    """)
+        
 
 @System.bot.on(events.InlineQuery)  # pylint:disable=E0602
 async def inline_handler(event):
@@ -50,7 +60,7 @@ async def inline_handler(event):
     await event.answer([result])
     return
   await asyncio.sleep(2)
-  if query.startswith("qproof"):
+  if query.startswith("info"):
     if len(split) == 1:
       result = builder.article("Type User id", text="No Id was proved")
     else:
