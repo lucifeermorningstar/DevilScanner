@@ -9,5 +9,5 @@ def seprate_flags(message: str) -> Tuple[Dict[str, bool], str]:
     flags_dict = dict()
     for flag in flags:
          flags_dict[flag[1:]] = True
-         message.replace(flag, "")
+    message = FLAG_REGEX.sub('', message)
     return (flags_dict, message)
