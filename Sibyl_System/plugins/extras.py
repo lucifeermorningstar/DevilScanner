@@ -1,3 +1,4 @@
+from urllib.parse import urlparse, urlunparse
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
@@ -201,8 +202,7 @@ async def redirect(event) -> None:
         of = event.text.split(" ", 1)[1]
     except BaseException:
         return
-    if not of.startswith('https://'):
-        of = 'https://' + of
+    of = urlunparse(urlparse(of, 'https'))
     async with session.get(of) as r:
         url = r.url
     await System.send_message(event.chat_id, f'URL: {url}')
