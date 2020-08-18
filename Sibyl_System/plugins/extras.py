@@ -211,21 +211,23 @@ async def redirect(event) -> None:
 help_plus = """
 Help!
 `addenf` - Adds a user as an enforcer.
-Format : addenf <user id / as reply >
+Format : addenf <user id / as reply>
 `rmenf` - Removes a user from enforcers.
-Format : rmenf <user id/ as reply>
+Format : rmenf <user id / as reply>
 `enforcers` - Lists all enforcers.
 `addins` - Adds a user as an Inspector.
-Format : addins <user id / as reply >
+Format : addins <user id / as reply>
 `rmins` - Removes a user from Inspector.
-Format : rmins <user id/ as reply>
-`inspector` - Lists all Inspector.
+Format : rmins <user id / as reply>
+`inspector` - Lists all inspectors.
 `join` - Joins a chat.
-Format : Joins < chat username or invite link >
+Format : join <chat username or invite link>
 `leave` - Leaves a chat.
-Format : Leaves < chat username or id >
-`resolve` - owo
-`get_redirect` - get redirect of a link
+Format : leave <chat username or id>
+`resolve` - Resolve a chat invite link.
+Format : resolve <chat invite link>
+`get_redirect` - Follows redirect of a link.
+Format : get_redirect <URL>
 **Notes:**
 `/` `?` `.` `!` are supported prefixes.
 **Example:** `/addenf` or `?addenf` or `.addenf`
