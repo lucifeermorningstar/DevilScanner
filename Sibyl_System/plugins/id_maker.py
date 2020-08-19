@@ -18,7 +18,7 @@ async def image_maker(event) -> None:
  position = (2473, 481)
  draw = ImageDraw.Draw(id_template)
  color = 'rgb(23, 43, 226)' #blue-ish color
- font = ImageFont.truetype('Sibyl_System/plugins/arial-unicode-ms.ttf', size=200)
+ font = ImageFont.truetype('font.ttf', size=200)
  #put text in image
  draw.text(position, replied_user.sender.first_name.replace('\u2060', ''), fill=color, font=font)
  id_template.save('user_id.png')
