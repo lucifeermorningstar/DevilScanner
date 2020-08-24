@@ -80,12 +80,12 @@ async def revive(event):
 async def approve(event):
         replied = await event.get_reply_message()
         match = re.match(r'\$SCAN', replied.text)
-        auto_match = re.match(r'\$AUTO(SCAN)?', replied.text)
+        auto_match = re.search(r'\$AUTO(SCAN)?', replied.text)
         me = await System.get_me()
         if auto_match:
             if replied.sender.id == me.id:
                 id = re.search(
-                    r"Scanned user: (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
+                    r"\*\*Scanned user\*\*: (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
                     replied.text).group(2)
                 try:
                      bot = (await System.get_entity(id)).bot
