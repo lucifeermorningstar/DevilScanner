@@ -1,9 +1,11 @@
 from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS, GBAN_MSG_LOGS
 from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
 from Sibyl_System import System, system_cmd
-import re
 from Sibyl_System import session
+from Sibyl_System.utils import seprate_flags
 import Sibyl_System.plugins.Mongo_DB.gbans as db
+
+import re
 import logging
 
 
@@ -15,12 +17,9 @@ logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s'
 async def scan(event):
         trim = None
         replied = await event.get_reply_message()
-        if re.match('.scan (-f )?-o .*', event.text) or re.match(".scan -o .*", event.text) or re.match(".scan (-f )?-p", event.text):
+        flags, reason = seprate_flags(event.text)
+        if 'o' in flags.keys():
             if replied.fwd_from:
-                if re.match('.scan -o .*', event.text): 
-                  trim = 2
-                else: 
-                  trim = 3
                 reply = replied.fwd_from
                 target = reply.from_id
                 if reply.from_id in ENFORCERS or reply.from_id in SIBYL:
@@ -36,35 +35,24 @@ async def scan(event):
             target = replied.sender.id
         executer = await event.get_sender()
         req_proof = req_user = False
-        try:
-            if re.match('.scan -f .*', event.text) and executer.id in INSPECTORS:
-                if not trim:
-                    reason = event.text.split(" ", 2)[2]
-                approve = True
-            else:
-                reason = event.text.split(" ", 1)[1]
-                approve = False
-            match = re.match('.scan -f -p (\d+) .*', event.text)
-            if  match and executer.id in INSPECTORS:
-                rep_proof = True
-                req_user = match.group(1)
-        except BaseException:
-            return
+        if 'f' in flags.keys() and executer.id in INSPECTORS:
+             approve = True
+        else:
+             approve = False
+        match = re.match('.scan -f -p (\d+) .*', event.text)
         if replied.video or replied.document or replied.contact or replied.gif or replied.sticker:
             await replied.forward_to(Sibyl_logs)
-        if trim:
-            reason = event.text.split(" ", trim)[trim]
         executor = f'[{executer.first_name}](tg://user?id={executer.id})'
         chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
         await event.reply("Connecting to Sibyl for a cymatic scan.")
         if req_proof and req_user:
-          await replied.forward_to(Sibyl_logs)
-          await System.gban(executer.id, req_user, reason, msg.id, executer)
+           await replied.forward_to(Sibyl_logs)
+           await System.gban(executer.id, req_user, reason, msg.id, executer)
         if not approve:
            msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=sender, chat=chat , message=replied.text, reason=reason))
-        if approve:
-           msg = await System.send_message(Sibyl_logs, forced_scan_string.format(ins = executor, spammer=sender, chat=chat,message=replied.text, reason=reason))
-           await System.gban(executer.id, target, reason, msg.id, executer)
+           return
+        msg = await System.send_message(Sibyl_logs, forced_scan_string.format(ins = executor, spammer=sender, chat=chat,message=replied.text, reason=reason))
+        await System.gban(executer.id, target, reason, msg.id, executer)
 
 @System.on(system_cmd(pattern=r're(vive|vert|store) '))
 async def revive(event):
@@ -153,7 +141,7 @@ Here is the help for **Main**:
 `/` `?` `.`are supported prefixes.
 **Example:** `/addenf` or `?addenf` or `.addenf`
 Adding `-f` to a scan will force an approval. (Sibyl Only)
-**Note 2:** adding `-o` will gban & fban the original sender, If using both approve and original sender flag the "-f" flag must come first!
+**Note 2:** adding `-o` will gban & fban the original sender.
 **Example:** `/scan -f bitcoin spammer`
 **Example 2:** `!scan -f -o owo`
 Also see "?help extras" for extended functions.
