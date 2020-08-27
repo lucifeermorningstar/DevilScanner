@@ -38,6 +38,8 @@ class SibylClient(TelegramClient):
             await self.send_message(Sibyl_approved_logs, bot_gban_string.format(enforcer=enforcer, scam=target, reason = reason))
         else:
             await self.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, reason = reason, proof_id = msg_id))
+        if not target:
+            return False
         if await update_gban(victim = int(target), reason=reason, proof_id=int(msg_id), enforcer=int(enforcer)):
             return True
         else:
