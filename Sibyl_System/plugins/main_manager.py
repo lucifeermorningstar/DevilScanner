@@ -18,7 +18,7 @@ async def scan(event):
         trim = None
         replied = await event.get_reply_message()
         flags, reason = seprate_flags(event.text)
-        if re.match('.scan', reason.strip()):
+        if len(reason.split(" ", 1)) == 1:
           return
         reason = reason.strip().split(" ", 1)[1]
         if 'o' in flags.keys():
