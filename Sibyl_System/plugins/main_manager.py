@@ -18,6 +18,8 @@ async def scan(event):
         trim = None
         replied = await event.get_reply_message()
         flags, reason = seprate_flags(event.text)
+        if not reason:
+          return
         if 'o' in flags.keys():
             if replied.fwd_from:
                 reply = replied.fwd_from
