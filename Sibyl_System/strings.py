@@ -28,7 +28,6 @@ $FORCED
 reject_string = """
 $REJECTED
 **Crime Coefficient:** `Under 100`
-
 Not a target for enforcement action. 
 The trigger will be locked.
 """
