@@ -27,6 +27,9 @@ async def scan(event):
                 target = reply.from_id
                 if reply.from_id in ENFORCERS or reply.from_id in SIBYL:
                     return
+                if not reply.from_id:
+                    await event.reply("Cannot get user ID.")
+                    return
                 if reply.from_name:
                     sender = f"[{reply.from_name}](tg://user?id={reply.from_id})"
                 else:
