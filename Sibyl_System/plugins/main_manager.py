@@ -12,7 +12,8 @@ import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.ERROR)
 
-url_regex = re.compile('(http(s)?://)?t.me/c/(\w+)/(\d+)')
+url_regex = re.compile('(http(s)?://)?t.me/(c/)?(\w+)/(\d+)')
+
 def get_data_from_url(url: str) -> tuple:
       """
       >>> get_data_from_url("https://t.me/c/1476401326/36963")
@@ -21,7 +22,7 @@ def get_data_from_url(url: str) -> tuple:
       match = url_regex.match(url)
       if not match:
         return False
-      return (match.group(3), match.group(4))
+      return (match.group(4), match.group(5))
       
 
 
