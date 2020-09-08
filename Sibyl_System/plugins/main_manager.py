@@ -36,7 +36,7 @@ async def scan(event):
         split = reason.strip().split(" ", 1)
         reason = reason.strip().split(" ", 1)[1]
         if 'u' in flags.keys():
-           url = reason
+           url = reason.split(" ", 1)[0]
            data = get_data_from_url(url.strip())
            if not data:
               await event.reply('Invalid url')
@@ -165,7 +165,7 @@ async def reject(event):
                 await System.edit_message(Sibyl_logs, id, reject_string)
         orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
         flags, reason = seprate_flags(event.text)
-        if orig and 'r' in flags[0].keys():
+        if orig and 'r' in flags.keys():
           await System.send_message(orig.group(1),'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to=int(orig.group(2)))
 
 help_plus = """
@@ -183,7 +183,8 @@ Here is the help for **Main**:
 **Example:** `/addenf` or `?addenf` or `.addenf`
 Adding `-f` to a scan will force an approval. (Sibyl Only)
 **Note 2:** adding `-o` will gban & fban the original sender.
-**Note 3:** Use -u flag with a url to scan the url 
+**Note 3:** Use -u flag with a url to scan the url
+**Note 3:** Use -r with reject to reply to message
 **Example:** `/scan -f bitcoin spammer`
 **Example 2:** `!scan -f -o owo`
 Also see "?help extras" for extended functions.
