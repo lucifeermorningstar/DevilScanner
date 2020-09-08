@@ -48,6 +48,11 @@ async def scan(event):
               return
            executor = await event.get_sender()
            executor = f'[{executor.first_name}](tg://user?id={executor.id})'
+           if not message:
+              await event.reply('Failed to get data from url')
+              return
+           if message.from_id in ENFORCERS:
+              return
            msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url.strip() , message=message.text, reason=split[1].strip().split(' ')[1]))
            return
         if 'o' in flags.keys():
@@ -159,7 +164,8 @@ async def reject(event):
                 id = replied.id
                 await System.edit_message(Sibyl_logs, id, reject_string)
         orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
-        if orig:
+        flags, reason = seprate_flags(event.text)
+        if orig and 'r' in flags[0].keys():
           await System.send_message(orig.group(1),'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to=int(orig.group(2)))
 
 help_plus = """
