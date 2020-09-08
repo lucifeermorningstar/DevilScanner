@@ -12,6 +12,18 @@ import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.ERROR)
 
+url_regex = re.compile('(http(s)?://)?t.me/c/(\w+)/(\d+)')
+def get_data_from_url(url: str) -> tuple:
+      """
+      >>> get_data_from_url("https://t.me/c/1476401326/36963")
+      (1476401326, 36963)
+      """
+      match = url_regex.match(url)
+      if not match:
+        return False
+      return (match.group(3), match.group(4))
+      
+
 
 @System.on(system_cmd(pattern=r'scan ', allow_enforcer = True, force_reply = True))
 async def scan(event):
@@ -20,7 +32,24 @@ async def scan(event):
         flags, reason = seprate_flags(event.text)
         if len(reason.split(" ", 1)) == 1:
           return
+        split = reason.strip().split(" ", 1)
         reason = reason.strip().split(" ", 1)[1]
+        if 'u' in flags.keys():
+           url = reason
+           reason = 
+           data = get_data_from_url(url)
+           if not data:
+              await event.reply('Invalid url')
+              return
+           try:
+              message = await System.get_messages(data[0], data[1])
+           except:
+              await event.reply('Failed to get data from url')
+              return
+           executor = await event.get_sender()
+           executor = f'[{executer.first_name}](tg://user?id={executer.id})'
+           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url , message=message.text, reason=split[2]))
+           return
         if 'o' in flags.keys():
             if replied.fwd_from:
                 reply = replied.fwd_from
