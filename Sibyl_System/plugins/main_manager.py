@@ -47,8 +47,8 @@ async def scan(event):
               await event.reply('Failed to get data from url')
               return
            executor = await event.get_sender()
-           executor = f'[{executer.first_name}](tg://user?id={executer.id})'
-           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url , message=message.text, reason=split[2]))
+           executor = f'[{executor.first_name}](tg://user?id={executor.id})'
+           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url.strip() , message=message.text, reason=split[2]))
            return
         if 'o' in flags.keys():
             if replied.fwd_from:
