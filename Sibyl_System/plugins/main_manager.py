@@ -36,7 +36,7 @@ async def scan(event):
         split = reason.strip().split(" ", 1)
         reason = reason.strip().split(" ", 1)[1]
         if 'u' in flags.keys():
-           url = reason.split(" ", 1)[0]
+           url = reason
            data = get_data_from_url(url.strip())
            if not data:
               await event.reply('Invalid url')
@@ -53,7 +53,7 @@ async def scan(event):
               return
            if message.from_id in ENFORCERS:
               return
-           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url.strip() , message=message.text, reason=split[1].strip().split(' ')[1]))
+           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url.split(" ", 1)[0] , message=message.text, reason=split[1].strip().split(' ')[1]))
            return
         if 'o' in flags.keys():
             if replied.fwd_from:
