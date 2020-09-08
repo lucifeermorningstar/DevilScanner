@@ -42,7 +42,7 @@ async def scan(event):
               await event.reply('Invalid url')
               return
            try:
-              message = await System.get_messages(data[0], ids = data[1])
+              message = await System.get_messages(int(data[0]) if data[0].isnumeric() else data[0], ids = int(data[1]))
            except:
               await event.reply('Failed to get data from url')
               return
