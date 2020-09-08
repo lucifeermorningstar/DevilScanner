@@ -36,7 +36,6 @@ async def scan(event):
         reason = reason.strip().split(" ", 1)[1]
         if 'u' in flags.keys():
            url = reason
-           reason = 
            data = get_data_from_url(url)
            if not data:
               await event.reply('Invalid url')
