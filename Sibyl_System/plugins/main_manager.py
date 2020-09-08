@@ -48,7 +48,7 @@ async def scan(event):
               return
            executor = await event.get_sender()
            executor = f'[{executor.first_name}](tg://user?id={executor.id})'
-           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url.strip() , message=message.text, reason=split[2]))
+           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url.strip() , message=message.text, reason=split[1].strip().split(' ')[1]))
            return
         if 'o' in flags.keys():
             if replied.fwd_from:
@@ -177,6 +177,7 @@ Here is the help for **Main**:
 **Example:** `/addenf` or `?addenf` or `.addenf`
 Adding `-f` to a scan will force an approval. (Sibyl Only)
 **Note 2:** adding `-o` will gban & fban the original sender.
+**Note 3:** Use -u flag with a url to scan the url 
 **Example:** `/scan -f bitcoin spammer`
 **Example 2:** `!scan -f -o owo`
 Also see "?help extras" for extended functions.
