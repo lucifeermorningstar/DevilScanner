@@ -25,7 +25,7 @@ def get_data_from_url(url: str) -> tuple:
       
 
 
-@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True, force_reply = True))
+@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True))
 async def scan(event):
         trim = None
         replied = await event.get_reply_message()
