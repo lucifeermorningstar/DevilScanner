@@ -169,7 +169,7 @@ async def reject(event):
         _orig = re.search(r"t.me/c/(\w+)/(\d+)", replied.text)
         flags, reason = seprate_flags(event.text)
         if _orig and 'r' in flags.keys():
-          await System.send_message(_orig.group(1), 'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to = int(_orig.group(2)))
+          await System.send_message(int(_orig.group(1)), 'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to = int(_orig.group(2)))
         if orig and 'r' in flags.keys():
           await System.send_message(orig.group(1),'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to=int(orig.group(2)))
 help_plus = """
