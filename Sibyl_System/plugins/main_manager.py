@@ -170,8 +170,10 @@ async def reject(event):
         flags, reason = seprate_flags(event.text)
         if _orig and 'r' in flags.keys():
           await System.send_message(int(_orig.group(1)), 'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to = int(_orig.group(2)))
+          return
         if orig and 'r' in flags.keys():
           await System.send_message(orig.group(1),'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to=int(orig.group(2)))
+
 help_plus = """
 Here is the help for **Main**:
 
