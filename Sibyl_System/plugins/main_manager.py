@@ -55,6 +55,8 @@ async def scan(event):
               return
            msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url.split(" ", 1)[0] , message=message.text, reason=split[1].strip().split(' ')[1]))
            return
+        if not event.is_reply:
+          return
         if 'o' in flags.keys():
             if replied.fwd_from:
                 reply = replied.fwd_from
@@ -83,7 +85,7 @@ async def scan(event):
         if replied.video or replied.document or replied.contact or replied.gif or replied.sticker:
             await replied.forward_to(Sibyl_logs)
         executor = f'[{executer.first_name}](tg://user?id={executer.id})'
-        chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
+        chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"t.me/c/{event.chat.id}/{event.message.id}"
         await event.reply("Connecting to Sibyl for a cymatic scan.")
         if req_proof and req_user:
            await replied.forward_to(Sibyl_logs)
@@ -164,9 +166,12 @@ async def reject(event):
                 id = replied.id
                 await System.edit_message(Sibyl_logs, id, reject_string)
         orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
+        _orig = re.search(r"t.me/c/(\w+)/(\d+)", replied.text)
         flags, reason = seprate_flags(event.text)
         if orig and 'r' in flags.keys():
           await System.send_message(orig.group(1),'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to=int(orig.group(2)))
+        if _orig and 'r' in flags.keys():
+          await System.send_message(_orig.group(1), 'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to = int(_orig.group(2)))
 
 help_plus = """
 Here is the help for **Main**:
