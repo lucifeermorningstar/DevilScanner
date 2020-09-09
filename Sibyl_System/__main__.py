@@ -4,6 +4,7 @@ from Sibyl_System.plugins.Mongo_DB.gbans import get_gbans
 import logging
 import importlib
 import asyncio
+import time
 
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
@@ -27,9 +28,11 @@ for load in to_load:
 @System.on(system_cmd(pattern=r'status', allow_enforcer = True))
 async def status(event):
   msg = await event.reply('Portable Psychological Diagnosis and Suppression System.')
+  time.sleep(1)
   await msg.edit('Initialising ▫️◾️▫️')
   sender = await event.get_sender()
   user_status = 'Inspector' if sender.id in INSPECTORS else 'Enforcers'
+  time.sleep(1)
   await msg.edit(on_string.format(Enforcer = user_status, name=sender.first_name))
 
 @System.on(system_cmd(pattern='sibyl stats'))
