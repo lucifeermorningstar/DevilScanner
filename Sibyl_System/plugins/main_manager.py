@@ -53,7 +53,7 @@ async def scan(event):
               return
            if message.from_id in ENFORCERS:
               return
-           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=url.split(" ", 1)[0] , message=message.text, reason=split[1].strip().split(' ')[1]))
+           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=f"https://t.me/{data[0]}/{data[1]}" , message=message.text, reason=split[1].strip().split(' ')[1]))
            return
         if not event.is_reply:
           return
