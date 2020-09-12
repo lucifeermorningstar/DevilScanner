@@ -177,22 +177,23 @@ async def reject(event):
 help_plus = """
 Here is the help for **Main**:
 
-`/` `?` `.`are supported prefixes.
-
-`scan` - Reply to a message WITH reason to send a request to Sibyl for judgement
-`approve` - Approve a scan request (Only works in Public Safety Bureau)
-`revert or revive or restore` - Ungban ID
-`qproof` - Get quick proof from database for given user id
-`proof` - Get message from proof id which is at the end of gban msg
-`reject` - Reject a scan request
+Commands:
+   `scan` - Reply to a message WITH reason to send a request to Sibyl for judgement  
+   `approve` - Approve a scan request (Only works in Public Safety Bureau)
+   `revert` or `revive` or `restore` - Ungban ID
+   `qproof` - Get quick proof from database for given user id
+   `proof` - Get message from proof id which is at the end of gban msg
+   `reject` - Reject a scan request
 
 Flags:
-  scan:
-    -f - Force approve a scan. Using this with scan will auto approve it (Inspectors+)
-    -u - Grab message from url. Use this with message link to scan the user the message link redirects to. (Enforcers+)
-    -o - Original Sender. Using this will gban orignal sender instead of forwarder (Enforcers+)
-  reject:
-    -r - Reply to the scan message with reject reason.
+    scan:
+        `-f` - Force approve a scan. Using this with scan will auto approve it (Inspectors+)
+        `-u` - Grab message from url. Use this with message link to scan the user the message link redirects to. (Enforcers+)
+        `-o` - Original Sender. Using this will gban orignal sender instead of forwarder (Enforcers+)
+    reject:
+        `-r` - Reply to the scan message with reject reason.
+
+All commands can be used with ! or / or ? or .
 """
 
 __plugin_name__ = "Main"
