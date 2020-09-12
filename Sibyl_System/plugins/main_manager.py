@@ -177,6 +177,8 @@ async def reject(event):
 help_plus = """
 Here is the help for **Main**:
 
+`/` `?` `.`are supported prefixes.
+
 `scan` - Reply to a message WITH reason to send a request to Sibyl for judgement
 `approve` - Approve a scan request (Only works in Public Safety Bureau)
 `revert or revive or restore` - Ungban ID
@@ -184,16 +186,13 @@ Here is the help for **Main**:
 `proof` - Get message from proof id which is at the end of gban msg
 `reject` - Reject a scan request
 
-**Notes:**
-`/` `?` `.`are supported prefixes.
-**Example:** `/addenf` or `?addenf` or `.addenf`
-Adding `-f` to a scan will force an approval. (Sibyl Only)
-**Note 2:** adding `-o` will gban & fban the original sender.
-**Note 3:** Use -u flag with a url to scan the url
-**Note 3:** Use -r with reject to reply to message
-**Example:** `/scan -f bitcoin spammer`
-**Example 2:** `!scan -f -o owo`
-Also see "?help extras" for extended functions.
+Flags:
+  scan:
+    -f - Force approve a scan. Using this with scan will auto approve it (Inspectors+)
+    -u - Grab message from url. Use this with message link to scan the user the message link redirects to. (Enforcers+)
+    -o - Original Sender. Using this will gban orignal sender instead of forwarder (Enforcers+)
+  reject:
+    -r - Reply to the scan message with reject reason.
 """
 
 __plugin_name__ = "Main"
