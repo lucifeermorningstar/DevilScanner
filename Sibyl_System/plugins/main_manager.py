@@ -12,20 +12,59 @@ import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.ERROR)
 
+url_regex = re.compile('(http(s)?://)?t.me/(c/)?(\w+)/(\d+)')
 
-@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True, force_reply = True))
+def get_data_from_url(url: str) -> tuple:
+      """
+      >>> get_data_from_url("https://t.me/c/1476401326/36963")
+      (1476401326, 36963)
+      """
+      match = url_regex.match(url)
+      if not match:
+        return False
+      return (match.group(4), match.group(5))
+      
+
+
+@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True))
 async def scan(event):
         trim = None
         replied = await event.get_reply_message()
         flags, reason = seprate_flags(event.text)
         if len(reason.split(" ", 1)) == 1:
           return
+        split = reason.strip().split(" ", 1)
         reason = reason.strip().split(" ", 1)[1]
+        if 'u' in flags.keys():
+           url = reason
+           data = get_data_from_url(url.strip())
+           if not data:
+              await event.reply('Invalid url')
+              return
+           try:
+              message = await System.get_messages(int(data[0]) if data[0].isnumeric() else data[0], ids = int(data[1]))
+           except:
+              await event.reply('Failed to get data from url')
+              return
+           executor = await event.get_sender()
+           executor = f'[{executor.first_name}](tg://user?id={executor.id})'
+           if not message:
+              await event.reply('Failed to get data from url')
+              return
+           if message.from_id in ENFORCERS:
+              return
+           msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=message.from_id, chat=f"https://t.me/{data[0]}/{data[1]}" , message=message.text, reason=split[1].strip().split(' ')[1]))
+           return
+        if not event.is_reply:
+          return
         if 'o' in flags.keys():
             if replied.fwd_from:
                 reply = replied.fwd_from
                 target = reply.from_id
                 if reply.from_id in ENFORCERS or reply.from_id in SIBYL:
+                    return
+                if not reply.from_id:
+                    await event.reply("Cannot get user ID.")
                     return
                 if reply.from_name:
                     sender = f"[{reply.from_name}](tg://user?id={reply.from_id})"
@@ -46,7 +85,7 @@ async def scan(event):
         if replied.video or replied.document or replied.contact or replied.gif or replied.sticker:
             await replied.forward_to(Sibyl_logs)
         executor = f'[{executer.first_name}](tg://user?id={executer.id})'
-        chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
+        chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"t.me/c/{event.chat.id}/{event.message.id}"
         await event.reply("Connecting to Sibyl for a cymatic scan.")
         if req_proof and req_user:
            await replied.forward_to(Sibyl_logs)
@@ -127,27 +166,34 @@ async def reject(event):
                 id = replied.id
                 await System.edit_message(Sibyl_logs, id, reject_string)
         orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
-        if orig:
-          await System.send_message(orig.group(1),'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.', reply_to=int(orig.group(2)))
+        _orig = re.search(r"t.me/c/(\w+)/(\d+)", replied.text)
+        flags, reason = seprate_flags(event.text)
+        if _orig and 'r' in flags.keys():
+          await System.send_message(int(_orig.group(1)), f'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.\nReason: **{reason.split(" ", 1)[1].strip()}**', reply_to = int(_orig.group(2)))
+          return
+        if orig and 'r' in flags.keys():
+          await System.send_message(orig.group(1),f'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.\nReason: **{reason.split(" ", 1)[1].strip()}**', reply_to=int(orig.group(2)))
 
 help_plus = """
 Here is the help for **Main**:
 
-`scan` - Reply to a message WITH reason to send a request to Sibyl for judgement
-`approve` - Approve a scan request (Only works in Public Safety Bureau)
-`revert or revive or restore` - Ungban ID
-`qproof` - Get quick proof from database for given user id
-`proof` - Get message from proof id which is at the end of gban msg
-`reject` - Reject a scan request
+Commands:
+    `scan` - Reply to a message WITH reason to send a request to Inspectors/Sibyl for judgement  
+    `approve` - Approve a scan request (Only works in Sibyl System Base)
+    `revert` or `revive` or `restore` - Ungban ID
+    `qproof` - Get quick proof from database for given user id
+    `proof` - Get message from proof id which is at the end of gban msg
+    `reject` - Reject a scan request
 
-**Notes:**
-`/` `?` `.`are supported prefixes.
-**Example:** `/addenf` or `?addenf` or `.addenf`
-Adding `-f` to a scan will force an approval. (Sibyl Only)
-**Note 2:** adding `-o` will gban & fban the original sender.
-**Example:** `/scan -f bitcoin spammer`
-**Example 2:** `!scan -f -o owo`
-Also see "?help extras" for extended functions.
+Flags:
+    scan:
+        `-f` - Force approve a scan. Using this with scan will auto approve it (Inspectors+)
+        `-u` - Grab message from url. Use this with message link to scan the user the message link redirects to. (Enforcers+)
+        `-o` - Original Sender. Using this will gban orignal sender instead of forwarder (Enforcers+)
+    reject:
+        `-r` - Reply to the scan message with reject reason.
+
+All commands can be used with ! or / or ? or .
 """
 
 __plugin_name__ = "Main"
