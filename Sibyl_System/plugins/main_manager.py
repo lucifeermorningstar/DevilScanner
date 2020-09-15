@@ -132,7 +132,7 @@ async def approve(event):
             if reply == me.id:
                 list = re.findall(r'tg://user\?id=(\d+)', replied.text)
                 if 'or' in flags.keys():
-                    await replied.edit(re.sub('(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {reason.split(' ', 1)[1].strip()}', replied.text))
+                    await replied.edit(re.sub('(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {reason.split(" ", 1)[1].strip()}', replied.text))
                 else:
                     reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)", replied.text)
                     reason = reason.group(4) if reason.group(4) else reason.group(3)
