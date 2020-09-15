@@ -43,10 +43,10 @@ async def sup(event):
 @System.bot.on(events.NewMessage(pattern = "[/?]help"))
 async def sup(event):
     await event.reply("""
-    This bot is a inline bot, You can use it by typing `@SibylSystemRobot`
-    If a user is gbanned - 
-       Getting user details using db - `@SibylSystemRobot info <user_id>`
-       Getting reason for gban, message the user was gbanned for - `@SibylSystemRobot proof <user_id>`
+This bot is a inline bot, You can use it by typing `@SibylSystemRobot`
+If a user is gbanned -
+    Getting user details using db - `@SibylSystemRobot info <user_id>`
+    Getting reason for gban, message the user was gbanned for - `@SibylSystemRobot proof <user_id>`
     """)
         
 
