@@ -127,11 +127,15 @@ async def approve(event):
         if match:
             reply = replied.sender.id
             sender = await event.get_sender()
+            flags, reason = seprate_flags(event.text)
             # checks to not gban the Gbanner and find who is who
             if reply == me.id:
                 list = re.findall(r'tg://user\?id=(\d+)', replied.text)
-                reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)", replied.text)
-                reason = reason.group(4) if reason.group(4) else reason.group(3)
+                if 'or' in flags.keys():
+                    await replied.edit(re.sub('(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {reason}', replied.text))
+                else:
+                    reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)", replied.text)
+                    reason = reason.group(4) if reason.group(4) else reason.group(3)
                 if len(list) > 1:
                     id1 = list[0]
                     id2 = list[1]
@@ -190,6 +194,8 @@ Flags:
         `-f` - Force approve a scan. Using this with scan will auto approve it (Inspectors+)
         `-u` - Grab message from url. Use this with message link to scan the user the message link redirects to. (Enforcers+)
         `-o` - Original Sender. Using this will gban orignal sender instead of forwarder (Enforcers+)
+    approve:
+        `-or` - Overwrite reason. Use this to change scan reason.
     reject:
         `-r` - Reply to the scan message with reject reason.
 
