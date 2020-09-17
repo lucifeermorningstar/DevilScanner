@@ -27,17 +27,7 @@ for load in to_load:
 
 @System.on(system_cmd(pattern=r'status', allow_enforcer = True))
 async def status(event):
-  msg = await event.reply('Portable.')
-  time.sleep(1)
-  await msg.edit('Portable Psychological.')
-  time.sleep(1)
-  await msg.edit('Portable Psychological Diagnosis.')
-  time.sleep(1)
-  await msg.edit('Portable Psychological Diagnosis and.')
-  time.sleep(1)
-  await msg.edit('Portable Psychological Diagnosis and Suppression.')
-  time.sleep(1)
-  await msg.edit('Portable Psychological Diagnosis and Suppression System.')
+  msg = await event.reply('Portable Psychological Diagnosis and Suppression System.')
   time.sleep(2)
   await msg.edit('Initialising ▫️◾️▫️') 
   time.sleep(2)
