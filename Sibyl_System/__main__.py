@@ -1,4 +1,4 @@
-from Sibyl_System import System, system_cmd, make_collections, INSPECTORS
+from Sibyl_System import System, system_cmd, make_collections, INSPECTORS, ENFORCERS
 from Sibyl_System.strings import on_string
 from Sibyl_System.plugins.Mongo_DB.gbans import get_gbans 
 import logging
@@ -48,7 +48,7 @@ async def status(event):
   await msg.edit('Initialising ◾️▫️◾️')
   time.sleep(2)
   sender = await event.get_sender()
-  user_status = 'Inspector' if sender.id in INSPECTORS else 'Enforcers'
+  user_status = 'Inspector' if sender.id in INSPECTORS else 'Enforcer'
   time.sleep(1)
   await msg.edit(on_string.format(Enforcer = user_status, name=sender.first_name))
 
@@ -56,6 +56,14 @@ async def status(event):
 async def stats(event):
   msg = f"Processed {System.processed} messages since last restart."
   msg += f"\n{len((await get_gbans())['victim'])} users are gbanned."
+  msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
+  g = 0
+  async for d in event.client.iter_dialogs(limit=None):
+        if d.is_channel and not d.entity.broadcast:
+            g += 1
+        elif d.is_group:
+            g += 1
+  msg += f"\nModerating {g} Groups"
   await event.reply(msg)
 
 @System.on(system_cmd(pattern=r'help', allow_slash=False, allow_inspectors = True))
