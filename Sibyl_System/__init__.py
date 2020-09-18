@@ -6,7 +6,13 @@ import os
 from motor import motor_asyncio
 import re
 import asyncio
+import logging 
 
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[logging.FileHandler('log.txt'),
+              logging.StreamHandler()],
+    level=logging.INFO)
 
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
