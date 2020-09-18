@@ -9,8 +9,6 @@ import re
 import logging
 
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.ERROR)
 
 url_regex = re.compile('(http(s)?://)?t.me/(c/)?(\w+)/(\d+)')
 
@@ -105,6 +103,9 @@ async def revive(event):
    await System.ungban(user_id, f" By //{(await event.get_sender()).id}")
    await a.edit("Revert request sent to sibyl. This might take 10minutes or so.")
 
+@System.on(system_cmd(pattern=r"logs"))
+async def logs(event):
+         await System.send_file(event.chat_id, 'logs.txt')
 
 @System.on(system_cmd(pattern=r'approve', allow_inspectors=True, force_reply = True))
 async def approve(event):
