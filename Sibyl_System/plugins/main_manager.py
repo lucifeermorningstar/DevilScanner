@@ -105,7 +105,7 @@ async def revive(event):
 
 @System.on(system_cmd(pattern=r"logs"))
 async def logs(event):
-         await System.send_file(event.chat_id, 'logs.txt')
+         await System.send_file(event.chat.id, 'log.txt')
 
 @System.on(system_cmd(pattern=r'approve', allow_inspectors=True, force_reply = True))
 async def approve(event):
