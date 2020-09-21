@@ -136,7 +136,7 @@ async def approve(event):
                     await replied.edit(re.sub('(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {reason.split(" ", 1)[1].strip()}', replied.text))
                 else:
                     reason = re.search(r"(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)", replied.text)
-                    reason = reason.group(4) if reason.group(4) else reason.group(3)
+                    reason = reason.group(5) if reason.group(5) else reason.group(4)
                 if len(list) > 1:
                     id1 = list[0]
                     id2 = list[1]
