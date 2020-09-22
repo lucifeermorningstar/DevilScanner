@@ -24,7 +24,7 @@ def get_data_from_url(url: str) -> tuple:
       
 
 
-@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True))
+@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True, force_reply=True))
 async def scan(event):
         trim = None
         replied = await event.get_reply_message()
@@ -80,7 +80,7 @@ async def scan(event):
         else:
              approve = False
         match = re.match('.scan -f -p (\d+) .*', event.text)
-        if replied.video or replied.document or replied.contact or replied.gif or replied.sticker:
+        if replied.media:
             await replied.forward_to(Sibyl_logs)
         executor = f'[{executer.first_name}](tg://user?id={executer.id})'
         chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"t.me/c/{event.chat.id}/{event.message.id}"
