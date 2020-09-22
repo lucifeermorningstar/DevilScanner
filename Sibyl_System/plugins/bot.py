@@ -9,7 +9,7 @@ import re
 async def make_proof(event, proof_id):
         proof = await System.get_messages(Sibyl_logs, ids=proof_id)
         try:
-            reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)", proof.message)
+            reason = re.search(r"(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)", proof.message)
             reason = reason.group(4) if reason.group(4) else reason.group(3)
         except BaseException:
             return "Invalid"
