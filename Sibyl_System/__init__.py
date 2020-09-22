@@ -92,5 +92,5 @@ def system_cmd(pattern=None, allow_sibyl=True,
     else:
         args["from_users"] = SIBYL
     if force_reply:
-        args["func"] = lambda e: True if e.message.reply_to_msg_id else False
+        args["func"] = lambda e: e.is_reply
     return events.NewMessage(**args)
