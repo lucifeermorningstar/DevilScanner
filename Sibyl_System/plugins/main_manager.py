@@ -134,6 +134,7 @@ async def approve(event):
                 list = re.findall(r'tg://user\?id=(\d+)', replied.text)
                 if 'or' in flags.keys():
                     await replied.edit(re.sub('(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {reason.split(" ", 1)[1].strip()}', replied.text))
+                    reason = reason.split(" ", 1)[1].strip()
                 else:
                     reason = re.search(r"(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)", replied.text)
                     reason = reason.group(5) if reason.group(5) else reason.group(4)
