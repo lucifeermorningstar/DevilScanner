@@ -1,13 +1,16 @@
-from urllib.parse import urlparse, urlunparse
+from telethon.utils import resolve_invite_link
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
-from Sibyl_System import ENFORCERS, INSPECTORS,  session
+
+from Sibyl_System import ENFORCERS, INSPECTORS, session
 from Sibyl_System import System, system_cmd
-import re
-from telethon.utils import resolve_invite_link
+from Sibyl_System import Sibyl_logs
+
+from urllib.parse import urlparse, urlunparse
 import heroku3
 import os 
+import re
 
 try:
     from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME
@@ -83,7 +86,7 @@ async def listuser(event) -> None:
     await System.send_message(event.chat_id, msg)
 
 
-@System.on(system_cmd(pattern=r'join'))
+@System.on(system_cmd(pattern=r'join', allow_inspectors = True))
 async def join(event) -> None:
     try:
         link = event.text.split(" ", 1)[1]
@@ -95,9 +98,12 @@ async def join(event) -> None:
     if private:
         await System(ImportChatInviteRequest(private.group(5)))
         await System.send_message(event.chat_id, "Joined chat!")
+        await System.send_message(Sibyl_logs, f"{(await event.get_sender()).first_name} made Sibyl join {private.group(5)}")
     else:
         await System(JoinChannelRequest(link))
         await System.send_message(event.chat_id, "Joined chat!")
+        await System.send_message(Sibyl_logs, f"{(await event.get_sender()).first_name} made Sibyl join {link}")
+        
 
 @System.on(system_cmd(pattern=r'addins'))
 async def addins(event) -> None:
