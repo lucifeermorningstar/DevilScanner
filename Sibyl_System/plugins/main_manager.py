@@ -1,12 +1,9 @@
-from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS, GBAN_MSG_LOGS
-from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
+from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS
+from Sibyl_System.strings import scan_request_string, bot_gban_string, reject_string, proof_string, forced_scan_string
 from Sibyl_System import System, system_cmd
-from Sibyl_System import session
 from Sibyl_System.utils import seprate_flags
-import Sibyl_System.plugins.Mongo_DB.gbans as db
 
 import re
-import logging
 
 
 
@@ -17,6 +14,7 @@ def get_data_from_url(url: str) -> tuple:
       >>> get_data_from_url("https://t.me/c/1476401326/36963")
       (1476401326, 36963)
       """
+
       match = url_regex.match(url)
       if not match:
         return False
@@ -26,7 +24,6 @@ def get_data_from_url(url: str) -> tuple:
 
 @System.on(system_cmd(pattern=r'scan ', allow_enforcer = True, force_reply=True))
 async def scan(event):
-        trim = None
         replied = await event.get_reply_message()
         flags, reason = seprate_flags(event.text)
         if len(reason.split(" ", 1)) == 1:
@@ -79,7 +76,6 @@ async def scan(event):
              approve = True
         else:
              approve = False
-        match = re.match('.scan -f -p (\d+) .*', event.text)
         if replied.media:
             await replied.forward_to(Sibyl_logs)
         executor = f'[{executer.first_name}](tg://user?id={executer.id})'
