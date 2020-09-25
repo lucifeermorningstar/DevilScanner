@@ -1,4 +1,4 @@
-from Sibyl_System import System, system_cmd, session
+from Sibyl_System import System, session
 from telethon import events
 from Sibyl_System import INSPECTORS, Sibyl_logs
 import Sibyl_System.plugins.Mongo_DB.gbans as db
@@ -41,7 +41,7 @@ async def sup(event):
     await event.reply('sup?')
 
 @System.bot.on(events.NewMessage(pattern = "[/?]help"))
-async def sup(event):
+async def help(event):
     await event.reply("""
 This bot is a inline bot, You can use it by typing `@SibylSystemRobot`
 If a user is gbanned -

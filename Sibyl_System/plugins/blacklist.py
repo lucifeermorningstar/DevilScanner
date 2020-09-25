@@ -90,7 +90,7 @@ async def auto_gban_request(event):
             if re.search(pattern, text, flags=re.IGNORECASE):
                 c = words.index(word)
                 link = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"Occurred in Private Chat - {event.chat.title}"
-                logmsg = f"""$AUTOSCAN\n**Scanned user:** [{event.from_id}](tg://user?id={event.from_id})\n**Reason:** 0x{c}\n**Chat:** {link}\n**Hue Color:** Yellow-green\n**Message:** {event.text}"""                     
+                logmsg = f"""$AUTOSCAN\n**Scanned user:** [{event.from_id}](tg://user?id={event.from_id})\n**Reason:** 0x{c}\n**Chat:** {link}\n**Hue Color:** Yellow-green\n**Message:** {event.text}"""
                 await System.send_message(Sibyl_logs, logmsg)
                 System.processed += 1
                 System.processing -= 1
@@ -137,7 +137,7 @@ async def get(event):
     if which:
        try:
           await event.reply(f"Info from type {which.group(1)}\nPostion: {which.group(2)}\nMatches:{words[int(which.group(2))]}")
-       except:
+       except Exception:
           return
 
 

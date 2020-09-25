@@ -1,5 +1,5 @@
 from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS
-from Sibyl_System.strings import scan_request_string, bot_gban_string, reject_string, proof_string, forced_scan_string
+from Sibyl_System.strings import scan_request_string, reject_string, proof_string, forced_scan_string
 from Sibyl_System import System, system_cmd
 from Sibyl_System.utils import seprate_flags
 
