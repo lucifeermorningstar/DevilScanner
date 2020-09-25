@@ -5,8 +5,7 @@ from telethon.sessions import StringSession
 import os
 from motor import motor_asyncio
 import re
-import asyncio
-import logging 
+import logging
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
