@@ -1,13 +1,13 @@
 from Sibyl_System import MONGO_CLIENT
 
+db = MONGO_CLIENT['Sibyl']['Main']
+
 async def get_blacklist():
-    db = MONGO_CLIENT['Sibyl']['Main']
     json = await db.find_one({'_id': 1})
     return json.get('blacklisted', [])
 
 
 async def update_blacklist(word, add=False):
-    db = MONGO_CLIENT['Sibyl']['Main']
     # cant find better names
     upd = {}
     owo = {}
