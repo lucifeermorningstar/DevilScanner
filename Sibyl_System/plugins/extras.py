@@ -169,7 +169,7 @@ async def info(event) -> None:
     u = event.text.split(' ', 1)[1]
     msg = f"User: {u}\n"
     msg += f"Added by: {data[u]['addedby']}\n"
-    msg += f"Timestamp: {datetime.fromtimestamp(data[u]['timestamp']).strftime('%d/%m/%Y - %H:%M:%S')}(`{data['u']['timestamp']}`)"
+    msg += f"Timestamp: {datetime.fromtimestamp(data[u]['timestamp']).strftime('%d/%m/%Y - %H:%M:%S')}(`{data[u]['timestamp']}`)"
     await event.reply(msg)
 
 
