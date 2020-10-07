@@ -88,7 +88,7 @@ async def make_collections() -> str:
         for x in SIBYL:
             sample_dict['data'][x] = {}
             sample_dict['standalone'][x] = {'added_by': 777000, 'timestamp': datetime.timestamp(datetime.now())}
-        await collection.insert_one()
+        await collection.insert_one(sample_dict)
     return ""
 
 def system_cmd(pattern=None, allow_sibyl=True,
