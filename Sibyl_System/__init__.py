@@ -1,11 +1,16 @@
 """Gets ENV vars or Config vars then calls class."""
+
 from telethon import events
-import aiohttp
 from telethon.sessions import StringSession
-import os
+
 from motor import motor_asyncio
-import re
+import aiohttp
+
 import logging
+import os
+import re
+
+
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -60,22 +65,29 @@ System = SibylClient(
 collection = MONGO_CLIENT['Sibyl']['Main']
 
 async def make_collections() -> str:
-    if await collection.count_documents({'_id': 1}, limit=1) == 0:
+    if await collection.count_documents({'_id': 1}, limit=1) == 0: # Blacklisted words list
         dictw = {"_id": 1}
         dictw["blacklisted"] = []
         await collection.insert_one(dictw)
 
-    if await collection.count_documents({'_id': 2}, limit=1) == 0:
+    if await collection.count_documents({'_id': 2}, limit=1) == 0: # Blacklisted words in name list
         dictw = {"_id": 2, "Type": "Wlc Blacklist"}
         dictw["blacklisted_wlc"] = []
         await collection.insert_one(dictw)
-    if await collection.count_documents({'_id': 3}, limit=1) == 0:
+    if await collection.count_documents({'_id': 3}, limit=1) == 0: # Gbanned users list
         dictw = {"_id": 3, "Type": "Gban:List"}
         dictw["victim"] = []
         dictw["gbanners"] = []
         dictw["reason"] = []
         dictw["proof_id"] = []
         await collection.insert_one(dictw)
+    if await collection.count_documents({'_id': 4}, limit=1) == 0: # Rank tree list
+        sample_dict = {'data': {}, 'standalone': {}}
+        sample_dict['data'] = {}
+        for x in SIBYL:
+            sample_dict['data'][x] = {}
+            sample_dict['standalone'][x] = {'added_by': 777000, 'timestamp': datetime.timestamp(datetime.now()}
+        await collection.insert_one()
     return ""
 
 def system_cmd(pattern=None, allow_sibyl=True,
