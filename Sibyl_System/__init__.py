@@ -83,7 +83,7 @@ async def make_collections() -> str:
         dictw["proof_id"] = []
         await collection.insert_one(dictw)
     if await collection.count_documents({'_id': 4}, limit=1) == 0: # Rank tree list
-        sample_dict = {'data': {}, 'standalone': {}}
+        sample_dict = {'_id': 4, 'data': {}, 'standalone': {}}
         sample_dict['data'] = {}
         for x in SIBYL:
             sample_dict['data'][str(x)] = {}
