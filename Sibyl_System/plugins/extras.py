@@ -3,10 +3,12 @@ from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 
-from Sibyl_System import ENFORCERS, INSPECTORS, session
+from Sibyl_System.plugins.Mongo_DB.tree import add_inspector, add_enforcers, get_data
+from Sibyl_System import ENFORCERS, INSPECTORS, SIBYL, session
 from Sibyl_System import System, system_cmd
 from Sibyl_System import Sibyl_logs
 
+from datetime import datetime
 from urllib.parse import urlparse, urlunparse
 import heroku3
 import os 
@@ -41,6 +43,8 @@ async def addenf(event) -> None:
         config['ENFORCERS'] = os.environ.get('ENFORCERS') + ' ' + str(u_id)
     else:
         ENFORCERS.append(u_id)
+    if not event.from_id in SIBYL:
+        await add_enforcers(event.from_id, u_id)
     await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to Enforcers')
 
 
@@ -125,6 +129,7 @@ async def addins(event) -> None:
         config['INSPECTORS'] = os.environ.get('INSPECTORS') + ' ' + str(u_id)
     else:
         INSPECTORS.append(u_id)
+    await add_inspector(event.from_id, u_id)
     await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to INSPECTORS')
 
 
@@ -156,6 +161,16 @@ async def rmins(event) -> None:
     await System.send_message(event.chat_id, f'Removed Inspector status of [{u_id}](tg://user?id={u_id}), Now that user is a mere enforcers.')
 
 
+@System.on(system_cmd(pattern=r'info ', allow_inspectors = True))
+async def info(event) -> None:
+    data = (await get_data())['standalone']
+    if not event.text.split(' ', 1)[1] in data.keys():
+        return
+    u = event.text.split(' ', 1)[1]
+    msg = f"User: {u}\n"
+    msg += f"Added by: {data[u]['added_by']}\n"
+    msg += f"Timestamp: {datetime.fromtimestamp(data['u']['timestamp']).strftime('%d/%m/%Y - %H:%M:%S')} | `{data['u']['timestamp']}`"
+    await event.reply(msg)
 
 
 @System.on(system_cmd(pattern=r'inspectors', allow_inspectors = True))
