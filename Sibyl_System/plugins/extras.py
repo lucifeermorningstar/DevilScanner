@@ -59,11 +59,12 @@ async def rmenf(event) -> None:
       u_id = (await System.get_entity(u_id)).id
     except BaseException:
         await event.reply('Invalid ID/Username!')
-    u_id = str(u_id)
+    u_id = int(u_id)
     if u_id not in ENFORCERS:
         await System.send_message(event.chat_id, 'Is that person even a Enforcer?')
         return
     if HEROKU:
+        str(u_id)
         ENF = os.environ.get('ENFORCERS')
         if ENF.endswith(u_id):
          config['ENFORCERS'] = ENF.strip(' ' + str(u_id))
