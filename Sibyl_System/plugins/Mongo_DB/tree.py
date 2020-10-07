@@ -9,14 +9,14 @@ async def get_data() -> dict:
 
 async def add_inspector(sibyl: int, inspector: int) -> True:
     data = await get_data()
-    data['data'][sibyl][inspector] = []
-    data['standalone'][inspector] = {'addedby': sibyl, 'timestamp': datetime.timestamp(datetime.now())}
+    data['data'][str(sibyl)][str(inspector)] = []
+    data['standalone'][str(inspector)] = {'addedby': sibyl, 'timestamp': datetime.timestamp(datetime.now())}
     await db.replace_one(await get_data(), data)
 
 async def add_enforcers(inspector: int, enforcer: int) -> True:
     data = await get_data()
-    sibyl = data['standalone'][inspector]['addedby']
-    data['data'][sibyl][inspector].append([enforcer])
-    data['standalone'][enforcer] = {'addedby': inspector, 'timestamp': datetime.timestamp(datetime.now())}
+    sibyl = data['standalone'][str(inspector)]['addedby']
+    data['data'][str(sibyl)][str(inspector)].append([enforcer])
+    data['standalone'][str(enforcer)] = {'addedby': inspector, 'timestamp': datetime.timestamp(datetime.now())}
     await db.replace_one(await get_data(), data)
     
