@@ -86,7 +86,7 @@ async def make_collections() -> str:
         sample_dict['data'] = {}
         for x in SIBYL:
             sample_dict['data'][x] = {}
-            sample_dict['standalone'][x] = {'added_by': 777000, 'timestamp': datetime.timestamp(datetime.now()}
+            sample_dict['standalone'][x] = {'added_by': 777000, 'timestamp': datetime.timestamp(datetime.now())}
         await collection.insert_one()
     return ""
 
