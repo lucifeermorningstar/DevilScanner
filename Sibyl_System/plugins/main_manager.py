@@ -112,7 +112,7 @@ async def approve(event):
         if auto_match:
             if replied.sender.id == me.id:
                 id = re.search(
-                    r"\*\*Scanned user\*\*: (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
+                    r"\*\*Scanned user:\*\* (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
                     replied.text).group(2)
                 try:
                      bot = (await System.get_entity(id)).bot
