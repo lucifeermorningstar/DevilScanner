@@ -15,9 +15,8 @@
 
 ## Config
 Here stuff you need to put in config.py or Environment variables:
-- ` API_ID_KEY`
-- ` API_HASH_KEY`
-You can get both of these from my.telegram.org
+- ` API_ID_KEY` Get from [my.telegram.org/apps](https://my.telegram.org/apps)
+- ` API_HASH_KEY` Get from [my.telegram.org/apps](https://my.telegram.org/apps)
 - `STRING_SESSION`:  You can get this by doing `python3 generatestringsession.py` on Linux and Mac, If on windows just python will work
 - ` SIBYL `: Users who approve gbans, manage blacklist etc.
 - ` ENFORCERS `: Users who send gban request

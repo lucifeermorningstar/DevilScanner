@@ -1,13 +1,10 @@
 from Sibyl_System import MONGO_CLIENT
 db = MONGO_CLIENT['Sibyl']['Main']
-#cant find better names
-upd = {}
-owo = {}
 
 async def update_wlc_blacklist(word, add = False):
-     db = MONGO_CLIENT['Sibyl']['Main']
      bl = await db.find_one({'_id': 2})
      current = bl['blacklisted_wlc']
+     upd, owo = {}, {}
      if add:
         if word in current:
              return False
@@ -24,6 +21,5 @@ async def update_wlc_blacklist(word, add = False):
 
 
 async def get_wlc_bl():
-        db = MONGO_CLIENT['Sibyl']['Main']
-        json = await db.find_one({"_id": 2})
-        return json.get("blacklisted_wlc", [])
+      json = await db.find_one({"_id": 2})
+      return json.get("blacklisted_wlc", [])

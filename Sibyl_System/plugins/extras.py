@@ -1,13 +1,18 @@
-from urllib.parse import urlparse, urlunparse
+from telethon.utils import resolve_invite_link
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
-from Sibyl_System import ENFORCERS, INSPECTORS,  session
+
+from Sibyl_System.plugins.Mongo_DB.tree import add_inspector, add_enforcers, get_data
+from Sibyl_System import ENFORCERS, INSPECTORS, SIBYL, session
 from Sibyl_System import System, system_cmd
-import re
-from telethon.utils import resolve_invite_link
+from Sibyl_System import Sibyl_logs
+
+from datetime import datetime
+from urllib.parse import urlparse, urlunparse
 import heroku3
 import os 
+import re
 
 try:
     from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME
@@ -38,6 +43,8 @@ async def addenf(event) -> None:
         config['ENFORCERS'] = os.environ.get('ENFORCERS') + ' ' + str(u_id)
     else:
         ENFORCERS.append(u_id)
+    if not event.from_id in SIBYL:
+        await add_enforcers(event.from_id, u_id)
     await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to Enforcers')
 
 
@@ -52,11 +59,12 @@ async def rmenf(event) -> None:
       u_id = (await System.get_entity(u_id)).id
     except BaseException:
         await event.reply('Invalid ID/Username!')
-    u_id = str(u_id)
+    u_id = int(u_id)
     if u_id not in ENFORCERS:
         await System.send_message(event.chat_id, 'Is that person even a Enforcer?')
         return
     if HEROKU:
+        str(u_id)
         ENF = os.environ.get('ENFORCERS')
         if ENF.endswith(u_id):
          config['ENFORCERS'] = ENF.strip(' ' + str(u_id))
@@ -83,7 +91,7 @@ async def listuser(event) -> None:
     await System.send_message(event.chat_id, msg)
 
 
-@System.on(system_cmd(pattern=r'join'))
+@System.on(system_cmd(pattern=r'join', allow_inspectors = True))
 async def join(event) -> None:
     try:
         link = event.text.split(" ", 1)[1]
@@ -95,9 +103,12 @@ async def join(event) -> None:
     if private:
         await System(ImportChatInviteRequest(private.group(5)))
         await System.send_message(event.chat_id, "Joined chat!")
+        await System.send_message(Sibyl_logs, f"{(await event.get_sender()).first_name} made Sibyl join {private.group(5)}")
     else:
         await System(JoinChannelRequest(link))
         await System.send_message(event.chat_id, "Joined chat!")
+        await System.send_message(Sibyl_logs, f"{(await event.get_sender()).first_name} made Sibyl join {link}")
+        
 
 @System.on(system_cmd(pattern=r'addins'))
 async def addins(event) -> None:
@@ -119,6 +130,7 @@ async def addins(event) -> None:
         config['INSPECTORS'] = os.environ.get('INSPECTORS') + ' ' + str(u_id)
     else:
         INSPECTORS.append(u_id)
+    await add_inspector(event.from_id, u_id)
     await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to INSPECTORS')
 
 
@@ -150,6 +162,16 @@ async def rmins(event) -> None:
     await System.send_message(event.chat_id, f'Removed Inspector status of [{u_id}](tg://user?id={u_id}), Now that user is a mere enforcers.')
 
 
+@System.on(system_cmd(pattern=r'info ', allow_inspectors = True))
+async def info(event) -> None:
+    data = (await get_data())['standalone']
+    if not event.text.split(' ', 1)[1] in data.keys():
+        return
+    u = event.text.split(' ', 1)[1]
+    msg = f"User: {u}\n"
+    msg += f"Added by: {data[u]['addedby']}\n"
+    msg += f"Timestamp: {datetime.fromtimestamp(data[u]['timestamp']).strftime('%d/%m/%Y - %H:%M:%S')}(`{data[u]['timestamp']}`)"
+    await event.reply(msg)
 
 
 @System.on(system_cmd(pattern=r'inspectors', allow_inspectors = True))

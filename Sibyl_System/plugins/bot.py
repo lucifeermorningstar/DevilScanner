@@ -1,4 +1,4 @@
-from Sibyl_System import System, system_cmd, session
+from Sibyl_System import System, session
 from telethon import events
 from Sibyl_System import INSPECTORS, Sibyl_logs
 import Sibyl_System.plugins.Mongo_DB.gbans as db
@@ -9,7 +9,7 @@ import re
 async def make_proof(event, proof_id):
         proof = await System.get_messages(Sibyl_logs, ids=proof_id)
         try:
-            reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)", proof.message)
+            reason = re.search(r"(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)", proof.message)
             reason = reason.group(4) if reason.group(4) else reason.group(3)
         except BaseException:
             return "Invalid"
@@ -41,7 +41,7 @@ async def sup(event):
     await event.reply('sup?')
 
 @System.bot.on(events.NewMessage(pattern = "[/?]help"))
-async def sup(event):
+async def help(event):
     await event.reply("""
 This bot is a inline bot, You can use it by typing `@SibylSystemRobot`
 If a user is gbanned -

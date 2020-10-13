@@ -1,16 +1,11 @@
-from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS, GBAN_MSG_LOGS
-from Sibyl_System.strings import scan_request_string, scan_approved_string, bot_gban_string, reject_string, proof_string, forced_scan_string
+from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS
+from Sibyl_System.strings import scan_request_string, reject_string, proof_string, forced_scan_string
 from Sibyl_System import System, system_cmd
-from Sibyl_System import session
 from Sibyl_System.utils import seprate_flags
-import Sibyl_System.plugins.Mongo_DB.gbans as db
 
 import re
-import logging
 
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.ERROR)
 
 url_regex = re.compile('(http(s)?://)?t.me/(c/)?(\w+)/(\d+)')
 
@@ -19,6 +14,7 @@ def get_data_from_url(url: str) -> tuple:
       >>> get_data_from_url("https://t.me/c/1476401326/36963")
       (1476401326, 36963)
       """
+
       match = url_regex.match(url)
       if not match:
         return False
@@ -26,9 +22,8 @@ def get_data_from_url(url: str) -> tuple:
       
 
 
-@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True))
+@System.on(system_cmd(pattern=r'scan ', allow_enforcer = True, force_reply=True))
 async def scan(event):
-        trim = None
         replied = await event.get_reply_message()
         flags, reason = seprate_flags(event.text)
         if len(reason.split(" ", 1)) == 1:
@@ -81,8 +76,7 @@ async def scan(event):
              approve = True
         else:
              approve = False
-        match = re.match('.scan -f -p (\d+) .*', event.text)
-        if replied.video or replied.document or replied.contact or replied.gif or replied.sticker:
+        if replied.media:
             await replied.forward_to(Sibyl_logs)
         executor = f'[{executer.first_name}](tg://user?id={executer.id})'
         chat = f"t.me/{event.chat.username}/{event.message.id}" if event.chat.username else f"t.me/c/{event.chat.id}/{event.message.id}"
@@ -105,6 +99,9 @@ async def revive(event):
    await System.ungban(user_id, f" By //{(await event.get_sender()).id}")
    await a.edit("Revert request sent to sibyl. This might take 10minutes or so.")
 
+@System.on(system_cmd(pattern=r"logs"))
+async def logs(event):
+         await System.send_file(event.chat_id, 'log.txt')
 
 @System.on(system_cmd(pattern=r'approve', allow_inspectors=True, force_reply = True))
 async def approve(event):
@@ -115,7 +112,7 @@ async def approve(event):
         if auto_match:
             if replied.sender.id == me.id:
                 id = re.search(
-                    r"\*\*Scanned user\*\*: (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
+                    r"\*\*Scanned user:\*\* (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
                     replied.text).group(2)
                 try:
                      bot = (await System.get_entity(id)).bot
@@ -132,10 +129,11 @@ async def approve(event):
             if reply == me.id:
                 list = re.findall(r'tg://user\?id=(\d+)', replied.text)
                 if 'or' in flags.keys():
-                    await replied.edit(re.sub('(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {reason.split(" ", 1)[1].strip()}', replied.text))
+                    await replied.edit(re.sub('(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {reason.split(" ", 1)[1].strip()}', replied.text))
+                    reason = reason.split(" ", 1)[1].strip()
                 else:
-                    reason = re.search(r"(\*\*)?Scan Reason:(\*\*)? (`([^`]*)`|.*)", replied.text)
-                    reason = reason.group(4) if reason.group(4) else reason.group(3)
+                    reason = re.search(r"(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)", replied.text)
+                    reason = reason.group(5) if reason.group(5) else reason.group(4)
                 if len(list) > 1:
                     id1 = list[0]
                     id2 = list[1]
