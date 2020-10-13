@@ -13,6 +13,7 @@ from urllib.parse import urlparse, urlunparse
 import heroku3
 import os 
 import re
+import json
 
 try:
     from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME
@@ -23,6 +24,7 @@ try:
 except BaseException:
     HEROKU = False
 
+json_file = os.path.join(os.getcwd(), 'SibylSystem/elevated_users.json')
 
 @System.on(system_cmd(pattern=r'addenf', allow_inspectors = True))
 async def addenf(event) -> None:
@@ -42,7 +44,17 @@ async def addenf(event) -> None:
     if HEROKU:
         config['ENFORCERS'] = os.environ.get('ENFORCERS') + ' ' + str(u_id)
     else:
-        ENFORCERS.append(u_id)
+        with open(json_file, 'r') as file:
+            data = json.load(file)
+        data['ENFORCERS'].append(u_id)
+        with open(json_file, 'w') as file:
+            json.dump(data, file, indent=4)
+        await System.send_message(event.chat_id, 'Added to enforcers, Restarting...')
+        if not event.from_id in SIBYL:
+            await add_enforcers(event.from_id, u_id)
+        await System.disconnect()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+        quit()
     if not event.from_id in SIBYL:
         await add_enforcers(event.from_id, u_id)
     await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to Enforcers')
@@ -73,7 +85,15 @@ async def rmenf(event) -> None:
         else:
          config['ENFORCERS'] = ENF.strip(' ' + str(u_id) + ' ')   
     else:
-        ENFORCERS.remove(int(u_id))
+        with open(json_file, 'r') as file:
+            data = json.load(file)
+        data['ENFORCERS'].remove(u_id)
+        with open(json_file, 'w') as file:
+            json.dump(data, file, indent=4)
+        await System.send_message(event.chat_id, 'Removed from enforcers, Restarting...')
+        await System.disconnect()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+        quit()
     await System.send_message(event.chat_id, f'Removed [{u_id}](tg://user?id={u_id}) from Enforcers')
 
 
@@ -129,7 +149,16 @@ async def addins(event) -> None:
     if HEROKU:
         config['INSPECTORS'] = os.environ.get('INSPECTORS') + ' ' + str(u_id)
     else:
-        INSPECTORS.append(u_id)
+        with open(json_file, 'r') as file:
+            data = json.load(file)
+        data['INSPECTORS'].append(u_id)
+        with open(json_file, 'w') as file:
+            json.dump(data, file, indent=4)
+        await System.send_message(event.chat_id, 'Added to Inspectors, Restarting...')
+        await add_inspector(event.from_id, u_id)
+        await System.disconnect()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+        quit()
     await add_inspector(event.from_id, u_id)
     await System.send_message(event.chat_id, f'Added [{u_id}](tg://user?id={u_id}) to INSPECTORS')
 
@@ -158,7 +187,15 @@ async def rmins(event) -> None:
         else:
          config['INSPECTORS'] = ENF.strip(' ' + str(u_id) + ' ')
     else:
-        INSPECTORS.remove(int(u_id))
+        with open(json_file, 'r') as file:
+            data = json.load(file)
+        data['INSPECTORS'].remove(u_id)
+        with open(json_file, 'w') as file:
+            json.dump(data, file, indent=4)
+        await System.send_message(event.chat_id, 'Removed from Inspectors, Restarting...')
+        await System.disconnect()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+        quit()
     await System.send_message(event.chat_id, f'Removed Inspector status of [{u_id}](tg://user?id={u_id}), Now that user is a mere enforcers.')
 
 
