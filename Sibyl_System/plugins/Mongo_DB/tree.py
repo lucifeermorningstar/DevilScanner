@@ -1,5 +1,6 @@
 from Sibyl_System import MONGO_CLIENT
 from datetime import datetime
+from random import choice
 
 db = MONGO_CLIENT['Sibyl']['Main']
 
@@ -16,7 +17,11 @@ async def add_inspector(sibyl: int, inspector: int) -> True:
 async def add_enforcers(inspector: int, enforcer: int) -> True:
     data = await get_data()
     sibyl = data['standalone'][str(inspector)]['addedby']
-    data['data'][str(sibyl)][str(inspector)].append([enforcer])
+    if sibyl == 777000:
+        s = data['data'][str(inspector)]
+        s[list(choice(s.keys()))].append([enforcer])
+    else:
+        data['data'][str(sibyl)][str(inspector)].append([enforcer])
     data['standalone'][str(enforcer)] = {'addedby': inspector, 'timestamp': datetime.timestamp(datetime.now())}
     await db.replace_one(await get_data(), data)
     
