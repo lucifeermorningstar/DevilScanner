@@ -29,7 +29,7 @@ async def run(event):
   elif stderr: final = "**Output**:\n`" + stderr
   else: final = "`OwO no output"
   if len(final) > 4096:
-    with open('exec.txt', 'w+') as f:
+    with open('exec.txt', 'w+', encoding="utf-8") as f:
       f.write(final)
     await System.send_file(event.chat_id, 'exec.txt')
     return
