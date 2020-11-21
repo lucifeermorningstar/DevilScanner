@@ -28,6 +28,11 @@ async def run(event):
   elif output: final = "**Output**:\n`" + output
   elif stderr: final = "**Output**:\n`" + stderr
   else: final = "`OwO no output"
+  if len(final) > 4096:
+    with open('exec.txt', 'w+') as f:
+      f.write(final)
+    await System.send_file(event.chat_id, 'exec.txt')
+    return
   await event.reply(final + '`' )
 
 @System.on(system_cmd(pattern = r"sibyl (ev|eva|eval|py)"))
