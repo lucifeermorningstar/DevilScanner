@@ -22,20 +22,20 @@ logging.basicConfig(
 
 ENV = bool(os.environ.get('ENV', False))
 if ENV:
-    API_ID_KEY = int(os.environ.get('API_ID_KEY', None))
-    API_HASH_KEY = os.environ.get('API_HASH_KEY', None)
-    STRING_SESSION = os.environ.get('STRING_SESSION', None)
-    HEROKU_API_KEY = os.environ.get('HEROKU_API_KEY', None)
-    HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME', None)
+    API_ID_KEY = int(os.environ.get('API_ID_KEY'))
+    API_HASH_KEY = os.environ.get('API_HASH_KEY')
+    STRING_SESSION = os.environ.get('STRING_SESSION')
+    HEROKU_API_KEY = os.environ.get('HEROKU_API_KEY')
+    HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME')
     RAW_SIBYL = os.environ.get("SIBYL", "")
     RAW_ENFORCERS = os.environ.get("ENFORCERS", "")
     SIBYL = list(int(x) for x in os.environ.get("SIBYL", "").split())
     INSPECTORS = list(int(x) for x in os.environ.get("INSPECTORS", "").split())
     ENFORCERS = list(int(x) for x in os.environ.get("ENFORCERS", "").split())
     MONGO_DB_URL = os.environ.get('MONGO_DB_URL')
-    Sibyl_logs = int(os.environ.get('Sibyl_logs', None))
-    Sibyl_approved_logs = int(os.environ.get('Sibyl_Approved_Logs', None))
-    GBAN_MSG_LOGS = int(os.environ.get('GBAN_MSG_LOGS', None))
+    Sibyl_logs = int(os.environ.get('Sibyl_logs'))
+    Sibyl_approved_logs = int(os.environ.get('Sibyl_Approved_Logs'))
+    GBAN_MSG_LOGS = int(os.environ.get('GBAN_MSG_LOGS'))
     BOT_TOKEN = os.environ.get('BOT_TOKEN')
 else:
     import Sibyl_System.config as Config

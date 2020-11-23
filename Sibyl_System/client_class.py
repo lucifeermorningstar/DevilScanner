@@ -21,8 +21,8 @@ class SibylClient(TelegramClient):
                 api_hash=API_HASH_KEY
             ).start(bot_token=BOT_TOKEN)
         super().__init__(*args, **kwargs)
-    
-    async def gban(self, enforcer = None, target=None, reason=None, msg_id=None, approved_by=None, auto=False, bot=False) -> bool:
+
+    async def gban(self, enforcer = None, target=None, reason=None, msg_id=None, approved_by=None, auto=False, bot=False, message=False) -> bool:
         """Gbans & Fbans user."""
         if self.gban_logs:
             logs = self.gban_logs
@@ -40,11 +40,8 @@ class SibylClient(TelegramClient):
             await self.send_message(Sibyl_approved_logs, scan_approved_string.format(enforcer=enforcer, scam=target, reason = reason, proof_id = msg_id))
         if not target:
             return False
-        if await update_gban(victim = int(target), reason=reason, proof_id=int(msg_id), enforcer=int(enforcer)):
-            return True
-        else:
-            return False
-    
+        await update_gban(victim = int(target), reason=reason, proof_id=int(msg_id), enforcer=int(enforcer), message = message)
+
     async def ungban(self, target:int=None, reason:str=None) -> bool:
         if self.gban_logs:
             logs = self.gban_logs
@@ -52,10 +49,3 @@ class SibylClient(TelegramClient):
             logs = self.log
         await self.send_message(logs, f'/ungban [{target}](tg://user?id={target}) {reason}')
         await self.send_message(logs, f'/unfban [{target}](tg://user?id={target}) {reason}')
-        if await update_gban(victim = target, add=False): 
-            return True
-        else:
-            return False
-        
-  
-  

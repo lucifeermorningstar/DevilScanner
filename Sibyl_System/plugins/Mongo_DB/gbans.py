@@ -1,40 +1,28 @@
 from Sibyl_System import MONGO_CLIENT
+from typing import Optional, Dict, Union
 
 db = MONGO_CLIENT['Sibyl']['Main']
 
-async def get_gbans() -> dict:
-    json = await db.find_one({'_id': 3})
+async def get_gban(user:int) -> Optional[Dict[str, Union[str, int]]]:
+    json = await db.find_one({'user': user})
     return json
 
-async def get_gban(user:int) :
-    gbans = await get_gbans()
-    if user not in gbans['victim']:
-        return False
-    else:
-        place = gbans['victim'].index(user)
-        user_data = {}
-        user_data['user'] = gbans['victim'][place]
-        user_data['reason'] = gbans['reason'][place]
-        user_data['enforcer'] = gbans['gbanners'][place]
-        user_data['proof_id'] = gbans['proof_id'][place]
-        return user_data
-        
 
-async def update_gban(victim:int, reason:str=None, proof_id:int=None, enforcer:int=None, add:bool=True) -> bool:
-    gbans_dict = await get_gbans()
-    if victim not in gbans_dict['victim'] and not add:
-        return False
-    if victim in gbans_dict['victim'] and add:
-        return False
-    if add:
-        gbans_dict['victim'].append(victim)
-        gbans_dict['reason'].append(reason)
-        gbans_dict['proof_id'].append(proof_id)
-        gbans_dict['gbanners'].append(enforcer)
+async def update_gban(victim:int, reason:Optional[str]=None, proof_id:Optional[int]=None, enforcer:Optional[int]=None, message:Optional[str] = None) -> True:
+    gbans_dict = await get_gban(victim)
+    if gbans_dict:
+        if reason:
+            gbans_dict['reason'] = reason
+        if proof_id:
+            gbans_dict['proof_id'] = proof_id
+        if enforcer:
+            gbans_dict['enforcer'] = enforcer
+        if message:
+            gbans_dict['message'] = message
+        await db.replace_one(await get_gban(victim), gbans_dict)
     else:
-        gbans_dict['victim'].remove(victim)
-        gbans_dict['reason'].remove(reason)
-        gbans_dict['proof_id'].remove(proof_id)
-        gbans_dict['gbanners'].remove(enforcer)
-    await db.replace_one(await get_gbans(), gbans_dict)
+        gbans_dict = {
+            "user": victim, "reason": reason, "enforcer": enforcer, "proof_id": proof_id, "message": message
+        }
+        await db.insert_one(gbans_dict)
     return True

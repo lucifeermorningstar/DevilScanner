@@ -19,7 +19,7 @@ def get_data_from_url(url: str) -> tuple:
       if not match:
         return False
       return (match.group(4), match.group(5))
-      
+
 
 
 @System.on(system_cmd(pattern=r'scan ', allow_enforcer = True))
@@ -83,12 +83,12 @@ async def scan(event):
         await event.reply("Connecting to Sibyl for a cymatic scan.")
         if req_proof and req_user:
            await replied.forward_to(Sibyl_logs)
-           await System.gban(executer.id, req_user, reason, msg.id, executer)
+           await System.gban(executer.id, req_user, reason, msg.id, executer, message = replied.text)
         if not approve:
            msg = await System.send_message(Sibyl_logs, scan_request_string.format(enforcer=executor, spammer=sender, chat=chat , message=replied.text, reason=reason))
            return
         msg = await System.send_message(Sibyl_logs, forced_scan_string.format(ins = executor, spammer=sender, chat=chat,message=replied.text, reason=reason))
-        await System.gban(executer.id, target, reason, msg.id, executer)
+        await System.gban(executer.id, target, reason, msg.id, executer, message = replied.text)
 
 @System.on(system_cmd(pattern=r're(vive|vert|store) '))
 async def revive(event):
@@ -115,11 +115,18 @@ async def approve(event):
                     r"\*\*Scanned user:\*\* (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
                     replied.text).group(2)
                 try:
+                    message = re.search(
+                        '(\*\*)?Message:(\*\*)? (.*)',
+                        proof.message,
+                        re.DOTALL).group(3)
+                except:
+                    message = None
+                try:
                      bot = (await System.get_entity(id)).bot
                 except:
                      bot = False
                 reason = re.search('\*\*Reason:\*\* (.*)', replied.text).group(1)
-                await System.gban(enforcer=me.id, target=id, reason = reason, msg_id=replied.id, auto=True, bot=bot)
+                await System.gban(enforcer=me.id, target=id, reason = reason, msg_id=replied.id, auto=True, bot=bot, message = message)
                 return "OwO"
         if match:
             reply = replied.sender.id
@@ -150,7 +157,14 @@ async def approve(event):
                    bot = (await System.get_entity(scam)).bot
                 except:
                    bot = False
-                await System.gban(enforcer, scam, reason, replied.id, sender, bot=bot)
+                try:
+                    message = re.search(
+                        '(\*\*)?Target Message:(\*\*)? (.*)',
+                        proof.message,
+                        re.DOTALL).group(3)
+                except:
+                    message = None
+                await System.gban(enforcer, scam, reason, replied.id, sender, bot=bot, message = message)
                 orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
                 if orig:
                   await System.send_message(orig.group(1), 'User is a target for enforcement action.\nEnforcement Mode: Lethal Eliminator', reply_to = int(orig.group(2)))
@@ -180,7 +194,7 @@ help_plus = """
 Here is the help for **Main**:
 
 Commands:
-    `scan` - Reply to a message WITH reason to send a request to Inspectors/Sibyl for judgement  
+    `scan` - Reply to a message WITH reason to send a request to Inspectors/Sibyl for judgement
     `approve` - Approve a scan request (Only works in Sibyl System Base)
     `revert` or `revive` or `restore` - Ungban ID
     `qproof` - Get quick proof from database for given user id
