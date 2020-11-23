@@ -1,40 +1,23 @@
 from Sibyl_System import System, session
 from telethon import events
 from Sibyl_System import INSPECTORS, Sibyl_logs
-import Sibyl_System.plugins.Mongo_DB.gbans as db
+import Sibyl_System.plugins.Mongo_DB.gbans import get_gban
 from Sibyl_System.strings import proof_string
 import asyncio
 import re
 
-async def make_proof(event, proof_id):
-        proof = await System.get_messages(Sibyl_logs, ids=proof_id)
-        try:
-            reason = re.search(r"(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)", proof.message)
-            reason = reason.group(4) if reason.group(4) else reason.group(3)
-        except BaseException:
-            return "Invalid"
-        try:
-            message = re.search(
-                '(\*\*)?Target Message:(\*\*)? (.*)',
-                proof.message,
-                re.DOTALL).group(3)
-        except BaseException:
-                proof_id -= 1
-                proof = await System.get_messages(Sibyl_logs, ids=proof_id)
-                if proof:
-                    if proof.media:
-                        return "Media"
-                    else:
-                        return False
-                else:
-                    return False
+async def make_proof(user):
+        data = await get_gban(user)
+        if not data:
+            return False
+        message = data.get('message') or ''
         async with session.post('https://nekobin.com/api/documents', json={'content': message}) as r:
             paste = f"https://nekobin.com/{(await r.json())['result']['key']}"
         url = "https://del.dog/documents"
         async with session.post(url, data=message.encode("UTF-8")) as f:
              r = await f.json()
              url = f"https://del.dog/{r['key']}"
-        return proof_string.format(proof_id = proof_id, reason=reason, paste=paste, url=url)
+        return proof_string.format(proof_id = data['proof_id'], reason=data['reason'], paste=paste, url=url)
 
 @System.bot.on(events.NewMessage(pattern = "[/?]start"))
 async def sup(event):
@@ -45,7 +28,6 @@ async def help(event):
     await event.reply("""
 This bot is a inline bot, You can use it by typing `@SibylSystemRobot`
 If a user is gbanned -
-    Getting user details using db - `@SibylSystemRobot info <user_id>`
     Getting reason for gban, message the user was gbanned for - `@SibylSystemRobot proof <user_id>`
     """)
         
@@ -60,32 +42,16 @@ async def inline_handler(event):
     await event.answer([result])
     return
   await asyncio.sleep(2)
-  if query.startswith("info"):
-    if len(split) == 1:
-      result = builder.article("Type User id", text="No Id was proved")
-    else:
-      user_data = await db.get_gban(int(split[1]))
-      if not user_data:
-         result = builder.article('User is not gbanned', text = f'User[{split[1]}] is not gbanned')
-      else:
-         result =  f"User: {user_data['user']}\n"\
-                   f"Enforcer: {user_data['enforcer']}\n"\
-                   f"Reason: {user_data['reason']}\n"\
-                   f"Extended Proof: {user_data['proof_id']}"
-         result = builder.article('Quick-Proof', text = result)
-  elif query.startswith("proof"):
+  if query.startswith("proof"):
       if len(split) == 1:
          result = builder.article("Type Case-ID", text="No Case-ID was provided")
       else:
-         proof = await make_proof(event, int(split[1]))
-         if proof == "Invalid":
-            result = builder.article("Invalid  Case-ID", text="Case-ID is Invalid")
-         elif proof == "Media":
-            result = builder.article("The provided message was media",
-                                     text="The provided proof was Media, You will have to manually get proof")
-         elif proof is False:
+         proof = await make_proof(int(split[1]))
+         if proof is False:
             result = builder.article("Unknown error occured while getting proof from Case-ID",
                                      text="Unknown error occured while getting proof from Case-ID")
          else:
-            result = builder.article("Proof", text = proof, link_preview=False)                              
+            result = builder.article("Proof", text = proof, link_preview=False)
+  else:
+    result = builder.article("No type provided", text="Use proof <user_id> to get proof")
   await event.answer([result])
