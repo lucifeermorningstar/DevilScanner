@@ -21,7 +21,7 @@ async def image_maker(event) -> None:
      font2 = ImageFont.truetype('font2.ttf', size=100)
      #put text in image
      draw.text((1270, 460), replied_user.sender.first_name.replace('\u2060', ''), fill=color, font=font2)
-     draw.text((393, 50), replied_user.sender.from_id, fill = color, font = font)
+     draw.text((393, 50), replied_user.from_id, fill = color, font = font)
      id_template.save('user_id.png')
      await System.send_message(
             event.chat_id,
