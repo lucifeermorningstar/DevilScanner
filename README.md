@@ -10,7 +10,7 @@
 [![Sibyl System](https://vignette.wikia.nocookie.net/psychopass/images/7/72/Sibyl_System.png/revision/latest?cb=20141029202159 "Sibyl System")](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-## A Telethon UserBot to make gbanning easy 
+## A Telethon UserBot to make gbanning easy
 > (asyncio)
 
 ## Config
@@ -37,12 +37,12 @@ Based on the popular anime series "Psycho Pass", Sibyl is designed to work in a 
 ### Location
 
 Sibyl can be seen around telegram judging people and chats and logging the information at [@SibylSystem](http://t.me/SibylSystem "@SibylSystem")
-The base of operations of Sibyl are Beneath the NONA Tower and are only accessible by select personnel. 
+The base of operations of Sibyl are Beneath the NONA Tower and are only accessible by select personnel.
 
 ------------
 
 ### Commands list
-You can check help using - 
+You can check help using -
 
     *help <plugin_name> *- Get help about plugin, Send it without plugin name to get list of all plugins.
 
@@ -50,10 +50,10 @@ You can check help using -
 
 #### Development and planning
 
-Sibyl is under active development and some future plans include 
+Sibyl is under active development and some future plans include
 - Gif responses
-- Better and detailed scanning 
-- Improved logging, access and replies strings 
+- Better and detailed scanning
+- Improved logging, access and replies strings
 - Anything else we come up with as this project goes on.
 
 ------------
@@ -74,20 +74,17 @@ Sibyl is under active development and some future plans include
 > Since Warning Always come after the spell
 - Using this userbot can get your account floodwaited as it checks for each message, each edited, each join for blacklisted strings, If you don't want auto gbans simply delete blacklist.py and remove it from to_load in `__init_.py`
 
-##### Why that? 
+##### Why that?
 
->Why use regex for so proof and approve? 
-- How else would I get reason, message etc? ( I know about split but that'd make the code hard for me to read) 
+>Why use regex for so proof and approve?
+- How else would I get reason, message etc? ( I know about split but that'd make the code hard for me to read)
 
 >Why such noob code?
 - Cuz I'm a noob?
 
 >Why not getting list of all module instead of manually putting module in to_load?
-- I don't want people from uniborg or ftg or other userbots to put there plugins (those weird animation ones or useless ones) in Sibyl System 
+- I don't want people from uniborg or ftg or other userbots to put there plugins (those weird animation ones or useless ones) in Sibyl System
 
-#### Contributors
+#### Credits
 
-| <a href="https://github.com/DragSama" target="_blank">**DragSama**</a> | <a href="https://github.com/TsunayoshiSawada" target="_blank">**Sawada**</a> | 
-| :---: |:---:|
-| [![DragSama](https://avatars1.githubusercontent.com/u/49992845?s=200&v=4)](https://github.com/DragSama)    | [![Sawada](https://avatars0.githubusercontent.com/u/34431649?s=200&v=4)](https://github.com/TsunayoshiSawada) |
-| <a href="https://github.com/AnimeKaizoku/SibylSystem/commits?author=DragSama" target="_blank">`All code is written by me :D`</a> | <a href="https://github.com/AnimeKaizoku/SibylSystem/commits?author=TsunayoshiSawada" target="_blank">`Base Idea of making userbot, All the weeb stuff`</a> |
+- [Simon](https://github.com/sitischu) for the ID image!

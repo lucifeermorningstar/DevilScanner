@@ -11,16 +11,17 @@ async def image_maker(event) -> None:
      #open id photo
      id_template = Image.open('ID.png')
      #resize user photo to fit box in id template
-     user_photo = user_photo.resize((989, 1073))
+     user_photo = user_photo.resize((1159, 1241))
      #put image in position
-     id_template.paste(user_photo, (1229, 573))
+     id_template.paste(user_photo, (1003,641))
      #postion on where to draw text
-     position = (2473, 481)
      draw = ImageDraw.Draw(id_template)
      color = 'rgb(23, 43, 226)' #blue-ish color
-     font = ImageFont.truetype('font.ttf', size=200)
+     font = ImageFont.truetype('font.ttf', size=80)
+     font2 = ImageFont.truetype('font2.ttf', size=100)
      #put text in image
-     draw.text(position, replied_user.sender.first_name.replace('\u2060', ''), fill=color, font=font)
+     draw.text((1270, 460), replied_user.sender.first_name.replace('\u2060', ''), fill=color, font=font2)
+     draw.text((393, 50), replied_user.sender.from_id, fill = color, font = font)
      id_template.save('user_id.png')
      await System.send_message(
             event.chat_id,
