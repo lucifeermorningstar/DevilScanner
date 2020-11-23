@@ -117,7 +117,7 @@ async def approve(event):
                 try:
                     message = re.search(
                         '(\*\*)?Message:(\*\*)? (.*)',
-                        proof.message,
+                        replied.text,
                         re.DOTALL).group(3)
                 except:
                     message = None
@@ -160,7 +160,7 @@ async def approve(event):
                 try:
                     message = re.search(
                         '(\*\*)?Target Message:(\*\*)? (.*)',
-                        proof.message,
+                        replied.text,
                         re.DOTALL).group(3)
                 except:
                     message = None
