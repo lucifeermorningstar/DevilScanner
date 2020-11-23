@@ -1,7 +1,7 @@
 from Sibyl_System import System, session
 from telethon import events
 from Sibyl_System import INSPECTORS, Sibyl_logs
-import Sibyl_System.plugins.Mongo_DB.gbans import get_gban
+from Sibyl_System.plugins.Mongo_DB.gbans import get_gban
 from Sibyl_System.strings import proof_string
 import asyncio
 import re
