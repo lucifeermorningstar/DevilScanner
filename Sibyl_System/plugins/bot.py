@@ -41,7 +41,6 @@ async def inline_handler(event):
     result = builder.article("Sibyl System", text = "You don't have access to this cmd.")
     await event.answer([result])
     return
-  await asyncio.sleep(2)
   if query.startswith("proof"):
       if len(split) == 1:
          result = builder.article("Type Case-ID", text="No Case-ID was provided")
