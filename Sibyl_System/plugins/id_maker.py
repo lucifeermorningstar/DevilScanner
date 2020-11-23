@@ -16,7 +16,7 @@ async def image_maker(event) -> None:
      id_template.paste(user_photo, (1003,641))
      #postion on where to draw text
      draw = ImageDraw.Draw(id_template)
-     color = 'rgb(23, 43, 226)' #blue-ish color
+     color = 'rgb(0, 0, 0)' #black
      font = ImageFont.truetype('font.ttf', size=80)
      font2 = ImageFont.truetype('font2.ttf', size=100)
      #put text in image
