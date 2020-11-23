@@ -20,7 +20,7 @@ async def image_maker(event) -> None:
      font = ImageFont.truetype('font.ttf', size=80)
      font2 = ImageFont.truetype('font2.ttf', size=100)
      #put text in image
-     draw.text((1270, 460), replied_user.sender.first_name.replace('\u2060', ''), fill=color, font=font2)
+     draw.text((1000, 460), replied_user.sender.first_name.replace('\u2060', ''), fill=color, font=font2)
      draw.text((393, 50), str(replied_user.from_id), fill = color, font = font)
      id_template.save('user_id.png')
      if 'doc' in event.text:
