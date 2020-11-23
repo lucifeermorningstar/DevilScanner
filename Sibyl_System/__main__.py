@@ -1,6 +1,5 @@
 from Sibyl_System import System, system_cmd, make_collections, INSPECTORS, ENFORCERS
 from Sibyl_System.strings import on_string
-from Sibyl_System.plugins.Mongo_DB.gbans import get_gbans 
 import logging
 import importlib
 import asyncio
@@ -53,7 +52,6 @@ async def status(event):
 @System.on(system_cmd(pattern='sibyl stats'))
 async def stats(event):
   msg = f"Processed {System.processed} messages since last restart."
-  msg += f"\n{len((await get_gbans())['victim'])} users are gbanned."
   msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
   g = 0
   async for d in event.client.iter_dialogs(limit=None):
