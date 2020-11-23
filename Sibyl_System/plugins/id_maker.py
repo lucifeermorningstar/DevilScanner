@@ -23,12 +23,16 @@ async def image_maker(event) -> None:
      draw.text((1270, 460), replied_user.sender.first_name.replace('\u2060', ''), fill=color, font=font2)
      draw.text((393, 50), str(replied_user.from_id), fill = color, font = font)
      id_template.save('user_id.png')
+     if 'doc' in event.text:
+         force_document = True
+     else:
+         force_document = False
      await System.send_message(
             event.chat_id,
             "Generated User ID",
             reply_to=event.message.id,
             file='user_id.png',
-            force_document=True,
+            force_document=force_document,
             silent=True
         )
      os.remove('user_id.png')
