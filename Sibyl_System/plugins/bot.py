@@ -49,10 +49,10 @@ async def callback_handler(event):
     if not dict_:
         await event.answer('Message is too old (Bot was restarted after message was sent), Use /approve on it instead', alert = True)
         return
-    await event.answer('I have sent you a message, Reply to it to overwrite reason, Otherwise ignore...')
+    await event.answer('I have sent you a message, Reply to it to overwrite reason, Otherwise ignore...', alert = True)
     sender = await event.get_sender()
     async with event.client.conversation(sender.id, timeout = 15) as conv:
-        if split[1] == 'approve':
+        if split[0] == 'approve':
             await conv.send_message('You approved a scan it seems, Would you like to overwrite reason?')
         else:
             await conv.send_message('You rejected a scan it seems, Would you like to give rejection reason?')
@@ -63,11 +63,11 @@ async def callback_handler(event):
     async with DATA_LOCK:
         dict_["reason"] = r.message
         data[index] = dict_
-    msg = f"U_ID: {data_['u_id']}"
-    msg += f"Enforcer: {data_['enforcer']}"
-    msg += f"Source: {data_['source']}"
-    msg += f"Reason: {data_['reason']}"
-    msg += f"Message: {data_['message']}"
+    msg = f"U_ID: {dict_['u_id']}"
+    msg += f"Enforcer: {dict_['enforcer']}"
+    msg += f"Source: {dict_['source']}"
+    msg += f"Reason: {dict_['reason']}"
+    msg += f"Message: {dict_['message']}"
     await event.respond(msg)
 
 
