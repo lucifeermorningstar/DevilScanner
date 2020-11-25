@@ -70,7 +70,7 @@ async def callback_handler(event):
         msg += f"Reason: {dict_['reason']}\n"
         msg += f"Message: {dict_['message']}\n"
         await event.respond(msg)
-        new_message = re.sub('(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {r.message}', message.message))
+        new_message = re.sub('(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {r.message}', message.message)
         await event.edit(new_message)
     else:
         await event.edit(reject_string)

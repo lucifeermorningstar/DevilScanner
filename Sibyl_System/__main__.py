@@ -93,7 +93,7 @@ async def main():
   if FAILED_TO_LOAD:
       msg = "Few plugins failed to load:"
       for plugin in FAILED_TO_LOAD:
-          msg += f"\n*{plugin}*\n\n`{FAILED_TO_LOAD[plugin]}`"
+          msg += f"\n**{plugin}**\n\n`{FAILED_TO_LOAD[plugin]}`"
       await System.send_message(Sibyl_logs, msg)
   else:
       await System.send_message(Sibyl_logs, "I'm up!")
