@@ -1,4 +1,4 @@
-from Sibyl_System import System, system_cmd, make_collections, INSPECTORS, ENFORCERS
+from Sibyl_System import System, system_cmd, make_collections, INSPECTORS, ENFORCERS, Sibyl_logs
 from Sibyl_System.strings import on_string
 import logging
 import importlib
@@ -12,6 +12,7 @@ from Sibyl_System.plugins import to_load
 
 HELP = {}
 IMPORTED = {}
+FAILED_TO_LOAD = {}
 
 for load in to_load:
     try:
@@ -28,6 +29,7 @@ for load in to_load:
         print(f'Error while loading plugin: {load}')
         print('------------------------------------')
         print(e)
+        FAILED_TO_LOAD[load] = e
         print('------------------------------------')
 
 @System.on(system_cmd(pattern=r'status', allow_enforcer = True))
@@ -88,6 +90,13 @@ async def main():
   await make_collections()
   await System.start()
   await System.catch_up()
+  if FAILED_TO_LOAD:
+      msg = "Few plugins failed to load:"
+      for plugin in FAILED_TO_LOAD:
+          msg += f"\n*{plugin}*\n\n`{FAILED_TO_LOAD[plugin]}`"
+      await System.send_message(Sibyl_logs, msg)
+  else:
+      await System.send_message(Sibyl_logs, "I'm up!")
   await System.run_until_disconnected()
 
 if __name__ == '__main__':

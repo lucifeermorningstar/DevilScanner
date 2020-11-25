@@ -72,7 +72,7 @@ async def inline_handler(event):
           buttons = [custom.Button.inline("Approve", data = f"approve_{index}"), custom.Button.inline("Reject", data = f"reject_{index}")]
           result = builder.article(
                 "Output",
-                text = scan_request_string.format(enforcer = enforcer, spammer = u_id, reason = reason, source = source, message = message),
+                text = scan_request_string.format(enforcer = enforcer, spammer = u_id, reason = reason, chat = source, message = message),
                 buttons = buttons
           )
 
