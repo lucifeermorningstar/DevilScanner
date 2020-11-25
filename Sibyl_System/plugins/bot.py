@@ -1,5 +1,5 @@
 from Sibyl_System import System, session, INSPECTORS, Sibyl_logs
-from Sibyl_System.strings import proof_string, scan_request_string
+from Sibyl_System.strings import proof_string, scan_request_string, reject_string
 from Sibyl_System.plugins.Mongo_DB.gbans import get_gban
 
 from telethon import events, custom
@@ -38,7 +38,6 @@ If a user is gbanned -
 
 @System.bot.on(events.CallbackQuery(pattern = r'(approve|reject)_(\d*)'))
 async def callback_handler(event):
-    print('a')
     split = event.data.decode().split('_', 1)
     index = int(split[1])
     message = await event.get_message()
@@ -71,10 +70,12 @@ async def callback_handler(event):
         msg += f"Reason: {dict_['reason']}\n"
         msg += f"Message: {dict_['message']}\n"
         await event.respond(msg)
-        await message.edit('test')
+        new_message = re.sub('(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {r.message}', message.message))
+        await event.edit(new_message)
     else:
-        await event.respond('reason not changed')
-        await message.edit('no test')
+        await event.edit(reject_string)
+        async with DATA_LOCK:
+            del data[index]
 
 
 @System.bot.on(events.InlineQuery)
