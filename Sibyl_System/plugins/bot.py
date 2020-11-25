@@ -51,7 +51,7 @@ async def callback_handler(event):
         return
     await event.answer('I have sent you a message, Reply to it to overwrite reason, Otherwise ignore...')
     sender = await event.get_sender()
-    async with event.client.bot.conversation(sender.id, timeout = 15) as conv:
+    async with event.client.conversation(sender.id, timeout = 15) as conv:
         if split[1] == 'approve':
             await conv.send_message('You approved a scan it seems, Would you like to overwrite reason?')
         else:
