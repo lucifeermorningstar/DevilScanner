@@ -73,7 +73,7 @@ async def callback_handler(event):
             await event.respond(msg)
             await message.edit(re.sub('(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {r.message}', message.message))
         else:
-            await event.edit(reject_string)
+            await message.edit(reject_string)
             async with DATA_LOCK:
                 del data[index]
     else:
