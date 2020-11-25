@@ -2,8 +2,7 @@ from Sibyl_System import System, session, INSPECTORS, Sibyl_logs
 from Sibyl_System.strings import proof_string, scan_request_string
 from Sibyl_System.plugins.Mongo_DB.gbans import get_gban
 
-from telethon import custom
-from telethon import events
+from telethon import events, custom
 
 import re
 import asyncio
@@ -37,8 +36,42 @@ If a user is gbanned -
     Getting reason for gban, message the user was gbanned for - `@SibylSystemRobot proof <user_id>`
     """)
 
+@System.bot.on(events.CallbackQuery(pattern = r'(approve|reject)_(\d*)'))
+async def callback_handler(event):
+    split = event.data.decode().split('_', 1)
+    index = int(split[1])
+    async with DATA_LOCK:
+        try:
+            dict_ = data[index]
+        except IndexError:
+            dict_ = None
+    if not dict_:
+        await event.answer('Message is too old (Bot was restarted after message was sent), Use /approve on it instead', alert = True)
+        return
+    await event.answer('I have sent you a message, Reply to it to overwrite reason, Otherwise ignore...')
+    sender = await event.get_sender()
+    async with event.client.bot.conversation(sender.id, timeout = 15) as conv:
+        if split[1] == 'approve':
+            await conv.send_message('You approved a scan it seems, Would you like to overwrite reason?')
+        else:
+            await conv.send_message('You rejected a scan it seems, Would you like to give rejection reason?')
+        try:
+            r = await conv.get_response()
+        except asyncio.exceptions.TimeoutError:
+            r = None
+    async with DATA_LOCK:
+        dict_["reason"] = r.message
+        data[index] = dict_
+    msg = f"U_ID: {data_['u_id']}"
+    msg += f"Enforcer: {data_['enforcer']}"
+    msg += f"Source: {data_['source']}"
+    msg += f"Reason: {data_['reason']}"
+    msg += f"Message: {data_['message']}"
+    await event.respond(msg)
 
-@System.bot.on(events.InlineQuery)  # pylint:disable=E0602
+
+
+@System.bot.on(events.InlineQuery)
 async def inline_handler(event):
     builder = event.builder
     query = event.text
