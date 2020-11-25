@@ -77,5 +77,5 @@ async def inline_handler(event):
           )
 
     else:
-    result = builder.article("No type provided", text="Use\nproof <user_id> to get proof\nbuilder id:::enforcer:::source:::reason:::message")
+        result = builder.article("No type provided", text="Use\nproof <user_id> to get proof\nbuilder id:::enforcer:::source:::reason:::message")
     await event.answer([result])
