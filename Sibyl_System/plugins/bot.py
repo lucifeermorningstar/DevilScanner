@@ -63,11 +63,11 @@ async def callback_handler(event):
     async with DATA_LOCK:
         dict_["reason"] = r.message
         data[index] = dict_
-    msg = f"U_ID: {dict_['u_id']}"
-    msg += f"Enforcer: {dict_['enforcer']}"
-    msg += f"Source: {dict_['source']}"
-    msg += f"Reason: {dict_['reason']}"
-    msg += f"Message: {dict_['message']}"
+    msg = f"U_ID: {dict_['u_id']}\n"
+    msg += f"Enforcer: {dict_['enforcer']}\n"
+    msg += f"Source: {dict_['source']}\n"
+    msg += f"Reason: {dict_['reason']}\n"
+    msg += f"Message: {dict_['message']}\n"
     await event.respond(msg)
 
 
