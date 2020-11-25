@@ -2,7 +2,7 @@ from Sibyl_System import System, session, INSPECTORS, Sibyl_logs
 from Sibyl_System.strings import proof_string, scan_request_string
 from Sibyl_System.plugins.Mongo_DB.gbans import get_gban
 
-from telethon.custom import Button
+from telethon import custom
 from telethon import events
 
 import re
@@ -69,7 +69,7 @@ async def inline_handler(event):
           async with DATA_LOCK:
               data.append(dict_)
               index = data.index(dict_)
-          buttons = [Button.inline("Approve", data = f"approve_{data}"), Button.inline("Reject", data = f"reject_{data}")]
+          buttons = [custom.Button.inline("Approve", data = f"approve_{data}"), custom.Button.inline("Reject", data = f"reject_{data}")]
           result = builder.article(
                 "Output",
                 text = scan_request_string.format(enforcer = enforcer, spammer = u_id, reason = reason, source = source, message = message),

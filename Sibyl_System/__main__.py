@@ -14,21 +14,26 @@ HELP = {}
 IMPORTED = {}
 
 for load in to_load:
-    imported = importlib.import_module("Sibyl_System.plugins." + load)
-    if not hasattr(imported, "__plugin_name__"):
-        imported.__plugin_name__ = imported.__name__
+    try:
+        imported = importlib.import_module("Sibyl_System.plugins." + load)
+        if not hasattr(imported, "__plugin_name__"):
+            imported.__plugin_name__ = imported.__name__
 
-    if not imported.__plugin_name__.lower() in IMPORTED:
-        IMPORTED[imported.__plugin_name__.lower()] = imported
+        if not imported.__plugin_name__.lower() in IMPORTED:
+            IMPORTED[imported.__plugin_name__.lower()] = imported
 
-    if hasattr(imported, "help_plus") and imported.help_plus:
-        HELP[imported.__plugin_name__.lower()] = imported
-
+        if hasattr(imported, "help_plus") and imported.help_plus:
+            HELP[imported.__plugin_name__.lower()] = imported
+    except Exception as e:
+        print(f'Error while loading plugin: {load}')
+        print('------------------------------------')
+        print(e)
+        print('------------------------------------')
 @System.on(system_cmd(pattern=r'status', allow_enforcer = True))
 async def status(event):
   msg = await event.reply('Portable Psychological Diagnosis and Suppression System.')
   time.sleep(1)
-  await msg.edit('Initialising ▫️◾️▫️') 
+  await msg.edit('Initialising ▫️◾️▫️')
   time.sleep(1)
   await msg.edit('Initialising ◾️▫️◾️')
   time.sleep(1)
@@ -43,7 +48,7 @@ async def status(event):
   await msg.edit('Initialising ▫️◾️▫️')
   time.sleep(1)
   await msg.edit('Connection successful!')
-  time.sleep(2)  
+  time.sleep(2)
   sender = await event.get_sender()
   user_status = 'Inspector' if sender.id in INSPECTORS else 'Enforcer'
   time.sleep(1)
