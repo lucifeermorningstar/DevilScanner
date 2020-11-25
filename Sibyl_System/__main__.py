@@ -29,6 +29,7 @@ for load in to_load:
         print('------------------------------------')
         print(e)
         print('------------------------------------')
+
 @System.on(system_cmd(pattern=r'status', allow_enforcer = True))
 async def status(event):
   msg = await event.reply('Portable Psychological Diagnosis and Suppression System.')

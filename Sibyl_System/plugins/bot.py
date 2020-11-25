@@ -58,7 +58,7 @@ async def inline_handler(event):
          else:
             result = builder.article("Proof", text = proof, link_preview=False)
     elif query.startswith("builder"):
-      split = query.split(':::', 4)
+      split = query.replace('builder', '').split(':::', 4)
       print(split)
       if len(split) != 5:
           result = builder.article('Not enough info provided...')
@@ -69,7 +69,7 @@ async def inline_handler(event):
           async with DATA_LOCK:
               data.append(dict_)
               index = data.index(dict_)
-          buttons = [custom.Button.inline("Approve", data = f"approve_{data}"), custom.Button.inline("Reject", data = f"reject_{data}")]
+          buttons = [custom.Button.inline("Approve", data = f"approve_{index}"), custom.Button.inline("Reject", data = f"reject_{index}")]
           result = builder.article(
                 "Output",
                 text = scan_request_string.format(enforcer = enforcer, spammer = u_id, reason = reason, source = source, message = message),
