@@ -38,6 +38,7 @@ If a user is gbanned -
 
 @System.bot.on(events.CallbackQuery(pattern = r'(approve|reject)_(\d*)'))
 async def callback_handler(event):
+    print('a')
     split = event.data.decode().split('_', 1)
     index = int(split[1])
     async with DATA_LOCK:
