@@ -41,6 +41,7 @@ async def callback_handler(event):
     print('a')
     split = event.data.decode().split('_', 1)
     index = int(split[1])
+    message = event.get_message()
     async with DATA_LOCK:
         try:
             dict_ = data[index]
@@ -49,7 +50,7 @@ async def callback_handler(event):
     if not dict_:
         await event.answer('Message is too old (Bot was restarted after message was sent), Use /approve on it instead', alert = True)
         return
-    await event.answer('I have sent you a message, Reply to it to overwrite reason, Otherwise ignore...', alert = True)
+    await event.answer('I have sent you a message, Reply to it to overwrite reason/specify reject reason, Otherwise ignore', alert = True)
     sender = await event.get_sender()
     async with event.client.conversation(sender.id, timeout = 15) as conv:
         if split[0] == 'approve':
@@ -60,16 +61,20 @@ async def callback_handler(event):
             r = await conv.get_response()
         except asyncio.exceptions.TimeoutError:
             r = None
-    async with DATA_LOCK:
-        dict_["reason"] = r.message
-        data[index] = dict_
-    msg = f"U_ID: {dict_['u_id']}\n"
-    msg += f"Enforcer: {dict_['enforcer']}\n"
-    msg += f"Source: {dict_['source']}\n"
-    msg += f"Reason: {dict_['reason']}\n"
-    msg += f"Message: {dict_['message']}\n"
-    await event.respond(msg)
-
+    if r:
+        async with DATA_LOCK:
+            dict_["reason"] = r.message
+            data[index] = dict_
+        msg = f"New Reason:\nU_ID: {dict_['u_id']}\n"
+        msg += f"Enforcer: {dict_['enforcer']}\n"
+        msg += f"Source: {dict_['source']}\n"
+        msg += f"Reason: {dict_['reason']}\n"
+        msg += f"Message: {dict_['message']}\n"
+        await event.respond(msg)
+        await message.edit('test')
+    else:
+        await event.respond('reason not changed')
+        await message.edit('no test')
 
 
 @System.bot.on(events.InlineQuery)
