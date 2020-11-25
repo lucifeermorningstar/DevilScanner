@@ -41,7 +41,7 @@ async def callback_handler(event):
     print('a')
     split = event.data.decode().split('_', 1)
     index = int(split[1])
-    message = event.get_message()
+    message = await event.get_message()
     async with DATA_LOCK:
         try:
             dict_ = data[index]
