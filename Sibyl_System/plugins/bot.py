@@ -61,20 +61,24 @@ async def callback_handler(event):
         except asyncio.exceptions.TimeoutError:
             r = None
     if r:
-        async with DATA_LOCK:
-            dict_["reason"] = r.message
-            data[index] = dict_
-        msg = f"New Reason:\nU_ID: {dict_['u_id']}\n"
-        msg += f"Enforcer: {dict_['enforcer']}\n"
-        msg += f"Source: {dict_['source']}\n"
-        msg += f"Reason: {dict_['reason']}\n"
-        msg += f"Message: {dict_['message']}\n"
-        await event.respond(msg)
-        await message.edit(re.sub('(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {r.message}', message.message))
+        if split[0] == 'approve':
+            async with DATA_LOCK:
+                dict_["reason"] = r.message
+                data[index] = dict_
+            msg = f"New Reason:\nU_ID: {dict_['u_id']}\n"
+            msg += f"Enforcer: {dict_['enforcer']}\n"
+            msg += f"Source: {dict_['source']}\n"
+            msg += f"Reason: {dict_['reason']}\n"
+            msg += f"Message: {dict_['message']}\n"
+            await event.respond(msg)
+            await message.edit(re.sub('(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)', f'**Scan Reason:** {r.message}', message.message))
+        else:
+            await event.edit(reject_string)
+            async with DATA_LOCK:
+                del data[index]
     else:
-        await event.edit(reject_string)
-        async with DATA_LOCK:
-            del data[index]
+        await event.respond('no respond, bye bye')
+
 
 
 @System.bot.on(events.InlineQuery)
