@@ -1,5 +1,6 @@
 from Sibyl_System import MONGO_CLIENT
 from typing import Optional, Dict, Union
+from datetime import datetime
 
 db = MONGO_CLIENT['Sibyl']['Main']
 
@@ -19,10 +20,11 @@ async def update_gban(victim:int, reason:Optional[str]=None, proof_id:Optional[i
             gbans_dict['enforcer'] = enforcer
         if message:
             gbans_dict['message'] = message
+        gbans_dict['timestamp'] = datetime.timestamp(datetime.now())
         await db.replace_one(await get_gban(victim), gbans_dict)
     else:
         gbans_dict = {
-            "user": victim, "reason": reason, "enforcer": enforcer, "proof_id": proof_id, "message": message
+            "user": victim, "reason": reason, "enforcer": enforcer, "proof_id": proof_id, "message": message, 'timestamp': datetime.timestamp(datetime.now())
         }
         await db.insert_one(gbans_dict)
     return True
