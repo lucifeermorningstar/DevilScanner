@@ -10,8 +10,7 @@
 [![Sibyl System](https://vignette.wikia.nocookie.net/psychopass/images/7/72/Sibyl_System.png/revision/latest?cb=20141029202159 "Sibyl System")](https://github.com/AnimeKaizoku/SibylSystem "Sibyl System")
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-## A Telethon UserBot to make gbanning easy
-> (asyncio)
+## A Telethon Userbot to make gbanning easy
 
 ## Config
 Here stuff you need to put in config.py or Environment variables:
