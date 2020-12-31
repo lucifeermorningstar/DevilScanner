@@ -1,6 +1,6 @@
 from Sibyl_System import System, session, INSPECTORS, Sibyl_logs
 from Sibyl_System.strings import proof_string, scan_request_string, reject_string
-from Sibyl_System.plugins.Mongo_DB.gbans import get_gban
+from Sibyl_System.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
 
 from telethon import events, custom
 
@@ -12,7 +12,10 @@ DATA_LOCK = asyncio.Lock()
 
 
 async def make_proof(user):
-    data = await get_gban(user)
+    if str(user).startswith('#'):
+        data = await get_gban_by_proofid(user)
+    else:
+        data = await get_gban(user)
     if not data:
         return False
     message = data.get("message") or ""
@@ -40,7 +43,7 @@ async def help(event):
         """
 This bot is a inline bot, You can use it by typing `@SibylSystemRobot`
 If a user is gbanned -
-    Getting reason for gban, message the user was gbanned for - `@SibylSystemRobot proof <user_id>`
+    Getting reason for gban, message the user was gbanned for - `@SibylSystemRobot proof <user_id|proof_id>`
     """
     )
 
@@ -123,8 +126,8 @@ async def inline_handler(event):
             proof = await make_proof(int(split[1]))
             if proof is False:
                 result = builder.article(
-                    "Unknown error occured while getting proof from Case-ID",
-                    text="Unknown error occured while getting proof from Case-ID",
+                    "User is not gbanned.",
+                    text="User is not gbanned.",
                 )
             else:
                 result = builder.article("Proof", text=proof, link_preview=False)
