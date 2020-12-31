@@ -9,6 +9,9 @@ async def get_gban(user: int) -> Optional[Dict[str, Union[str, int]]]:
     json = await db.find_one({"user": user})
     return json
 
+async def get_gban_by_proofid(proofid: int) -> Optional[Dict[str, Union[str, int]]]:
+    json = await db.find_one({"proof_id": proofid})
+    return json
 
 async def update_gban(
     victim: int,
