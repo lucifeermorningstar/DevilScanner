@@ -4,6 +4,8 @@ from Sibyl_System.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
 
 from telethon import events, custom
 
+from typing import Union
+
 import re
 import asyncio
 
@@ -11,11 +13,11 @@ data = []
 DATA_LOCK = asyncio.Lock()
 
 
-async def make_proof(user):
-    if str(user).startswith('#'):
-        data = await get_gban_by_proofid(user)
+async def make_proof(user: Union[str, int]):
+    if isinstance(user, str) and user.startswith('#'):
+        data = await get_gban_by_proofid(int(user.strip('#')))
     else:
-        data = await get_gban(user)
+        data = await get_gban(int(user))
     if not data:
         return False
     message = data.get("message") or ""
@@ -123,7 +125,7 @@ async def inline_handler(event):
         if len(split) == 1:
             result = builder.article("Type Case-ID", text="No Case-ID was provided")
         else:
-            proof = await make_proof(int(split[1]))
+            proof = await make_proof(split[1])
             if proof is False:
                 result = builder.article(
                     "User is not gbanned.",
