@@ -77,8 +77,8 @@ async def listbl(event):
     await System.send_message(event.chat_id, msg)
 
 
-@System.on(events.MessageEdited(incoming=True))
-@System.on(events.NewMessage(incoming=True))
+@System.bot.on(events.MessageEdited(incoming=True))
+@System.bot.on(events.NewMessage(incoming=True))
 async def auto_gban_request(event):
     System.processing += 1
     if event.from_id in ENFORCERS or event.from_id in SIBYL:
@@ -106,7 +106,7 @@ async def auto_gban_request(event):
     System.processing -= 1
 
 
-@System.on(events.ChatAction(func=lambda e: e.user_joined))  # pylint:disable=E0602
+@System.bot.on(events.ChatAction(func=lambda e: e.user_joined))
 async def auto_wlc_gban(event):
     System.processing += 1
     user = await event.get_user()
