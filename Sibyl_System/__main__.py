@@ -98,7 +98,12 @@ async def send_help(event):
 
 
 async def main():
-    await make_collections()
+    try:
+        await make_collections()
+        me = await System.bot.get_me()
+        System.bot.id = me.id
+    except Exception as e:
+        FAILED_TO_LOAD["main"] = e
     await System.start()
     await System.catch_up()
     if FAILED_TO_LOAD:
