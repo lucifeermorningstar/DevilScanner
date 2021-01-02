@@ -182,6 +182,7 @@ async def inline_handler(event):
 
 @System.bot.on(events.ChatAction(func=lambda e: e.user_joined))
 async def check_user(event):
+    print(event.stringify())
     if event.created:
         return
     user = await event.get_user()
