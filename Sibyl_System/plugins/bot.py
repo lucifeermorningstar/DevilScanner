@@ -182,15 +182,20 @@ async def inline_handler(event):
 
 @System.bot.on(events.ChatAction(func=lambda e: e.user_joined))
 async def check_user(event):
+    if event.created:
+        return
     user = await event.get_user()
-    if user.id == System.bot.id:
-        if (await db.add_chat(event.chat_id)):
-            msg = "Thanks for adding me here!\n"\
-                  "Here are your current settings:\n"\
-                  "Alert: True\n"\
-                  "Alert Mode: Warn"
-            await event.respond(msg)
-        else: # Chat already exists in database
+    if not user:
+        if System.bot.id in event.action_message.action.users:
+            if (await db.add_chat(event.chat_id)):
+                msg = "Thanks for adding me here!\n"\
+                      "Here are your current settings:\n"\
+                      "Alert: True\n"\
+                      "Alert Mode: Warn"
+                await event.respond(msg)
+            else: # Chat already exists in database
+                return
+        else:
             return
     elif user.id in INSPECTORS or user.id in ENFORCERS:
         return
