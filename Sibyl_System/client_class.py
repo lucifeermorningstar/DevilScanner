@@ -31,6 +31,7 @@ class SibylClient(TelegramClient):
             self.bot = TelegramClient(
                 "SibylSystem", api_id=API_ID_KEY, api_hash=API_HASH_KEY
             ).start(bot_token=BOT_TOKEN)
+            self.bot.id = self.bot.get_me().id
         super().__init__(*args, **kwargs)
 
     async def gban(
