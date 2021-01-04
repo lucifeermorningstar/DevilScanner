@@ -8,7 +8,7 @@ async def image_maker(event) -> None:
     replied_user = await event.get_reply_message()
     # Download profile photo
     await System.download_profile_photo(
-        replied_user.from_id, file="user.png", download_big=True
+        replied_user.sender_id, file="user.png", download_big=True
     )
     user_photo = Image.open("user.png")
     # open id photo
@@ -29,7 +29,7 @@ async def image_maker(event) -> None:
         fill=color,
         font=font2,
     )
-    draw.text((393, 50), str(replied_user.from_id), fill=color, font=font)
+    draw.text((393, 50), str(replied_user.sender_id), fill=color, font=font)
     id_template.save("user_id.png")
     if "doc" in event.text:
         force_document = True

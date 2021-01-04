@@ -81,7 +81,7 @@ async def listbl(event):
 @System.bot.on(events.NewMessage(incoming=True))
 async def auto_gban_request(event):
     System.processing += 1
-    if event.from_id in ENFORCERS or event.from_id in SIBYL:
+    if event.sender_id in ENFORCERS or event.sender_id in SIBYL:
         return
     if event.chat_id == Sibyl_logs:
         return
@@ -97,7 +97,7 @@ async def auto_gban_request(event):
                     if event.chat.username
                     else f"Occurred in Private Chat - {event.chat.title}"
                 )
-                logmsg = f"""$AUTOSCAN\n**Scanned user:** [{event.from_id}](tg://user?id={event.from_id})\n**Reason:** 0x{c}\n**Chat:** {link}\n**Hue Color:** Yellow-green\n**Message:** {event.text}"""
+                logmsg = f"""$AUTOSCAN\n**Scanned user:** [{event.sender_id}](tg://user?id={event.sender_id})\n**Reason:** 0x{c}\n**Chat:** {link}\n**Hue Color:** Yellow-green\n**Message:** {event.text}"""
                 await System.send_message(Sibyl_logs, logmsg)
                 System.processed += 1
                 System.processing -= 1
