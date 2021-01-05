@@ -128,7 +128,7 @@ async def scan(event):
     )
 
 
-@System.on(system_cmd(pattern=r"re(vive|vert|store) "))
+@System.on(system_cmd(pattern=r"re(vive|vert|store) ", allow_inspectors=True))
 async def revive(event):
     try:
         user_id = event.text.split(" ", 1)[1]
