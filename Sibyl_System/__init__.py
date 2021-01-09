@@ -11,8 +11,8 @@ import logging
 import os
 import re
 
-
-os.remove("log.txt")
+if os.path.exists('log.txt')
+    os.remove("log.txt")
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
