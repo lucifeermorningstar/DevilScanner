@@ -11,7 +11,7 @@ import logging
 import os
 import re
 
-if os.path.exists('log.txt')
+if os.path.exists('log.txt'):
     os.remove("log.txt")
 
 logging.basicConfig(
