@@ -183,7 +183,7 @@ async def inline_handler(event):
 @System.bot.on(events.ChatAction())
 async def check_user(event):
     logging.info(1)
-    if not event.user_joined or not event.user_added:
+    if not event.user_joined and not event.user_added:
         return
     logging.info(2)
     if event.created:
