@@ -8,8 +8,8 @@ async def get_chat(chat: int) -> Optional[Dict[str, Union[str, int]]]:
     return settings
 
 async def add_chat(chat: int) -> bool:
-    chat = await db.find_one({'chat_id': chat})
-    if chat:
+    exists = await db.find_one({'chat_id': chat})
+    if exists:
         return False
     await db.insert_one({'chat_id': chat, 'alert': True, 'alertmode': 'warn'})
     return True
