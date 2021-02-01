@@ -12,3 +12,4 @@ async def add_chat(chat: int) -> bool:
     if chat:
         return False
     await db.insert_one({'chat_id': chat, 'alert': True, 'alertmode': 'warn'})
+    return True
