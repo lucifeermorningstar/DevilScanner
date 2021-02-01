@@ -40,18 +40,47 @@ async def make_proof(user: Union[str, int]):
     )
 
 
-@System.bot.on(events.NewMessage(pattern="[/?]start"))
+@System.bot.on(events.NewMessage(pattern="[/!]start"))
 async def sup(event):
     await event.reply("sup?")
 
+@System.bot.on(events.NewMessage(pattern="[/!]alertmode"))
+async def setalertmode(event):
+    if event.is_private:
+        return
+    split = event.text.split(' ')
+    if len(split) == 1:
+        c = await db.get_chat(event.chat_id)
+        if not c:
+            await event.reply("Chat not found, Re-Add this bot and try again.")
+            return
+        await event.reply(f"Current mode: `{c['alertmode']}`")
+        return
+    mode = split[1].lower()
+    if mode not in ['ban', 'silent-ban', 'warn']:
+        await event.reply("Invalid mode given, Read /help for list of all available modes!")
+        return
+    if (await db.change_settings(event.chat_id, True, mode)):
+        await event.reply(f"Changed mode to: `{mode}`")
+    else:
+        await event.reply("Failed to change mode")
 
-@System.bot.on(events.NewMessage(pattern="[/?]help"))
+@System.bot.on(events.NewMessage(pattern="[/!]help"))
 async def help(event):
+    if not event.is_private:
+        return
     await event.reply(
         """
-This bot is a inline bot, You can use it by typing `@SibylSystemRobot`
-If a user is gbanned -
-    Getting reason for gban, message the user was gbanned for - `@SibylSystemRobot proof <user_id|proof_id>`
+Add this bot to any group and It will warn/ban If any gbanned user joins.
+**Commands:**
+    `help` - This text.
+    `start` - Start the bot.
+    `alertmode` - Change alertmode.
+        **Available modes:**
+        `silent-ban` - Silently ban user.
+        `ban` - Ban and send a message In the chat to say the user was banned.
+        `warn` - Warn that a gbanned user has joined but do nothing.
+All commands can be used with ! or /.
     """
     )
 
