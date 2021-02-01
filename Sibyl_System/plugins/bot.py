@@ -190,10 +190,11 @@ async def check_user(event):
         return
     print(3)
     user = await event.get_user()
-    print(user)
     if not user:
+        return
+    if user and event.user_added:
         print(3.5)
-        if System.bot.id in event.action_message.action.users:
+        if event.user.is_self:
             if (await db.add_chat(event.chat_id)):
                 msg = "Thanks for adding me here!\n"\
                       "Here are your current settings:\n"\
