@@ -3,6 +3,7 @@
 from telethon import events
 from telethon.sessions import StringSession
 
+import sys
 from motor import motor_asyncio
 import aiohttp
 import json
@@ -11,14 +12,15 @@ import logging
 import os
 import re
 
-if os.path.exists('log.txt'):
-    os.remove("log.txt")
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
     level=logging.INFO,
 )
+
+sys.stdout = open("stdeo.txt", 'w+')
+sys.stderr = open("stdeo.txt", 'w+')
 
 ENV = bool(os.environ.get("ENV", False))
 if ENV:
