@@ -204,7 +204,23 @@ async def check_user(event):
             else: # Chat already exists in database
                 return
         else:
-            return
+            u = await get_gban(user.id)
+            chat = await db.get_chat(event.chat_id)
+            if not u:
+                return
+            if chat['alertmode'] == 'silent-ban':
+                await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
+                return
+            msg = f"{user.first_name}'s Crime-Coeffecient is over 300!\n"\
+                  f"*Reason:* `{u['reason']}`\n"
+            if chat['alertmode'] == 'ban':
+                if can_ban(event):
+                    await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
+                    msg += "Banning them from here."
+                else:
+                    msg += "I can't ban users here, So just warning."
+
+            await event.respond(msg)
     elif user.id in INSPECTORS or user.id in ENFORCERS:
         logging.info(5)
         return
