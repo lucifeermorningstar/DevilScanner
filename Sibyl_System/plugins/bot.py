@@ -182,12 +182,17 @@ async def inline_handler(event):
 
 @System.bot.on(events.ChatAction())
 async def check_user(event):
+    print(1)
     if not event.user_joined or not event.user_added:
         return
+    print(2)
     if event.created:
         return
+    print(3)
     user = await event.get_user()
+    print(user)
     if not user:
+        print(3.5)
         if System.bot.id in event.action_message.action.users:
             if (await db.add_chat(event.chat_id)):
                 msg = "Thanks for adding me here!\n"\
@@ -200,8 +205,10 @@ async def check_user(event):
         else:
             return
     elif user.id in INSPECTORS or user.id in ENFORCERS:
+        print(4)
         return
     else:
+        print(5)
         u = await get_gban(user.id)
         chat = await db.get_chat(event.chat_id)
         if not u:
