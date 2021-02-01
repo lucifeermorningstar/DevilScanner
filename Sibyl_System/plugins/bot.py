@@ -6,7 +6,7 @@ import Sibyl_System.plugins.Mongo_DB.bot_settings as db
 from telethon import events, custom
 
 from typing import Union
-
+import logging
 import re
 import asyncio
 
@@ -182,18 +182,18 @@ async def inline_handler(event):
 
 @System.bot.on(events.ChatAction())
 async def check_user(event):
-    print(1)
+    logging.info(1)
     if not event.user_joined or not event.user_added:
         return
-    print(2)
+    logging.info(2)
     if event.created:
         return
-    print(3)
+    logging.info(3)
     user = await event.get_user()
     if not user:
         return
     if event.user_added:
-        print(3.5)
+        logging.info(4)
         if user.is_self:
             if (await db.add_chat(event.chat_id)):
                 msg = "Thanks for adding me here!\n"\
@@ -206,10 +206,10 @@ async def check_user(event):
         else:
             return
     elif user.id in INSPECTORS or user.id in ENFORCERS:
-        print(4)
+        logging.info(5)
         return
     else:
-        print(5)
+        logging.info(6)
         u = await get_gban(user.id)
         chat = await db.get_chat(event.chat_id)
         if not u:
