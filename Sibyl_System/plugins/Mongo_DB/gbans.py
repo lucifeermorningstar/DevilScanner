@@ -14,7 +14,7 @@ async def get_gban_by_proofid(proofid: int) -> Optional[Dict[str, Union[str, int
     return json
 
 async def delete_gban(user: int) -> bool:
-    gban = get_gban(user)
+    gban = await get_gban(user)
     if gban:
         await db.delete_one(gban)
         return True
