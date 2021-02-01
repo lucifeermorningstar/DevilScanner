@@ -234,7 +234,13 @@ async def check_user(event):
                 return
             if chat['alertmode'] == 'silent-ban':
                 if can_ban(event):
-                    await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
+                    try:
+                       msg = await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
+                       await event.delete()
+                       if msg:
+                          await msg.delete()
+                    except:
+                       pass
                 else:
                     await db.change_settings(event.chat_id, True, "warn")
                     await event.respond("I can't ban users here, Changed mode to `warn`")
@@ -258,7 +264,13 @@ async def check_user(event):
             return
         if chat['alertmode'] == 'silent-ban':
             if can_ban(event):
-                await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
+                try:
+                   msg = await event.client.edit_permissions(event.chat_id, user.id, view_messages=False)
+                   await event.delete()
+                   if msg:
+                      await msg.delete()
+                except:
+                   pass
             else:
                 await db.change_settings(event.chat_id, True, "warn")
                 await event.respond("I can't ban users here, Changed mode to `warn`")
