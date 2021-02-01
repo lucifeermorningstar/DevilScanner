@@ -192,9 +192,9 @@ async def check_user(event):
     user = await event.get_user()
     if not user:
         return
-    if user and event.user_added:
+    if event.user_added:
         print(3.5)
-        if event.user.is_self:
+        if user.is_self:
             if (await db.add_chat(event.chat_id)):
                 msg = "Thanks for adding me here!\n"\
                       "Here are your current settings:\n"\
