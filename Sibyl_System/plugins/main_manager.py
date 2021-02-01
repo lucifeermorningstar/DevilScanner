@@ -142,7 +142,6 @@ async def revive(event):
 @System.on(system_cmd(pattern=r"sibyl logs"))
 async def logs(event):
     await System.send_file(event.chat_id, "log.txt")
-    await System.send_file(event.chat_id, "stdeo.txt") 
 
 
 @System.on(system_cmd(pattern=r"approve", allow_inspectors=True, force_reply=True))
