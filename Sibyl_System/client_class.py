@@ -13,7 +13,7 @@ from Sibyl_System import (
     API_ID_KEY,
     API_HASH_KEY,
 )
-from Sibyl_System.plugins.Mongo_DB.gbans import update_gban
+from Sibyl_System.plugins.Mongo_DB.gbans import update_gban, delete_gban
 
 
 class SibylClient(TelegramClient):
@@ -94,9 +94,12 @@ class SibylClient(TelegramClient):
             logs = self.gban_logs
         else:
             logs = self.log
+        if not (await delete_gban(target)):
+            return False
         await self.send_message(
             logs, f"/ungban [{target}](tg://user?id={target}) {reason}"
         )
         await self.send_message(
             logs, f"/unfban [{target}](tg://user?id={target}) {reason}"
         )
+        return True
