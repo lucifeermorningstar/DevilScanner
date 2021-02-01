@@ -180,9 +180,10 @@ async def inline_handler(event):
         )
     await event.answer([result])
 
-@System.bot.on(events.ChatAction(func=lambda e: e.user_joined))
+@System.bot.on(events.ChatAction())
 async def check_user(event):
-    print(event.stringify())
+    if not event.user_joined or not event.user_added:
+        return
     if event.created:
         return
     user = await event.get_user()
