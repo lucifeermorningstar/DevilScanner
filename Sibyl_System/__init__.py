@@ -2,8 +2,6 @@
 
 from telethon import events
 from telethon.sessions import StringSession
-
-import sys
 from motor import motor_asyncio
 import aiohttp
 import json
@@ -18,9 +16,6 @@ logging.basicConfig(
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
     level=logging.INFO,
 )
-
-sys.stdout = open("stdeo.txt", 'w+')
-sys.stderr = open("stdeo.txt", 'w+')
 
 ENV = bool(os.environ.get("ENV", False))
 if ENV:
