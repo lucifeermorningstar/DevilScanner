@@ -19,7 +19,7 @@ async def reboot(event):
     await event.reply("Restarting.....")
     await System.disconnect()
     os.execl(sys.executable, sys.executable, *sys.argv)
-    quit()
+    sys.exit()
 
 
 @System.on(system_cmd(pattern=r"sibyl shutdown"))
