@@ -12,6 +12,8 @@
 
 ## A Telethon Userbot to make handling spam easer
 
+Do note that this repository does not come with support and assist, if you choose to deploy this anywhere and face issues - DO NOT COME TO US, if you are not sure how to deploy bots such as these then do not deploy them at all.
+
 ## Config
 Here stuff you need to put in config.py or Environment variables:
 - ` API_ID_KEY` Get from [my.telegram.org/apps](https://my.telegram.org/apps)
@@ -22,7 +24,7 @@ Here stuff you need to put in config.py or Environment variables:
 - ` Sibyl_logs `: In this group all scan requests will land (Super group)
 - ` Sibyl_approved_logs `: When approved it sends a message there (channel)
 - ` GBAN_MSG_LOGS `: Where to gban user, Set to None and it will send /gban in Sibyl_logs (Super group)
-- Start bot using `python3 -m Sibyl_System` on linux or `py -m -m Sibyl_System` for windows
+- Start bot using `python3 -m Sibyl_System` on linux or `py -m Sibyl_System` for windows
 ------------
 
 ## Purpose and schematics
