@@ -109,7 +109,7 @@ def system_cmd(
     **args
 ):
     if pattern and allow_slash:
-        args["pattern"] = re.compile(r"[\?\.!/]" + pattern)
+        args["pattern"] = re.compile(r"[\?\.!/](" + pattern + r")(?!@)")
     else:
         args["pattern"] = re.compile(r"[\?\.!]" + pattern)
     if allow_sibyl and allow_enforcer:
