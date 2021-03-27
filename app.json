@@ -1,0 +1,109 @@
+{
+      "name": "Sybil_System",
+      "description": "Gbannn System",
+      "keywords": [
+         "Sybil",
+         "Sybil",
+         "Gban",
+         "|Enforcer",
+         "ok"
+      ],   
+   "repository": "https://github.com/TheUnknownKanger/sybil_system",
+   "addons": [
+      {
+         "options": {
+            "version": "12"
+         },
+         "plan": "heroku-postgresql"
+      }
+   ],
+   "buildpacks": [
+    {
+      "url": "heroku/python"
+    }     
+  ],      
+   "env": {
+      "API_HASH_KEY": {
+         "description": "ok",
+         "required": true,
+         "value": ""
+      },
+      "API_ID_KEY": {
+         "description": "ok",
+         "required": true,
+         "value": ""
+      },
+      "HEROKU_API_KEY": {
+         "description": "huh",
+         "required": true,
+         "value": ""
+      },    
+      "STRING_SESSION": {
+         "description": "huh",
+         "required": false,
+         "value": ""
+      },      
+      "RAW_ENFORCERS": {
+         "description": "hmm",
+         "required": true,
+         "value": ""
+      },
+      "RAW_SIBYL": {
+         "description": "lel",
+         "value": ""
+      },
+      "HEROKU_APP_NAME": {
+         "description": "k",
+         "required": false,
+         "value": ""
+      },
+      "ENFORCERS": {
+         "description": "Enforcers Duh",
+         "required": false,
+         "value": ""
+      },
+      "INSPECTORS": {
+         "description": "ok",
+         "required": false,
+         "value": ""
+      },      
+      "SIBYL": {
+         "description": "idk",
+         "required": false,
+         "value": ""
+      },
+      "Sibyl_approved_logs": {
+         "description": "idk",
+         "required": false,
+         "value": "-xyz"
+      },
+      "Sibyl_logs": {
+         "description": "idk",
+         "required": false,
+         "value": ""
+      },
+      "MONGO_DB_URL": {
+         "description": "db url",
+         "required": true,
+         "value": ""
+      }, 
+      "BOT_TOKEN": {
+         "description": "Bot Token",
+         "value": ""
+      },
+      "GBAN_MSG_LOGS": {
+         "description": "Gban logs",
+         "required": false,
+         "value": "-100"
+      }
+   },
+   "keywords": [
+      "sybil",
+      "Sybil",
+      "gban system",
+      "Telegram",
+      "Tl"
+   ],
+   "name": "SyBiL_SySteM",
+   "repository": "https://github.com/Inukaasith/daisy-x"
+}
